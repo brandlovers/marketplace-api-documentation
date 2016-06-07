@@ -18,7 +18,7 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Server received your request and will start background data validation."
+                        "description": "Server received your request and will start background processing."
                     },
                     "400": {
                         "description": "Bad Request."
@@ -42,7 +42,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -94,8 +94,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -116,14 +116,164 @@
                 ]
             }
         },
-        "/orders/trackings/sent": {
+        "/product/{skuSellerId}": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Sucess fetching the object",
+                        "schema": {
+                            "$ref": "#/definitions/GetProductWithErrorsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request."
+                    },
+                    "401": {
+                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
+                    },
+                    "403": {
+                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
+                    },
+                    "404": {
+                        "description": "Object not found."
+                    },
+                    "405": {
+                        "description": "Invalid method."
+                    }
+                },
+                "description": "Operação para consultar um produto enviado. Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço GET /sellerItems/{skuSellerId}",
+                "tags": [
+                    "products"
+                ],
+                "summary": "Operação para consultar um produto enviado",
+                "operationId": "getProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "description": "SKU ID do Lojista.",
+                        "name": "skuSellerId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "Sucess processing your request."
+                    },
+                    "400": {
+                        "description": "Bad request."
+                    },
+                    "401": {
+                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
+                    },
+                    "403": {
+                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
+                    },
+                    "404": {
+                        "description": "Object not found."
+                    },
+
+                },
+                "description": "Operação utilizada para alterar um produto enviado na carga. O produto só pode ser alterado antes de assumir o status Disponível (AVAILABLE). Produtos já disponíveis não podem ser alterados através de serviços. Para mais informações.",
+                "tags": [
+                    "products"
+                ],
+                "summary": "Operação para alterar um produto",
+                "operationId": "putProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "description": "SKU do produto do lojista que deverá ser alterado.",
+                        "name": "skuSellerId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "description": "Parâmetros para alterar um produto enviado na carga.",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ProductUpdate"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": "Sucess processing your request",
+                    },
+                    "400": {
+                        "description": "Bad request. Invalid SKU or productID"
+                    },
+                    "401": {
+                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
+                    },
+                },
+                "description": "Essa operação está disponível apenas para SANDBOX.Operação utilizada para cancelar itens de uma carga. Os itens só podem ser cancelados se estiverem com erros de importação ou se os produtos estiverem pendentes (status=PENDING).",
+                "tags": [
+                    "loads"
+                ],
+                "summary": "Operação utilizada para cancelar uma lista de produtos enviados (SANDBOX)",
+                "operationId": "deleteProduct",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "description": "SKU do produto do lojista que deverá ser alterado.",
+                        "name": "skuSellerId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/orders/shipments/shipped": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "201": {
-                        "description": "Retorno de sucesso."
+                        "description": "Sucess transaction."
                     },
                     "400": {
                         "description": "Bad request."
@@ -132,12 +282,12 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para atualização de tracking massivo.   Devido ao formato JSON, é necessário alterar o HTTP Header: content-type para application/json para o correto funcionamento.  Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos POST segundo o Status HTTP 201 - Created.",
+                "description": "Allows batch updates of order shippments.",
                 "tags": [
-                    "loads"
+                    "orders"
                 ],
-                "summary": "Operação utilizada para atualização de tracking massivo",
-                "operationId": "postOrdersTrackingSent",
+                "summary": "Batch update of order shipments",
+                "operationId": "postOrdersshipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -148,10 +298,10 @@
                     {
                         "in": "body",
                         "description": "Arquivo em formato JSON cujo conteúdo contêm uma lista de objetos de order tracking.",
-                        "name": "ordersTrackings",
+                        "name": "ordersshipments",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OrdersTrackings"
+                            "$ref": "#/definitions/Ordersshipments"
                         }
                     }
                 ]
@@ -159,7 +309,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersTrackingUpdatingResponse"
                         }
@@ -177,15 +327,15 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação utilizada para consultar o status de uma lista de produtos enviados. É possível refinar a consulta utilizando alguns parâmetros não obrigatórios como: STATUS e DATA DE CADASTRO DO PRODUTO.",
                 "tags": [
-                    "loads"
+                    "orders"
                 ],
                 "summary": "Operação utilizada para consultar o status dos produtos enviados",
-                "operationId": "getOrdersTrackingSent",
+                "operationId": "getOrdersshipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -195,8 +345,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -237,14 +387,11 @@
                 ]
             }
         },
-        "/orders/trackings/delivered": {
+        "/orders/shipments/delivered": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "201": {
-                        "description": "Retorno de sucesso."
+                        "description": "Sucess. Server received your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -253,11 +400,11 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para atualização de tracking massivo.  Devido ao formato JSON, é necessário alterar o HTTP Header: content-type para application/json para o correto funcionamento.  Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos POST segundo o Status HTTP 201 - Created.",
+                "description": "Batch update of order shipments status. This ",
                 "tags": [
-                    "loads"
+                    "orders"
                 ],
-                "summary": "Operação utilizada  para atualização de tracking massivo",
+                "summary": "Batch update of order shipments",
                 "operationId": "postOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
@@ -268,18 +415,18 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "body",
-                        "description": "Arquivo em formato JSON cujo conteúdo contêm uma lista de objetos product.",
-                        "name": "ordersTrackings",
+                        "description": "JSON body with list of shipments to be updated.",
+                        "name": "ordersshipments",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OrdersTrackings"
+                            "$ref": "#/definitions/Ordersshipments"
                         }
                     }
                 ]
@@ -287,7 +434,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Server received your request and will start background processing.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersTrackingUpdatingResponse"
                         }
@@ -305,7 +452,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação utilizada para consultar o status de uma lista de produtos enviados. É possível refinar a consulta utilizando alguns parâmetros não obrigatórios como: STATUS e DATA DE CADASTRO DO PRODUTO",
@@ -323,8 +470,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -359,11 +506,11 @@
                 ]
             }
         },
-        "/loads/sellerItems/status": {
+        "/sellerItems/status": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsStatusUpdatingResponse"
                         }
@@ -375,7 +522,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação para consulta da atualização massiva de status de produtos enviado.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço <a href='#!/sellerItems/getDetailsSellerItemOrigin_get_1'  >GET /sellerItems/{skuSellerId}</a>",
@@ -393,8 +540,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -417,10 +564,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado com sucesso."
+                        "description": "Success processing your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -429,7 +573,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para ativação/desativação massiva de produtos enviados na carga. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Operação utilizada para ativação/desativação massiva de produtos enviados na carga.",
                 "tags": [
                     "loads"
                 ],
@@ -444,8 +588,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -464,11 +608,11 @@
                 ]
             }
         },
-        "/loads/sellerItems/prices": {
+        "/sellerItems/prices": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsPricesUpdatingResponse"
                         }
@@ -480,7 +624,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação para consulta de status da atualização massiva de preços de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço <a href='#!/sellerItems/getDetailsSellerItemOrigin_get_1'  >GET /sellerItems/{skuSellerId}</a>",
@@ -498,8 +642,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -522,10 +666,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado com sucesso."
+                        "description": "Sucess processing your request"
                     },
                     "400": {
                         "description": "Bad request."
@@ -534,7 +675,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para atualização de preço, de forma massiva, de produtos enviados na carga. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Operação utilizada para atualização de preço, de forma massiva, de produtos enviados na carga. Retorno do Serviço.",
                 "tags": [
                     "loads"
                 ],
@@ -549,8 +690,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -569,11 +710,11 @@
                 ]
             }
         },
-        "/loads/sellerItems/stocks": {
+        "/sellerItems/stocks": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsStocksUpdatingResponse"
                         }
@@ -585,7 +726,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação para consulta do status da atualização massiva de estoque de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço <a href='#!/sellerItems/getDetailsSellerItemOrigin_get_1'  >GET /sellerItems/{skuSellerId}</a>",
@@ -603,8 +744,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -627,10 +768,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado com sucesso."
+                        "description": "Sucess processing your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -639,7 +777,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para atualização de estoque, de forma massiva, de produtos enviados na carga. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Operação utilizada para atualização de estoque, de forma massiva, de produtos enviados na carga. Retorno do Serviço.",
                 "tags": [
                     "loads"
                 ],
@@ -654,8 +792,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -674,169 +812,11 @@
                 ]
             }
         },
-        "/loads/products/{skuSellerId}": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "No response was specified",
-                        "schema": {
-                            "$ref": "#/definitions/GetProductWithErrorsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
-                    },
-                    "403": {
-                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Método não Permitido."
-                    }
-                },
-                "description": "Operação para consultar um produto enviado.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço <a href='#!/sellerItems/getDetailsSellerItemOrigin_get_1'  >GET /sellerItems/{skuSellerId}</a>",
-                "tags": [
-                    "loads"
-                ],
-                "summary": "Operação para consultar um produto enviado",
-                "operationId": "getProduct",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "path",
-                        "description": "SKU ID do Lojista.",
-                        "name": "skuSellerId",
-                        "required": true,
-                        "type": "string"
-                    }
-                ]
-            },
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado com sucesso."
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
-                    }
-                },
-                "description": "Operação utilizada para alterar um produto enviado na carga.O produto só pode ser alterado antes de assumir o status Disponível (AVAILABLE). Produtos já disponíveis não podem ser alterados através de serviços. Para mais informações, leia a documentação <a href='#!/loads/loadProducts_post_0'  >POST /loads/products</a>. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
-                "tags": [
-                    "loads"
-                ],
-                "summary": "Operação para alterar um produto enviado na carga",
-                "operationId": "putProduct",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "path",
-                        "description": "SKU do produto do lojista que deverá ser alterado.",
-                        "name": "skuSellerId",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "description": "Parâmetros para alterar um produto enviado na carga.",
-                        "name": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ProductUpdate"
-                        }
-                    }
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "No response was specified",
-                        "schema": {
-                            "$ref": "#/definitions/Errors"
-                        }
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado ou excluído com sucesso."
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
-                    },
-                    "422": {
-                        "description": "Sku com status diferente de pendente ou com erro."
-                    }
-                },
-                "description": "Essa operação está disponível apenas para SANDBOX.Operação utilizada para cancelar itens de uma carga. Os itens só podem ser cancelados se estiverem com erros de importação ou se os produtos estiverem pendentes (status=PENDING). Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
-                "tags": [
-                    "loads"
-                ],
-                "summary": "Operação utilizada para cancelar uma lista de produtos enviados (SANDBOX)",
-                "operationId": "deleteProduct",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "path",
-                        "description": "SKU do produto do lojista que deverá ser alterado.",
-                        "name": "skuSellerId",
-                        "required": true,
-                        "type": "string"
-                    }
-                ]
-            }
-        },
         "/sellerItems": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsResponse"
                         }
@@ -854,7 +834,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera todos os produtos que estão associados ao Lojista, mesmo os que não estão disponíveis para venda.",
@@ -872,15 +852,15 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "query",
-                        "description": "Site do qual deseja consultar o produto. Se o parâmetro não for informado, serão trazidos apenas produtos do Extra. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites' >GET /sites</a>",
-                        "name": "site",
+                        "description": "Marketplace to query for this product.",
+                        "name": "marketplace",
                         "required": false,
                         "type": "string"
                     },
@@ -905,7 +885,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/SellerItem"
                         }
@@ -923,7 +903,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera detalhes do item do Lojista através do skuSellerId (sku do produto do Lojista) informado.",
@@ -941,8 +921,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -955,8 +935,8 @@
                     },
                     {
                         "in": "query",
-                        "description": "Site do qual deseja consultar o produto. Se o parâmetro não for informado, serão trazidos apenas produtos do Extra. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>",
-                        "name": "site",
+                        "description": "Marketplace to query for this product(s)",
+                        "name": "parketplace",
                         "required": false,
                         "type": "string"
                     }
@@ -967,10 +947,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado ou excluído com sucesso."
+                        "description": "Sucess processing your request"
                     },
                     "400": {
                         "description": "Bad request."
@@ -979,7 +956,7 @@
                         "description": "Requisição Requer Antenticação."
                     }
                 },
-                "description": "Atualiza o status do produto no Marketplace. Se setado para false, o produto é desativado e deixa de ser vendido no Marketplace.<p ='obs'>Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Atualiza o status do produto no Marketplace. Se setado para false, o produto é desativado e deixa de ser vendido no Marketplace.",
                 "tags": [
                     "sellerItems"
                 ],
@@ -994,8 +971,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1022,10 +999,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado ou excluído com sucesso."
+                        "description": "Sucess processing your request"
                     },
                     "400": {
                         "description": "Bad request."
@@ -1034,7 +1008,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Atualiza a quantidade disponível para venda do Item do Lojista informado. Se atualizado para zero, o item não estará mais disponível para venda. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Atualiza a quantidade disponível para venda do Item do Lojista informado. Se atualizado para zero, o item não estará mais disponível para venda.",
                 "tags": [
                     "sellerItems"
                 ],
@@ -1049,8 +1023,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1077,10 +1051,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado ou excluído com sucesso."
+                        "description": "Sucess processing your request"
                     },
                     "400": {
                         "description": "Bad request."
@@ -1089,7 +1060,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     }
                 },
-                "description": "Atualiza o preço 'de' e o preço 'por' (preço real para venda) do item do Lojista informado.Atenção:  Para proteção do lojista, existe uma regra de validação de preços que impede alterações muito grandes em uma única operação. Não é permitido a alteração com valores 50% menores que o valor atual.  Para este tipo de crítica será retornado um Status HTTP <a href='../apis/index.html#error_codes'>422</a>, seguido da mensagem: Alteração não permitida, variação de preço muito grande. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
+                "description": "Atualiza o preço 'de' e o preço 'por' (preço real para venda) do item do Lojista informado.Atenção:  Para proteção do lojista, existe uma regra de validação de preços que impede alterações muito grandes em uma única operação. Não é permitido a alteração com valores 50% menores que o valor atual.  Para este tipo de crítica será retornado um Status HTTP <a href='../apis/index.html#error_codes'>422</a>, seguido da mensagem: Alteração não permitida, variação de preço muito grande.",
                 "tags": [
                     "sellerItems"
                 ],
@@ -1104,8 +1075,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1132,7 +1103,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsResponse"
                         }
@@ -1150,7 +1121,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera apenas os produtos do Lojista que estão disponíveis para venda, ou seja, que possuem estoque e preço atualizados e imagem(ns) válida(s).",
@@ -1168,15 +1139,15 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "query",
-                        "description": "Site do qual deseja consultar os produtos. Se o parâmetro não for informado, serão trazidos apenas produtos do Extra. Os possíveis sites são: 'EX', 'PF', 'CB', 'EH', 'BT', 'CD'. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>",
-                        "name": "site",
+                        "description": "Marketplace to query for product(s)",
+                        "name": "marketplace",
                         "required": false,
                         "type": "string"
                     },
@@ -1201,7 +1172,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1219,7 +1190,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Operação utilizada para retornar informações de todos os pedidos, independente do status em que se encontram os mesmos.Observação: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informações de entrega são suprimidas para evitar a entrega antes da confirmação do pagamento. Nesta documentação estão presentes todos os campos de Pedido. Para saber quais campos são retornados para cada status do pedido, basta consultar a documentação de cada um dos métodos de consulta de pedidos por status.",
@@ -1237,8 +1208,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1258,61 +1229,12 @@
                     }
                 ]
             },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "No response was specified"
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Método não Permitido."
-                    },
-                    "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
-                    }
-                },
-                "description": "Operação que cria um pedido.<p class='obs obs-danger' >Esta operação só está disponível em ambiente de Sandbox para que seja possível executar todo o fluxo de testes da aplicação. É necessário aguardar cerca de 30 minutos para que o pedido seja indexado. Após esse período será possível consultar os pedidos através do serviço <a href='#!/orders/getOrdersByStatusNew_get_2'  >GET /orders/status/new</a>. O Pedido só pode ser aprovado após aparecer com status NEW.  Clique <a href='../tutoriais/exemplo_orders_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Operação para criar um pedido",
-                "operationId": "postOrder",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "body",
-                        "description": "Objeto para criação do pedido.",
-                        "name": "order",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/OrderSandbox"
-                        }
-                    }
-                ]
-            }
         },
         "/orders/status/approved": {
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1330,7 +1252,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera uma lista de pedidos com status Aprovado que estão relacionados com o token do lojista informado. Este serviço irá retornar um ou mais pedidos que já possua pagamento aprovado, ou seja, são pedidos que podem ter o processo de entrega iniciado de imediato.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
@@ -1348,8 +1270,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1395,7 +1317,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1413,7 +1335,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Retorna uma lista de pedidos Cancelados que estão relacionados com o token do lojista informado.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
@@ -1431,15 +1353,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1485,7 +1400,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1503,7 +1418,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera uma lista de pedidos Entregues que estão relacionados com o token do lojista informado. Este estado representa os pedidos cujos itens foram todos entregues.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
@@ -1521,15 +1436,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1575,7 +1483,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersStatusNewResponse"
                         }
@@ -1593,7 +1501,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera uma lista de pedidos com status Novo que estão relacionados com o token do lojista informado. Este estado representa os pedidos fechados que ainda não foram aprovados, ou seja, pedidos que ainda não devem ser entregues, pois estão aguardado o pagamento. Alguns campos não serão enviados, para evitar a entrega antes da confirmação do pagamento.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
@@ -1611,15 +1519,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1665,7 +1566,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1683,10 +1584,10 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
-                "description": "Retorna uma lista de pedidos Parcialmente Entregues que estão relacionados com o token do lojista informado.  Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Entregues pelo serviço <a href='#!/orders/persistTracking_post_10'  >POST /orders/{orderId}/trackings/delivered</a>Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
+                "description": "Retorna uma lista de pedidos Parcialmente Entregues que estão relacionados com o token do lojista informado.  Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Entregues pelo serviço <a href='#!/orders/persistTracking_post_10'  >POST /orders/{orderId}/shipments/delivered</a>Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
                 "tags": [
                     "orders"
                 ],
@@ -1701,15 +1602,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1755,7 +1649,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1773,10 +1667,10 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
-                "description": "Retorna uma lista de pedidos Parcialmente Enviados que estão relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, porém ainda existem itens que não foram enviados.  Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Enviados pelo serviço <a href='#!/orders/persistTracking_post_9'  >POST /orders/{orderId}/trackings/sent</a>Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
+                "description": "Retorna uma lista de pedidos Parcialmente Enviados que estão relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, porém ainda existem itens que não foram enviados.  Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Enviados pelo serviço <a href='#!/orders/persistTracking_post_9'  >POST /orders/{orderId}/shipments/sent</a>Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
                 "tags": [
                     "orders"
                 ],
@@ -1791,15 +1685,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1845,7 +1732,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersResponse"
                         }
@@ -1863,7 +1750,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera uma lista de pedidos com status Enviado, que estão relacionados com o token do lojista informado. Este estado representa os pedidos cujos itens foram todos entregues.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
@@ -1881,15 +1768,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1935,7 +1815,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/Order"
                         }
@@ -1953,7 +1833,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera detalhes do pedido informado.Observação: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informações de entrega são suprimidas para evitar a entrega antes da confirmação do pagamento. Nesta documentação estão presentes todos os campos de Pedido. Para saber quais campos são retornados para cada status do pedido, basta consultar a documentação de cada um dos métodos de consulta de pedidos por status. Deve ser informado um pedido válido.Abaixo seguem os valores possíveis para o tipo de pagamento (paymentType)<table class='table'><tr><th>Código</th><th>Descrição</th></tr><tr><td>1</td><td>Cartão de Crédito</td></tr><tr><td>2</td><td>Boleto</td></tr><tr><td>4</td><td>Cupom</td></tr><tr><td>5</td><td>Transferência</td></tr></table>Segue abaixo a lista de Status existentes para pedidos. Os status representam a situação consolidada do pedido: <table class = 'table'><tr><th>Código</th><th>Descrição</th></tr><tr><td>NEW</td><td>Novo</td></tr><tr><td>GDE</td><td>Entregas geradas</td></tr><tr><td>PEN</td><td>Pagamento pendente</td></tr><tr><td>PAY</td><td>Pagamento aprovado</td></tr><tr><td>SHP</td><td>Enviado</td></tr><tr><td>DLV</td><td>Entregue</td></tr></table>Segue abaixo a lista de Control Points existentes. Os Control Points estão presentes em cada operação de tracking e representam o status de cada operação realizada no pedido: <table class = 'table'><tr><th>Código</th><th>Sequência / ordem</th><th>Descrição</th></tr><tr><td>AAP</td><td>1</td><td>Aguardando a confirmação do pagamento</td></tr><tr><td>ACR</td><td>2</td><td>Análise de dados</td></tr><tr><td>ADT</td><td>3</td><td>Data de entrega ajustada</td></tr><tr><td>AEG</td><td>4</td><td>Aguardando entregas pagamento</td></tr><tr><td>AES</td><td>5</td><td>Disponibilidade de estoque</td></tr><tr><td>AGR</td><td>6</td><td>Dificuldade na entrega</td></tr><tr><td>AMC</td><td>7</td><td>Análise de dados</td></tr><tr><td>AR1</td><td>8</td><td>Aviso de Entrega 1</td></tr><tr><td>AR2</td><td>9</td><td>Aviso de Entrega 2</td></tr><tr><td>ARE</td><td>10</td><td>Aguardando Retirada</td></tr><tr><td>ARL</td><td>11</td><td>Disponível para Entrega</td></tr><tr><td>ATR</td><td>12</td><td>Dificuldade na entrega</td></tr><tr><td>AU1</td><td>13</td><td>Dificuldade na entrega</td></tr><tr><td>AU2</td><td>14</td><td>Dificuldade na entrega</td></tr><tr><td>AU3</td><td>15</td><td>Dificuldade na entrega</td></tr><tr><td>AVA</td><td>16</td><td>Dificuldade na entrega</td></tr><tr><td>CAN</td><td>17</td><td>Entrega Cancelada</td></tr><tr><td>CAP</td><td>18</td><td>Análise de dados concluída</td></tr><tr><td>DAE</td><td>19</td><td>Data de Entrega Ajustada</td></tr><tr><td>DIV</td><td>20</td><td>Dificuldade na entrega</td></tr><tr><td>DNE</td><td>21</td><td>Dificuldade na entrega</td></tr><tr><td>EA1</td><td>22</td><td>Destinatário Ausente - 1ª tentativa</td></tr><tr><td>EAR</td><td>23</td><td>Entrega em andamento</td></tr><tr><td>END</td><td>24</td><td>Dificuldade na entrega</td></tr><tr><td>ENL</td><td>25</td><td>Endereço não localizado</td></tr><tr><td>ENT</td><td>26</td><td>Entrega concluída</td></tr><tr><td>EPR</td><td>27</td><td>Entrega em andamento</td></tr><tr><td>ETR</td><td>28</td><td>Entrega em andamento</td></tr><tr><td>EXT</td><td>29</td><td>Dificuldade na entrega</td></tr><tr><td>FEL</td><td>30</td><td>Entrega em andamento</td></tr><tr><td>FIS</td><td>31</td><td>Dificuldade na entrega</td></tr><tr><td>IED</td><td>32</td><td>Dificuldade na entrega</td></tr><tr><td>INS</td><td>33</td><td>Produto instalado</td></tr><tr><td>LIF</td><td>34</td><td>Entrega em andamento</td></tr><tr><td>MDS</td><td>35</td><td>Dificuldade na entrega</td></tr><tr><td>MPA</td><td>36</td><td>Aguardando a confirmação do pagamento</td></tr><tr><td>NFS</td><td>37</td><td>Nota Fiscal emitida</td></tr><tr><td>OCO</td><td>38</td><td>Entrega concluída</td></tr><tr><td>PAP</td><td>39</td><td>Pagamento aprovado</td></tr><tr><td>PEI</td><td>40</td><td>Pedido incluso</td></tr><tr><td>PNA</td><td>41</td><td>Pagamento não aprovado</td></tr><tr><td>PRE</td><td>42</td><td>Pedido recusado pelo Cliente</td></tr><tr><td>REC</td><td>43</td><td>Análise de dados não confirmada</td></tr><tr><td>RED</td><td>44</td><td>Entrega em andamento</td></tr><tr><td>REO</td><td>45</td><td>Dificuldade na entrega</td></tr><tr><td>REV</td><td>46</td><td>Pagamento não aprovado</td></tr><tr><td>RIE</td><td>47</td><td>Impossibilidade de entrega do produto</td></tr><tr><td>ROT</td><td>48</td><td>Entrega em andamento</td></tr><tr><td>ROU</td><td>49</td><td>Dificuldade na entrega</td></tr><tr><td>RTD</td><td>50</td><td>Em rota de devolução</td></tr><tr><td>VES</td><td>51</td><td>Disponibilidade de estoque</td></tr><tr><td>WMS</td><td>52</td><td>Separação e embalagem</td></tr></table>",
@@ -1971,15 +1851,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -1997,7 +1870,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/OrderItem"
                         }
@@ -2015,7 +1888,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera detalhes de um item específico do pedido. Deve ser informado um pedido e um item do pedido válidos.",
@@ -2033,15 +1906,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2062,11 +1928,11 @@
                 ]
             }
         },
-        "/orders/{orderId}/trackings/cancel": {
+        "/orders/{orderId}/shipments/cancel": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified"
+                        "description": "Sucess."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2075,13 +1941,13 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     },
                     "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
+                        "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Operação utilizada para confirmar o cancelamento de um item de pedido que foi aberto pelo cliente (via protocolo) ou cancelamento acionado pelo lojista. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
+                "description": "Operação utilizada para confirmar o cancelamento de um item de pedido que foi aberto pelo cliente (via protocolo) ou cancelamento acionado pelo lojista. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.",
                 "tags": [
                     "orders"
                 ],
@@ -2096,15 +1962,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2126,7 +1985,7 @@
                 ]
             }
         },
-        "/orders/{orderId}/trackings/delivered": {
+        "/orders/{orderId}/shipments/delivered": {
             "post": {
                 "responses": {
                     "200": {
@@ -2139,13 +1998,13 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     },
                     "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
+                        "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Registra uma nova operação de tracking de Entrega para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que foram entregues. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar a entrega de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='../tutoriais/exemplo_tracking_delivered_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
+                "description": "Registra uma nova operação de tracking de Entrega para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que foram entregues. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar a entrega de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='../tutoriais/exemplo_tracking_delivered_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
                 "tags": [
                     "orders"
                 ],
@@ -2160,15 +2019,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2177,7 +2029,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewTrackingStatus"
+                            "$ref": "#/definitions/Newshipmentstatus"
                         }
                     },
                     {
@@ -2190,7 +2042,7 @@
                 ]
             }
         },
-        "/orders/{orderId}/trackings/exchange": {
+        "/orders/{orderId}/shipments/exchange": {
             "post": {
                 "responses": {
                     "200": {
@@ -2203,13 +2055,13 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     },
                     "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
+                        "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Operação utilizada para confirmar a troca de um item de pedido aberto pelo cliente (via protocolo). Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
+                "description": "Operação utilizada para confirmar a troca de um item de pedido aberto pelo cliente (via protocolo). Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
                 "tags": [
                     "orders"
                 ],
@@ -2224,15 +2076,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2254,7 +2099,7 @@
                 ]
             }
         },
-        "/orders/{orderId}/trackings/return": {
+        "/orders/{orderId}/shipments/return": {
             "post": {
                 "responses": {
                     "200": {
@@ -2267,13 +2112,13 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     },
                     "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
+                        "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Operação utilizada para confirmação de devolução (reembolso) de item do pedido através de protocolo aberto pelo cliente. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
+                "description": "Operação utilizada para confirmação de devolução (reembolso) de item do pedido através de protocolo aberto pelo cliente. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço",
                 "tags": [
                     "orders"
                 ],
@@ -2288,15 +2133,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2318,7 +2156,7 @@
                 ]
             }
         },
-        "/orders/{orderId}/trackings/sent": {
+        "/orders/{orderId}/shipments/sent": {
             "post": {
                 "responses": {
                     "200": {
@@ -2331,18 +2169,18 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     },
                     "415": {
-                        "description": "Tipo de media inválida (falta de informar o content-type correto, ver JSON)."
+                        "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Registra uma nova operação de tracking de Envio para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço O retorno deste serviço é baseado no padrão definido para método POST, sendo retornado apenas o Status HTTP 201 - Created.",
+                "description": "Registra uma nova operação de tracking de Envio para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
                 "tags": [
                     "orders"
                 ],
                 "summary": "Registra uma nova operação de tracking de envio",
-                "operationId": "postOrderTrackingSent",
+                "operationId": "postOrdershipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -2352,15 +2190,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2369,61 +2200,8 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/NewTrackingStatus"
+                            "$ref": "#/definitions/Newshipmentstatus"
                         }
-                    },
-                    {
-                        "in": "path",
-                        "description": "ID do pedido.",
-                        "name": "orderId",
-                        "required": true,
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/orders/status/approved/{orderId}": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "No response was specified"
-                    },
-                    "204": {
-                        "description": "Indica que o recurso foi alterado com sucesso."
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
-                    }
-                },
-                "description": "Essa operação está disponível apenas para SANDBOX.Operação para realizar a aprovação de um pedido. Retorno do Serviço O retorno deste serviço é baseado no padrão definido para métodos PUT e DELETE, sendo retornado apenas o Status HTTP 204 - No Content.",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Operação para realizar a aprovação de um pedido (SANDBOX)",
-                "operationId": "putSellerItemsStatusApproved",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
-                        "type": "string",
-                        "required": true
                     },
                     {
                         "in": "path",
@@ -2439,13 +2217,10 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/Tickets"
                         }
-                    },
-                    "201": {
-                        "description": "Requisição com sucesso."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2454,14 +2229,14 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
-                "description": "Esse serviço permite que as plataformas consigam integrar suas ferramentas de atendimento com o processo de atendimento/pós vendas do Marketplace. Um Ticket representa um atendimento feito ao consumidor final. São diversas possibilidades de atendimento ao consumidor, o consumidor pode iniciar o atendimento através dá página de contato do site do <a href=http://atendimento.extra.com.br/viewclient/faces/pages/contact.xhtml>Extra</a> .",
+                "description": "Allows seller to receive and status, queries, requests and complaints from customers.",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Operação utilizada para consultar os protocolos",
+                "summary": "Get customer trouble tickets",
                 "operationId": "getTickets",
                 "produces": [
                     "application/json"
@@ -2472,15 +2247,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2543,10 +2311,7 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa."
-                    },
-                    "201": {
-                        "description": "Requisição com sucesso."
+                        "description": "Success processing your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2555,7 +2320,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço irá efetuar a criação de um novo Ticket. Serve para atender as necessidades do lojista entrar em contato com o consumidor final caso necessário.Todo contato com o comprador, com exceção dos os emails transacionais que já são enviados pelo Marketplace, deve ser realizado através desta API.",
@@ -2573,15 +2338,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2601,13 +2359,10 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "No response was specified",
+                        "description": "Sucess processing your request",
                         "schema": {
                             "$ref": "#/definitions/GetTicketMessagesResponse"
                         }
-                    },
-                    "204": {
-                        "description": "O retorno deste serviço baseado no padrão definido para métodos POST, segundo sendo retornado apenas o Status HTTP 201 - Created."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2616,7 +2371,7 @@
                         "description": "Access denied. You're not authenticated. Check your headers, `authorization` field is required."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço apresenta todo o histórico de mensagens trocadas no Ticket para efetuar o atendimento. Para efetuar uma requisição é necessário passar o code do Ticket desejado no path do serviço.  Só serão exibidos os protocolos que sejam de propriedade do lojista/parceiro que está efetuando a consulta.",
@@ -2634,15 +2389,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2672,10 +2420,7 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa."
-                    },
-                    "201": {
-                        "description": "Requisição com sucesso."
+                        "description": "Success processing your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2684,7 +2429,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço irá criar uma mensagem atrelada ao Ticket em questão. Essa mensagem pode ou não ficar visível para o consumidor final. As mensagens enviadas ficam disponíveis no serviço de Consulta de Mensagens de Ticket.",
@@ -2702,15 +2447,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2737,10 +2475,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa."
-                    },
-                    "204": {
-                        "description": "O retorno deste serviço é baseado no padrão definido para método PUT segundo o Status HTTP 204 (No Content)."
+                        "description": "Success processing your request."
                     },
                     "400": {
                         "description": "Bad request."
@@ -2755,7 +2490,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço permitirá atualizar o responsável pelo atendimento de um Ticket, onde as possibilidades são: Marketplace ou Lojista.",
@@ -2773,15 +2508,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2810,9 +2538,6 @@
                     "200": {
                         "description": "No response was specified"
                     },
-                    "204": {
-                        "description": "O retorno deste serviço é baseado no padrão definido para método PUT segundo o Status HTTP 204 (No Content)."
-                    },
                     "400": {
                         "description": "Bad request."
                     },
@@ -2826,7 +2551,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço permitirá que o lojista/plataforma altere o status de um Ticket. Os status permitidos serão: Fechado  (closed)  e Em Acompanhamento  (attendance).",
@@ -2844,15 +2569,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Client ID disponibilizado na criação da APP",
-                        "name": "client_id",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     },
@@ -2880,15 +2598,15 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Access token can be found in your Admin console.",
-                        "name": "access_token",
+                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "name": "authorization",
                         "type": "string",
                         "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Indica que o processamento foi realizado corretamente e o retorno será conforme a expectativa.",
+                        "description": "Success processing your request.",
                         "schema": {
                             "$ref": "#/definitions/GetSitesResponse"
                         }
@@ -2906,7 +2624,7 @@
                         "description": "Object not found."
                     },
                     "405": {
-                        "description": "Método não Permitido."
+                        "description": "Invalid method."
                     }
                 },
                 "description": "Recupera uma lista de sites que operam como Marketplace.",
@@ -2934,19 +2652,27 @@
     "tags": [
         {
             "name": "products",
-            "description": "Recurso com serviços para operações de cargas"
+            "description": "Batch upload and query of seller products."
         },
         {
             "name": "product",
-            "description": "Recurso para gerenciar itens do Lojista"
+            "description": "Modify or read details of a single seller product"
         },
         {
             "name": "orders",
-            "description": "Recurso para gerenciamento de pedidos"
+            "description": "Batch upload or query of seller orders"
+        },
+        {
+            "name": "order",
+            "description": "Modify or read details of a single seller order"
         },
         {
             "name": "tickets",
-            "description": "Recurso para gerenciamento de tickets"
+            "description": "Batch upload and query of customer tickets"
+        },
+        {
+            "name": "ticket",
+            "description": "Modify or read details of a single ticket"
         },
         {
             "name": "marketplaces",
@@ -3390,7 +3116,7 @@
         },
         "GetOrdersTrackingUpdatingResponse": {
             "properties": {
-                "trackings": {
+                "shipments": {
                     "type": "array",
                     "description": "Informações de tracking do pedido",
                     "items": {
@@ -3459,14 +3185,14 @@
                 }
             }
         },
-        "OrdersTrackings": {
+        "Ordersshipments": {
             "properties": {
-                "trackings": {
+                "shipments": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/OrderTracking"
                     },
-                    "description": "Lista de trackings"
+                    "description": "Lista de shipments"
                 }
             }
         },
@@ -3962,7 +3688,7 @@
                 },
                 "skuSiteId": {
                     "type": "string",
-                    "description": "SKU Id do produto do Extra."
+                    "description": "SKU Id do produto."
                 },
                 "title": {
                     "type": "string",
@@ -4157,7 +3883,7 @@
                 "items",
                 "site",
                 "shipping",
-                "trackings"
+                "shipments"
             ],
             "properties": {
                 "id": {
@@ -4228,7 +3954,7 @@
                     "$ref": "#/definitions/ShippingAddress",
                     "description": "Informações de envio do pedido."
                 },
-                "trackings": {
+                "shipments": {
                     "type": "array",
                     "description": "Informações de tracking do pedido",
                     "items": {
@@ -4277,7 +4003,7 @@
                 "billing",
                 "items",
                 "site",
-                "trackings"
+                "shipments"
             ],
             "properties": {
                 "id": {
@@ -4344,7 +4070,7 @@
                         "$ref": "#/definitions/OrderItem"
                     }
                 },
-                "trackings": {
+                "shipments": {
                     "type": "array",
                     "description": "Informações de tracking do pedido",
                     "items": {
@@ -4709,7 +4435,7 @@
                 },
                 "id": {
                     "type": "string",
-                    "description": "Identificador de agrupamento de trackings por item ou itens da ordem"
+                    "description": "Identificador de agrupamento de shipments por item ou itens da ordem"
                 },
                 "sellerDeliveryId": {
                     "type": "string",
@@ -4745,7 +4471,7 @@
                 }
             }
         },
-        "NewTrackingStatus": {
+        "Newshipmentstatus": {
             "required": [
                 "items",
                 "occurredAt",
@@ -5346,26 +5072,20 @@
                 }
             }
         },
-        "Site": {
+        "Marketplace": {
             "required": [
                 "id",
                 "name",
-                "mnemonic",
                 "url"
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "ID do site"
+                    "type": "String",
+                    "description": "Marketplace ID"
                 },
                 "name": {
                     "type": "string",
-                    "description": "Nome do site"
-                },
-                "mnemonic": {
-                    "type": "string",
-                    "description": "Código que deverá ser utilizado nas operações que exigem o site. Exemplo: <code>GET /sellerItems?offset=0&limit=10&site=EX</code> para trazer produtos vendidos apenas no Extra"
+                    "description": "Marketplace Friendly Name"
                 },
                 "url": {
                     "type": "string",
