@@ -140,7 +140,7 @@
                 },
                 "description": "Returns all information of a single product using the seller `skuSellerId`. This service will return a json document with product detail, status, price and invetory in the Brand Lovers marketplace",
                 "tags": [
-                    "products"
+                    "product"
                 ],
                 "summary": "Returns details of a single product using the seller `skuSellerId`",
                 "operationId": "getProduct",
@@ -276,7 +276,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success fetching results.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsStatusUpdatingResponse"
                         }
@@ -1061,21 +1061,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Data de envio do produto. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: purchasedAt={data inicial},{data final} purchasedAt={data inicial},* purchasedAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
-                        "name": "createdAt",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Status do produto importado.",
+                        "description": "Product status.",
                         "name": "status",
                         "required": false,
                         "type": "string",
                         "enum": [
-                            "AVAILABLE",
-                            "CANCELED",
-                            "ERROR",
+                            "NEW",
+                            "APPROVED",
+                            "DECLINED",
                             "PENDING"
                         ]
                     },
@@ -1476,20 +1469,6 @@
                         "in": "query",
                         "description": "Data de envio. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
                         "name": "sentAt",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Nome do Cliente.",
-                        "name": "customer.name",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Documento do Cliente.",
-                        "name": "customer.documentNumber",
                         "required": false,
                         "type": "string"
                     },
@@ -1987,7 +1966,7 @@
                     "200": {
                         "description": "Success processing your request.",
                         "schema": {
-                            "$ref": "#/definitions/Tickets"
+                            "$ref": "#/definitions/GetTickets"
                         }
                     },
                     "400": {
@@ -2000,12 +1979,12 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Allows seller to receive and status, queries, requests and complaints from customers.",
+                "description": "Allows seller to receive and status, queries, requests and complaints from customers. As well related messages",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Get customer trouble tickets",
-                "operationId": "getTickets",
+                "summary": "Get customers trouble tickets",
+                "operationId": "GetTickets",
                 "produces": [
                     "application/json"
                 ],
@@ -2022,14 +2001,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Utilizado para filtrar os tickets com um status específico. Aberto (opened), Em Monitoramento (attendance), Fechado (closed).",
+                        "description": "Query by trouble ticket status",
                         "name": "status",
                         "required": false,
                         "type": "string",
                         "enum": [
-                            "opened",
-                            "attendance",
-                            "closed"
+                            "OPEN",
+                            "REOPENED",
+                            "CLOSE"
                         ]
                     },
                     {
@@ -2371,7 +2350,7 @@
         }
     ],
     "definitions": {
-        "MetadataEntry": {
+        "Metadata": {
             "required": [
                 "key",
                 "value"
@@ -2438,7 +2417,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Payload with response"
                 }
@@ -2510,16 +2489,16 @@
                     "description": "List of valid Product image URLs. Valid produtols are HTTP or HTTPS."
                 },
                 "price": {
-                    "$ref": "#/definitions/ProductPrice",
+                    "$ref": "#/definitions/ProductPrice"
                 },
                 "stock": {
-                    "$ref": "#/definitions/ProductStock",
+                    "$ref": "#/definitions/ProductStock"
                 },
                 "dimensions": {
-                    "$ref": "#/definitions/Dimensions",
+                    "$ref": "#/definitions/Dimensions"
                 },
                 "giftWrap": {
-                    "$ref": "#/definitions/GiftWrap",
+                    "$ref": "#/definitions/GiftWrap"
                 },
                 "attributes": {
                     "type": "array",
@@ -2585,16 +2564,16 @@
                     "description": " Lista de URLs de vídeos"
                 },
                 "price": {
-                    "$ref": "#/definitions/ProductPrice",
+                    "$ref": "#/definitions/ProductPrice"
                 },
                 "stock": {
-                    "$ref": "#/definitions/ProductStock",
+                    "$ref": "#/definitions/ProductStock"
                 },
                 "dimensions": {
-                    "$ref": "#/definitions/Dimensions",
+                    "$ref": "#/definitions/Dimensions"
                 },
                 "giftWrap": {
-                    "$ref": "#/definitions/GiftWrap",
+                    "$ref": "#/definitions/GiftWrap"
                 },
                 "attributes": {
                     "type": "array",
@@ -2808,7 +2787,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Response payload"
                 }
@@ -2882,11 +2861,9 @@
             "properties": {
                 "order": {
                     "$ref": "#/definitions/OrderId",
-                    "description": "ID do pedido."
                 },
                 "items": {
                     "type": "array",
-                    "description": "Itens do pedido",
                     "items": {
                         "$ref": "#/definitions/OrderItemReference"
                     }
@@ -2917,10 +2894,10 @@
                     "description": "Conhecimento de Transporte Eletôniconico"
                 },
                 "courier": {
-                    "$ref": "#/definitions/Courier",
+                    "$ref": "#/definitions/Courier"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/Invoice",
+                    "$ref": "#/definitions/Invoice"
                 }
             }
         },
@@ -2953,7 +2930,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Response payload"
                 }
@@ -2998,7 +2975,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Error"
-                    },
+                    }
                 }
             }
         },
@@ -3049,7 +3026,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Response payload"
                 }
@@ -3159,7 +3136,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Payload information"
                 }
@@ -3330,7 +3307,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'  >Metadada</a>"
                 }
@@ -3409,13 +3386,13 @@
                     }
                 },
                 "product": {
-                    "$ref": "#/definitions/ProductReference",
+                    "$ref": "#/definitions/ProductReference"
                 },
                 "dimensions": {
-                    "$ref": "#/definitions/Dimensions",
+                    "$ref": "#/definitions/Dimensions"
                 },
                 "giftWrap": {
-                    "$ref": "#/definitions/GiftWrap",
+                    "$ref": "#/definitions/GiftWrap"
                 },
                 "attributes": {
                     "type": "array",
@@ -3520,7 +3497,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'  >Metadada</a>"
                 }
@@ -3586,13 +3563,13 @@
                     "description": "Total de descontos do pedido"
                 },
                 "billing": {
-                    "$ref": "#/definitions/BillingAddress",
+                    "$ref": "#/definitions/BillingAddress"
                 },
                 "customer": {
-                    "$ref": "#/definitions/Customer",
+                    "$ref": "#/definitions/Customer"
                 },
                 "freight": {
-                    "$ref": "#/definitions/Freight",
+                    "$ref": "#/definitions/Freight"
                 },
                 "items": {
                     "type": "array",
@@ -3601,7 +3578,7 @@
                     }
                 },
                 "shipping": {
-                    "$ref": "#/definitions/ShippingAddress",
+                    "$ref": "#/definitions/ShippingAddress"
                 },
                 "shipments": {
                     "type": "array",
@@ -3610,8 +3587,7 @@
                     }
                 },
                 "seller": {
-                    "$ref": "#/definitions/Seller",
-                    "description": "Informações de venda"
+                    "$ref": "#/definitions/Seller"
                 }
             }
         },
@@ -3630,7 +3606,7 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'  >Metadada</a>"
                 }
@@ -3695,13 +3671,13 @@
                     "description": "Total de descontos do pedido"
                 },
                 "billing": {
-                    "$ref": "#/definitions/BillingAddress",
+                    "$ref": "#/definitions/BillingAddress"
                 },
                 "customer": {
-                    "$ref": "#/definitions/Customer",
+                    "$ref": "#/definitions/Customer"
                 },
                 "freight": {
-                    "$ref": "#/definitions/Freight",
+                    "$ref": "#/definitions/Freight"
                 },
                 "items": {
                     "type": "array",
@@ -3807,11 +3783,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "description": "Customer type: Enterprise or Cunsumer",
-                    "enum": [
-                        "PF",
-                        "PJ"
-                    ]
+                    "description": "Customer type: Enterprise or Consumer"
                 },
                 "createdAt": {
                     "type": "string",
@@ -3848,12 +3820,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "description": "Phone number type",
-                    "enum": [
-                        "HOME",
-                        "MOBILE",
-                        "OFFICE"
-                    ]
+                    "description": "Phone number type, home, office, mobile, etc"
                 }
             }
         },
@@ -3880,21 +3847,19 @@
                     "description": "Nome do produto"
                 },
                 "salePrice": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Preço de venda unitário"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Product unit price"
                 },
                 "sent": {
                     "type": "boolean",
                     "description": "Flag que indica se o produto já foi enviado"
                 },
                 "freight": {
-                    "$ref": "#/definitions/Freight",
-                    "description": "Informações sobre o frete do produto"
+                    "$ref": "#/definitions/Freight"
                 },
                 "giftWrap": {
-                    "$ref": "#/definitions/OrderGiftWrap",
-                    "description": "Informações de embrulho para presente"
+                    "$ref": "#/definitions/OrderGiftWrap"
                 },
                 "promotions": {
                     "type": "array",
@@ -3950,7 +3915,6 @@
                 },
                 "giftCard": {
                     "$ref": "#/definitions/GiftCard",
-                    "description": "Gift card message paylod."
                 }
             }
         },
@@ -3971,7 +3935,7 @@
                 },
                 "message": {
                     "type": "string",
-                    "description": "Giftcard body message"
+                    "description": "Giftcard `body` message"
                 }
             }
         },
@@ -3985,13 +3949,13 @@
             ],
             "properties": {
                 "actualAmount": {
-                    "type": "number",
-                    "format": "double",
+                    "type": "integer",
+                    "format": "int32",
                     "description": "Valor nominal do frete (sem descontos e abatimentos, com margem comercial)"
                 },
                 "chargedAmount": {
-                    "type": "number",
-                    "format": "double",
+                    "type": "integer",
+                    "format": "int32",
                     "description": "Valor cobrado pelo frete"
                 },
                 "transitTime": {
@@ -4010,12 +3974,7 @@
                 },
                 "type": {
                     "type": "string",
-                    "description": "Tipo de frete",
-                    "enum": [
-                        "NOR",
-                        "EXP",
-                        "AGE"
-                    ]
+                    "description": "Tipo de frete"
                 },
                 "scheduledAt": {
                     "type": "string",
@@ -4024,12 +3983,7 @@
                 },
                 "scheduledPeriod": {
                     "type": "string",
-                    "description": "Período que a entrega foi agendada",
-                    "enum": [
-                        "MANHÃ",
-                        "TARDE",
-                        "NOITE"
-                    ]
+                    "description": "Período que a entrega foi agendada"
                 }
             }
         },
@@ -4084,12 +4038,10 @@
                     "description": "Conhecimento de Transporte Eletrônico"
                 },
                 "courier": {
-                    "$ref": "#/definitions/Courier",
-                    "description": "Informações sobre transportadora"
+                    "$ref": "#/definitions/Courier"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/Invoice",
-                    "description": "Informações sobre a Nota Fiscal da compra"
+                    "$ref": "#/definitions/Invoice"
                 }
             }
         },
@@ -4147,12 +4099,10 @@
                     "description": "Conhecimento do Transporte Eletrônico"
                 },
                 "courier": {
-                    "$ref": "#/definitions/Courier",
-                    "description": "Informações sobre a transportadora"
+                    "$ref": "#/definitions/Courier"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/Invoice",
-                    "description": "Informações sobre a Nota Fiscal da compra"
+                    "$ref": "#/definitions/Invoice"
                 }
             }
         },
@@ -4167,7 +4117,6 @@
                     "items": {
                         "$ref": "#/definitions/OrderItemReference"
                     },
-                    "description": "Lista de Order IDs dos produtos comprados no pedido e que irão ser atualizados pela operação de tracking"
                 },
                 "info": {
                     "type": "string",
@@ -4195,8 +4144,7 @@
                     "description": "Conhecimento do Transporte Eletrônico"
                 },
                 "courier": {
-                    "$ref": "#/definitions/Courier",
-                    "description": "Informações sobre a transportadora"
+                    "$ref": "#/definitions/Courier"
                 }
             }
         },
@@ -4205,7 +4153,7 @@
                 "address",
                 "number",
                 "complement",
-                "quarter",
+                "neighbourhood",
                 "city",
                 "state",
                 "countryId",
@@ -4214,19 +4162,19 @@
             "properties": {
                 "address": {
                     "type": "string",
-                    "description": "Endereço (nome da rua, avenida ... )"
+                    "description": "Address first line (ave, street, name )"
                 },
                 "number": {
                     "type": "string",
-                    "description": "Número do endereço"
+                    "description": "Address number"
                 },
                 "complement": {
                     "type": "string",
-                    "description": "Informações adicionais"
+                    "description": "Complementary info (aptartament number, building name, suite)"
                 },
-                "quarter": {
+                "neighbourhood": {
                     "type": "string",
-                    "description": "Bairro"
+                    "description": "Customer neighbourhood"
                 },
                 "reference": {
                     "type": "string",
@@ -4234,23 +4182,23 @@
                 },
                 "city": {
                     "type": "string",
-                    "description": "Cidade"
+                    "description": "City"
                 },
                 "state": {
                     "type": "string",
-                    "description": "Estado"
+                    "description": "State"
                 },
                 "countryId": {
                     "type": "string",
-                    "description": "Identificação do País. Baseado na ISO-3166, padrão alpha 2. Ex.: BR, US, AR"
+                    "description": "Country Code. Use ISO-3166. Example: BR, US, AR, GB, CN"
                 },
                 "zipCode": {
                     "type": "string",
-                    "description": "Código de Endereçamento Postal - CEP"
+                    "description": "Zip Code"
                 },
                 "recipientName": {
                     "type": "string",
-                    "description": "Nome do destinatario"
+                    "description": "Recipient Name"
                 }
             }
         },
@@ -4270,11 +4218,10 @@
                 }
             }
         },
-        "Tickets": {
+        "GetTickets": {
             "properties": {
                 "tickets": {
                     "type": "array",
-                    "description": "Tickets",
                     "items": {
                         "$ref": "#/definitions/Ticket"
                     }
@@ -4282,9 +4229,8 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
-                    },
-                    "description": "Leia mais sobre os metadados retornados nas listagens"
+                        "$ref": "#/definitions/Metadata"
+                    }
                 }
             }
         },
@@ -4292,112 +4238,61 @@
             "properties": {
                 "ticketId": {
                     "type": "string",
-                    "description": "ID do ticket"
+                    "description": "Trouble Ticket unique identification Id"
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status do ticket que são classificados como: 'opened', 'closed' e 'attendance'."
+                    "description": "Trouble Ticket status. 'OPEN','CLOSED','REOPENED'"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Trouble ticket type."
                 },
                 "description": {
                     "type": "string",
-                    "description": "Descrição do ticket"
+                    "description": "Trouble ticked brief description"
                 },
                 "createdAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data da criação do ticket"
+                    "description": "Date time that ticket was created"
                 },
                 "updatedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Atualização do ticket"
+                    "description": "Date-time with last update of this ticket"
                 },
                 "closedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data de encerramento do ticket"
+                    "description": "Date-time when ticket was closed"
                 },
                 "priority": {
                     "type": "string",
-                    "description": "Prioridade do ticket possui os seguintes valores: 'Normal' e 'Em Acompanhamento'"
+                    "description": "Trouble ticket priority"
                 },
                 "customer": {
-                    "$ref": "#/definitions/CustomerReference",
-                    "description": "Cliente associado ao ticket"
+                    "$ref": "#/definitions/CustomerReference"
                 },
                 "marketplace": {
                     "type": "string",
                     "description": "Marketplace related to this trouble ticket"
                 },
-                "type": {
-                    "$ref": "#/definitions/TicketType",
-                    "description": "Tipo do ticket."
-                },
                 "subject": {
-                    "$ref": "#/definitions/TicketSubject",
-                    "description": "Assunto relacionado ao ticket."
+                    "type": "string",
+                    "description": "Short one line title describing ticket."
                 },
                 "sla": {
-                    "$ref": "#/definitions/TicketSla",
-                    "description": "Informações sobre o prazo de atendimento do ticket."
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date-time with a promisse for the customer when this ticket will be resolved"
                 },
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
+                        "$ref": "#/definitions/Metadata"
                     },
                     "description": "Leia mais sobre os metadados retornados nas listagens"
-                }
-            }
-        },
-        "TicketType": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Identificador do tipo de ticket."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Descrição do tipo de ticket com a ação esperada."
-                }
-            }
-        },
-        "TicketSubject": {
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Identificador do assunto."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Descrição do assunto relacionado ao ticket."
-                }
-            }
-        },
-        "TicketAssignedUser": {
-            "properties": {
-                "user": {
-                    "type": "string",
-                    "description": "Identificador do assunto."
-                },
-                "group": {
-                    "type": "string",
-                    "description": "Descrição do assunto relacionado ao ticket."
-                }
-            }
-        },
-        "TicketSla": {
-            "properties": {
-                "expireAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data de expiração para resolução do ticket."
-                },
-                "delayed": {
-                    "type": "boolean",
-                    "description": "Indicador de atraso do ticket."
                 }
             }
         },
@@ -4405,11 +4300,11 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Nome do cliente"
+                    "description": "Customer name"
                 },
                 "phoneNumber": {
                     "type": "string",
-                    "description": "Telefone do cliente"
+                    "description": "Customer phone mumber"
                 }
             }
         },
@@ -4422,7 +4317,6 @@
             "properties": {
                 "user": {
                     "$ref": "#/definitions/UserReference",
-                    "description": "Informações de usuário"
                 },
                 "visibility": {
                     "type": "string",
@@ -4441,7 +4335,6 @@
             "properties": {
                 "messages": {
                     "type": "array",
-                    "description": "Mensagens",
                     "items": {
                         "$ref": "#/definitions/TicketMessage"
                     }
@@ -4449,9 +4342,8 @@
                 "metadata": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/MetadataEntry"
-                    },
-                    "description": "Metadados do status"
+                        "$ref": "#/definitions/Metadata"
+                    }
                 }
             }
         },
@@ -4474,8 +4366,7 @@
                     "description": "Id do Ticket"
                 },
                 "user": {
-                    "$ref": "#/definitions/UserReference",
-                    "description": "Usuário"
+                    "$ref": "#/definitions/UserReference"
                 },
                 "body": {
                     "type": "string",
@@ -4483,7 +4374,7 @@
                 },
                 "visibility": {
                     "type": "string",
-                    "description": "Se o consumidor final irá receber/visualizar a mensagem. Os valores permitidos são: 'private' e 'public'"
+                    "description": "Se o consumidor final irá receber/visualizar a mensagem. Os valores permitidos são: 'INTERNAL' e 'CUSTOMER'"
                 }
             }
         },
@@ -4510,10 +4401,6 @@
             "properties": {
                 "ticketStatus": {
                     "type": "string",
-                    "enum": [
-                        "attendance",
-                        "closed"
-                    ],
                     "description": "Novo status desejado do Ticket. Fechado  (closed)  e Em Acompanhamento  (attendance) "
                 }
             }
