@@ -3696,15 +3696,12 @@
                 },
                 "billing": {
                     "$ref": "#/definitions/BillingAddress",
-                    "description": "Informações de cobrança"
                 },
                 "customer": {
                     "$ref": "#/definitions/Customer",
-                    "description": "Informações do cliente"
                 },
                 "freight": {
                     "$ref": "#/definitions/Freight",
-                    "description": "Informações de frete do pedido"
                 },
                 "items": {
                     "type": "array",
