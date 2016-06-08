@@ -225,53 +225,55 @@
                         }
                     }
                 ]
-            },
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "Server received your request and will start background processing."
-                    },
-                    "400": {
-                        "description": "Bad Request."
-                    },
-                    "401": {
-                        "description": "Not authenticated. Check your headers, `authorization` is required."
-                    }
-                },
-                "description": "Use this enpoint to upload a single new product information to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /product method. The server will load each product as an individual item that can be manipulated using your own `productID`. This system is idenpontent, this means that once a `productID` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `productID`",
-                "tags": [
-                    "products"
-                ],
-                "summary": "Allows new products to be loaded into the marketplace",
-                "operationId": "postProducts",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
-                        "name": "authorization",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "body",
-                        "description": "JSON with a list of new products to be updloaded to the platform",
-                        "name": "products",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Product"
-                            }
-                        }
-                    }
-                ]
             }
+        },
+        "/product": {
+          "post": {
+              "responses": {
+                  "200": {
+                      "description": "Server received your request and will start background processing."
+                  },
+                  "400": {
+                      "description": "Bad Request."
+                  },
+                  "401": {
+                      "description": "Not authenticated. Check your headers, `authorization` is required."
+                  }
+              },
+              "description": "Use this enpoint to upload a single new product information to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /product method. The server will load each product as an individual item that can be manipulated using your own `productID`. This system is idenpontent, this means that once a `productID` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `productID`",
+              "tags": [
+                  "products"
+              ],
+              "summary": "Allows new products to be loaded into the marketplace",
+              "operationId": "postProduct",
+              "produces": [
+                  "application/json"
+              ],
+              "consumes": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "in": "header",
+                      "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                      "name": "authorization",
+                      "type": "string",
+                      "required": true
+                  },
+                  {
+                      "in": "body",
+                      "description": "JSON with a list of new products to be updloaded to the platform",
+                      "name": "products",
+                      "required": true,
+                      "schema": {
+                          "type": "array",
+                          "items": {
+                              "$ref": "#/definitions/Product"
+                          }
+                      }
+                  }
+              ]
+          }
         },
         "/products/status": {
             "get": {
@@ -394,7 +396,7 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação para consulta de status da atualização massiva de preços de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço <a href='#!/sellerItems/getDetailsSellerItemOrigin_get_1'  >GET /sellerItems/{skuSellerId}</a>",
+                "description": "Operação para consulta de status da atualização massiva de preços de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço GET /sellerItems/{skuSellerId}",
                 "tags": [
                     "products"
                 ],
@@ -575,68 +577,6 @@
                                 "$ref": "#/definitions/SellerItemStocks"
                             }
                         }
-                    }
-                ]
-            }
-        },
-        "/product/{skuSellerId}": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success processing your request.",
-                        "schema": {
-                            "$ref": "#/definitions/SellerItem"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header, `authorization` field is required."
-                    },
-                    "403": {
-                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    }
-                },
-                "description": "Recupera detalhes do item do Lojista através do skuSellerId (sku do produto do Lojista) informado.",
-                "tags": [
-                    "sellerItems"
-                ],
-                "summary": "Recupera detalhes do item do Lojista através do skuSellerId (sku do produto do Lojista) informado",
-                "operationId": "getSellerItemBySkuSellerId",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
-                        "name": "authorization",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "path",
-                        "description": "SKU ID do Lojista.",
-                        "name": "skuSellerId",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Marketplace to query for this product(s)",
-                        "name": "parketplace",
-                        "required": false,
-                        "type": "string"
                     }
                 ]
             }
@@ -1521,7 +1461,7 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Retorna uma lista de pedidos Parcialmente Enviados que estão relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, porém ainda existem itens que não foram enviados.  Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Enviados pelo serviço <a href='#!/orders/persistTracking_post_9'  >POST /orders/{orderId}/shipments/sent</a>Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
+                "description": "Retorna uma lista de pedidos Parcialmente Enviados que estão relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, porém ainda existem itens que não foram enviados. Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Enviados pelo serviço",
                 "tags": [
                     "orders"
                 ],
@@ -1628,20 +1568,6 @@
                         "in": "query",
                         "description": "Data de envio. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas",
                         "name": "sentAt",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Nome do Cliente",
-                        "name": "customer.name",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Documento do Cliente",
-                        "name": "customer.documentNumber",
                         "required": false,
                         "type": "string"
                     },
@@ -2118,7 +2044,7 @@
                     {
                         "in": "query",
                         "description": "Código do protocolo.",
-                        "name": "code",
+                        "name": "ticketId",
                         "required": false,
                         "type": "string"
                     },
@@ -2252,8 +2178,8 @@
                     },
                     {
                         "in": "path",
-                        "description": "Identificador do  protocolo.",
-                        "name": "code",
+                        "description": "Trouble ticket ID.",
+                        "name": "ticketId",
                         "required": true,
                         "type": "string"
                     },
@@ -2310,8 +2236,8 @@
                     },
                     {
                         "in": "path",
-                        "description": "Identificador do  protocolo.",
-                        "name": "code",
+                        "description": "Trouble ticket ID.",
+                        "name": "ticketId",
                         "required": true,
                         "type": "string"
                     },
@@ -2371,8 +2297,8 @@
                     },
                     {
                         "in": "path",
-                        "description": "Código do protocolo.",
-                        "name": "code",
+                        "description": "Trouble ticket ID",
+                        "name": "ticketId",
                         "required": true,
                         "type": "string"
                     },
@@ -2432,8 +2358,8 @@
                     },
                     {
                         "in": "path",
-                        "description": "Código do protocólo.",
-                        "name": "code",
+                        "description": "Trouble ticket ID",
+                        "name": "ticketId",
                         "required": true,
                         "type": "string"
                     },
@@ -2464,7 +2390,7 @@
                     "200": {
                         "description": "Success processing your request.",
                         "schema": {
-                            "$ref": "#/definitions/GetSitesResponse"
+                            "$ref": "#/definitions/GetMarketplaces"
                         }
                     },
                     "400": {
@@ -4628,7 +4554,7 @@
         },
         "Ticket": {
             "properties": {
-                "code": {
+                "ticketId": {
                     "type": "string",
                     "description": "ID do ticket"
                 },
@@ -4696,7 +4622,7 @@
                     "items": {
                         "$ref": "#/definitions/MetadataEntry"
                     },
-                    "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'>Metadada</a>"
+                    "description": "Leia mais sobre os metadados retornados nas listagens"
                 }
             }
         },
@@ -4906,20 +4832,15 @@
                 }
             }
         },
-        "GetSitesResponse": {
+        "GetMarketplaces": {
             "required": [
-                "totalRows",
-                "sites"
+                "marktplaces"
             ],
             "properties": {
-                "totalRows": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "sites": {
+                "marktplaces": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Site"
+                        "$ref": "#/definitions/Marketplace"
                     }
                 }
             }
@@ -4932,7 +4853,7 @@
             ],
             "properties": {
                 "id": {
-                    "type": "String",
+                    "type": "string",
                     "description": "Marketplace ID"
                 },
                 "name": {
