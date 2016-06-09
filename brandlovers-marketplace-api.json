@@ -2337,19 +2337,19 @@
         },
         {
             "name": "product",
-            "description": "Create, Modify or Read details of a single seller product"
+            "description": "Create, Modify or Read details of a single product"
         },
         {
             "name": "orders",
-            "description": "Batch upload or query of seller orders"
+            "description": "Batch upload or query orders"
         },
         {
             "name": "order",
-            "description": "Modify or read details of a single seller order"
+            "description": "Modify or read details of a single order"
         },
         {
             "name": "tickets",
-            "description": "Batch upload and query of customer tickets"
+            "description": "Batch upload or query customer tickets"
         },
         {
             "name": "ticket",
@@ -2357,7 +2357,7 @@
         },
         {
             "name": "marketplaces",
-            "description": "Returns a list of Brand Lovers marketplaces with detailed information"
+            "description": "Returns Brand Lovers marketplaces details"
         }
     ],
     "definitions": {
@@ -2767,7 +2767,7 @@
             "properties": {
                 "available": {
                     "type": "boolean",
-                    "description": "Flag que indica se existe embrulho para presente para o produto"
+                    "description": "Flag that defines if seller supports giftwrapping"
                 },
                 "value": {
                     "type": "integer",
@@ -2776,7 +2776,7 @@
                 },
                 "messageSupport": {
                     "type": "boolean",
-                    "description": "Flag que indica se é possível incluir uma mensagem"
+                    "description": "Flag that defines if seller supports giftwrapp with a message"
                 }
             }
         },
@@ -3221,7 +3221,7 @@
                 "crossDockingTime": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Lead and/or setup time in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
+                    "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
         },
@@ -3233,12 +3233,12 @@
                 "quantity": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Quantidade de produtos disponíveis"
+                    "description": "Stock available"
                 },
                 "crossDockingTime": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Tempo de preparação/fabricação do produto em dias. Esse tempo é incluído no cálculo de frete"
+                    "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
         },
@@ -3249,12 +3249,13 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "description": "Nome da transportadora"
+                    "description": "Courier name"
                 },
                 "taxID": {
                     "type": "string",
-                    "description": "CNPJ da transportadora"
-                }
+                    "description": "Courier taxId information. For example CNPJ"
+                },
+
             }
         },
         "Invoice": {
@@ -3311,8 +3312,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Metadata"
-                    },
-                    "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'  >Metadada</a>"
+                    }
                 }
             }
         },
