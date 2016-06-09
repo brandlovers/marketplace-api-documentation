@@ -2952,9 +2952,9 @@
                     "type": "string",
                     "description": "SKU do produto do lojista que deverá ser alterado"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site de venda"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "status": {
                     "type": "string",
@@ -3522,7 +3522,7 @@
                 "customer",
                 "billing",
                 "items",
-                "site",
+                "marketplace",
                 "shipping",
                 "shipments"
             ],
@@ -3535,9 +3535,9 @@
                     "type": "string",
                     "description": "ID do pedido gerado no site e que é passado ao cliente"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site para o qual o pedido foi criado. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "purchasedAt": {
                     "type": "string",
@@ -3631,7 +3631,7 @@
                 "customer",
                 "billing",
                 "items",
-                "site",
+                "marketplace",
                 "shipments"
             ],
             "properties": {
@@ -3643,9 +3643,9 @@
                     "type": "string",
                     "description": "ID do pedido gerado no site e que é passado ao cliente"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site para o qual o pedido foi criado. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "purchasedAt": {
                     "type": "string",
