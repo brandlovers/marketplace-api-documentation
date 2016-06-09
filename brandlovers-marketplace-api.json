@@ -351,11 +351,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para ativação/desativação massiva de produtos enviados na carga.",
+                "description": "Bulk enable/disable products in the marketplace.",
                 "tags": [
                     "products"
                 ],
-                "summary": "Operação para ativação/desativação massiva de produtos",
+                "summary": "Bulk enable/disable products in the marketplace",
                 "operationId": "putSellerItemsStatus",
                 "produces": [
                     "application/json"
@@ -373,7 +373,7 @@
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para ativação/desativação massiva de produtos",
+                        "description": "List of seller products with new status information",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -402,7 +402,7 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação para consulta de status da atualização massiva de preços de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço GET /sellerItems/{skuSellerId}",
+                "description": "Returns list of products and respective prices",
                 "tags": [
                     "products"
                 ],
@@ -450,11 +450,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Allows batch update of product prices. This endpoint expects a json document with an array of products with the seller ID and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status",
+                "description": "Allows bulk update of product prices. This endpoint expects a json document with an array of products with the seller ID and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status",
                 "tags": [
                     "products"
                 ],
-                "summary": "Allows batch update of product prices.",
+                "summary": "Allows bulk update of product prices.",
                 "operationId": "putSellerItemsPrices",
                 "produces": [
                     "application/json"
@@ -597,7 +597,7 @@
                         "description": "Requisição Requer Antenticação."
                     }
                 },
-                "description": "Atualiza o status do produto no Marketplace. Se setado para false, o produto é desativado e deixa de ser vendido no Marketplace.",
+                "description": "Update product status in the Marketplace. Set to `false` to disable `true` to enable for sale.",
                 "tags": [
                     "product"
                 ],
@@ -884,11 +884,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Batch update of order shipments status. This alows to inform multiple shipments status",
+                "description": "Bulk update of order shipments status. This alows to inform multiple shipments status",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Batch update of order shipments",
+                "summary": "Bulk update of order shipments",
                 "operationId": "postOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
@@ -1000,11 +1000,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Allows batch updates of order shippments.",
+                "description": "Allows bulk updates of order shippments.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Batch update of order shipments",
+                "summary": "Bulk update of order shipments",
                 "operationId": "postOrdersshipmentsent",
                 "produces": [
                     "application/json"
@@ -2274,7 +2274,7 @@
     "tags": [
         {
             "name": "products",
-            "description": "Batch upload or bulk query of seller products."
+            "description": "Bulk upload or query seller products."
         },
         {
             "name": "product",
@@ -2282,7 +2282,7 @@
         },
         {
             "name": "orders",
-            "description": "Batch upload or bulk query orders"
+            "description": "Bulk upload or query orders"
         },
         {
             "name": "order",
@@ -2290,7 +2290,7 @@
         },
         {
             "name": "tickets",
-            "description": "Batch upload or bulk query customer tickets"
+            "description": "Bulk upload or query customer tickets"
         },
         {
             "name": "ticket",
@@ -2962,7 +2962,7 @@
             "properties": {
                 "skus": {
                     "type": "array",
-                    "description": "Skus do pedido",
+                    "description": "Seller product SKUs",
                     "items": {
                         "$ref": "#/definitions/PricesUpdatingStatus"
                     }
@@ -2980,7 +2980,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Seller unique product identification number"
                 },
                 "status": {
                     "type": "string",
