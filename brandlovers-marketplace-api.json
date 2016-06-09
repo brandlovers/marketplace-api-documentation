@@ -2156,7 +2156,9 @@
                         "type": "integer"
                     }
                 ]
-            },
+            }
+        },
+        "/ticket/{ticketId}/message": {
             "post": {
                 "responses": {
                     "200": {
@@ -2172,11 +2174,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Esse serviço irá criar uma mensagem atrelada ao Ticket em questão. Essa mensagem pode ou não ficar visível para o consumidor final. As mensagens enviadas ficam disponíveis no serviço de Consulta de Mensagens de Ticket.",
+                "description": "Add a new message to this trouble ticket. Messages can be `CUSTOMER` (customer will be able to see it) or `INTERNAL`.",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Operação utilizada para criar uma mensagem no protocolo",
+                "summary": "Add new message to trouble ticket",
                 "operationId": "postTicketMessage",
                 "produces": [
                     "application/json"
@@ -2201,8 +2203,8 @@
                     },
                     {
                         "in": "body",
-                        "description": "Objeto Ticket.",
-                        "name": "ticket",
+                        "description": "New message object to append to trouble ticket.",
+                        "name": "message",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/NewTicketMessage"
@@ -2211,6 +2213,7 @@
                 ]
             }
         },
+
         "/ticket/{ticketId}/status": {
             "put": {
                 "responses": {
@@ -2949,9 +2952,9 @@
                     "type": "string",
                     "description": "SKU do produto do lojista que deverá ser alterado"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site de venda"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "status": {
                     "type": "string",
@@ -3519,7 +3522,7 @@
                 "customer",
                 "billing",
                 "items",
-                "site",
+                "marketplace",
                 "shipping",
                 "shipments"
             ],
@@ -3532,9 +3535,9 @@
                     "type": "string",
                     "description": "ID do pedido gerado no site e que é passado ao cliente"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site para o qual o pedido foi criado. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "purchasedAt": {
                     "type": "string",
@@ -3628,7 +3631,7 @@
                 "customer",
                 "billing",
                 "items",
-                "site",
+                "marketplace",
                 "shipments"
             ],
             "properties": {
@@ -3640,9 +3643,9 @@
                     "type": "string",
                     "description": "ID do pedido gerado no site e que é passado ao cliente"
                 },
-                "site": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Site para o qual o pedido foi criado. Consulte a lista completa de sites disponíveis no serviço <a href='#!/sites'  >GET /sites</a>"
+                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
                 },
                 "purchasedAt": {
                     "type": "string",
@@ -4310,21 +4313,17 @@
         },
         "NewTicketMessage": {
             "required": [
-                "user",
                 "visibility",
                 "body"
             ],
             "properties": {
-                "user": {
-                    "$ref": "#/definitions/UserReference"
-                },
                 "visibility": {
                     "type": "string",
-                    "description": "Se o consumidor final irá receber/visualizar a mensagem. Os valores permitidos são: 'private' e 'public'"
+                    "description": "Defines if this message is `CUSTOMER` (customer will receive a copy) or `INTERNAL`"
                 },
                 "body": {
                     "type": "string",
-                    "description": "Texto da mensagem"
+                    "description": "Message text"
                 }
             }
         },
@@ -4351,7 +4350,6 @@
             "required": [
                 "createdAt",
                 "id",
-                "user",
                 "body",
                 "visibility"
             ],
@@ -4359,38 +4357,19 @@
                 "createdAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data de criação do Ticket"
+                    "description": "Date created"
                 },
                 "id": {
                     "type": "string",
-                    "description": "Id do Ticket"
-                },
-                "user": {
-                    "$ref": "#/definitions/UserReference"
+                    "description": "Trouble Ticket Id."
                 },
                 "body": {
                     "type": "string",
-                    "description": "Texto da mensagem"
+                    "description": "Message text"
                 },
                 "visibility": {
                     "type": "string",
-                    "description": "Se o consumidor final irá receber/visualizar a mensagem. Os valores permitidos são: 'INTERNAL' e 'CUSTOMER'"
-                }
-            }
-        },
-        "UserReference": {
-            "required": [
-                "login",
-                "name"
-            ],
-            "properties": {
-                "login": {
-                    "type": "string",
-                    "description": "Login do usuário que fará o atendimento do Ticket"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Nome do usuário que fará o atendimento do Ticket"
+                    "description": "Defines if this message is `CUSTOMER` (customer will receive a copy) or `INTERNAL`"
                 }
             }
         },
