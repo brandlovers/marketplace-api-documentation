@@ -2336,7 +2336,7 @@
     "tags": [
         {
             "name": "products",
-            "description": "Batch upload or Batch query of seller products."
+            "description": "Batch upload or bulk query of seller products."
         },
         {
             "name": "product",
@@ -2344,7 +2344,7 @@
         },
         {
             "name": "orders",
-            "description": "Batch upload or query orders"
+            "description": "Batch upload or bulk query orders"
         },
         {
             "name": "order",
@@ -2352,7 +2352,7 @@
         },
         {
             "name": "tickets",
-            "description": "Batch upload or query customer tickets"
+            "description": "Batch upload or bulk query customer tickets"
         },
         {
             "name": "ticket",
@@ -2360,7 +2360,7 @@
         },
         {
             "name": "marketplaces",
-            "description": "Returns Brand Lovers marketplaces details"
+            "description": "Returns marketplaces details"
         }
     ],
     "definitions": {
