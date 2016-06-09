@@ -88,6 +88,11 @@
                 "consumes": [
                     "application/json"
                 ],
+                "security": [
+                  {
+                    "authorization": []
+                  }
+                ],
                 "parameters": [
                     {
                         "in": "header",
@@ -100,14 +105,14 @@
                         "in": "query",
                         "description": "Number or items to skip when executing query. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
                         "description": "Number of items to retun. Defaults to 100. Max alowed is 200. Use this conjuction with `offset` to paginate across the results. ",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -149,6 +154,11 @@
                 ],
                 "consumes": [
                     "application/json"
+                ],
+                "security": [
+                  {
+                    "authorization": []
+                  }
                 ],
                 "parameters": [
                     {
@@ -196,6 +206,11 @@
                 ],
                 "consumes": [
                     "application/json"
+                ],
+                "security": [
+                  {
+                    "authorization": []
+                  }
                 ],
                 "parameters": [
                     {
@@ -474,7 +489,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success.",
                         "schema": {
                             "$ref": "#/definitions/GetSellerItemsStocksUpdatingResponse"
                         }
@@ -482,18 +497,15 @@
                     "400": {
                         "description": "Bad request."
                     },
-                    "404": {
-                        "description": "Object not found."
-                    },
                     "405": {
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação para consulta do status da atualização massiva de estoque de produtos enviados.Essa operação deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importação de produtos. Não utilize esse serviço para recuperar os dados atuais do produto que está sendo vendido (como preço e estoque). Para recuperar informações de venda do produto, utilize o serviço GET /product/{skuSellerId}",
+                "description": "Retuns bulk data with seller products inventory. For extensive details for a given product use GET /product/{skuSellerId}",
                 "tags": [
                     "products"
                 ],
-                "summary": "Operação para consulta do status da atualização massiva de estoque",
+                "summary": "Get bulk details about products inventory",
                 "operationId": "getSellerItemsStocksUpdatingStatus",
                 "produces": [
                     "application/json"
@@ -906,7 +918,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Server received your request and will start background processing.",
+                        "description": "Sucess!",
                         "schema": {
                             "$ref": "#/definitions/GetOrdersTrackingUpdatingResponse"
                         }
@@ -919,9 +931,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -2312,11 +2321,13 @@
             }
         }
     },
+
     "securityDefinitions": {
         "authorization": {
             "type": "apiKey",
             "in": "header",
-            "name": "authorization"
+            "name": "authorization",
+            "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console."
         }
     },
     "tags": [
@@ -2587,8 +2598,7 @@
         "ProductResponseItem": {
             "properties": {
                 "skuSeller": {
-                    "$ref": "#/definitions/SellerItemReference",
-                    "description": "SKU do produto do Lojista"
+                    "$ref": "#/definitions/SellerItemReference"
                 },
                 "status": {
                     "type": "string",
@@ -2675,16 +2685,13 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    },
-                    "description": " Lista de URLs de vídeos"
+                    }
                 },
                 "price": {
-                    "$ref": "#/definitions/ProductPrice",
-                    "description": "Informações de preço do produto"
+                    "$ref": "#/definitions/ProductPrice"
                 },
                 "stock": {
-                    "$ref": "#/definitions/ProductStock",
-                    "description": "Informações de estoque do produto"
+                    "$ref": "#/definitions/ProductStock"
                 },
                 "dimensions": {
                     "$ref": "#/definitions/Dimensions"
@@ -2694,14 +2701,12 @@
                 },
                 "attributes": {
                     "type": "array",
-                    "description": "Características do produto",
                     "items": {
                         "$ref": "#/definitions/ProductAttribute"
                     }
                 },
                 "errors": {
                     "type": "array",
-                    "description": "Lista de erros que ocorreram na importação do produto",
                     "items": {
                         "$ref": "#/definitions/Error"
                     }
@@ -2796,12 +2801,10 @@
         "OrderShippmentUpdatingStatus": {
             "properties": {
                 "order": {
-                    "$ref": "#/definitions/OrderReference",
-                    "description": "Dados do pedido"
+                    "$ref": "#/definitions/OrderReference"
                 },
                 "items": {
                     "type": "array",
-                    "description": "Items do pedido",
                     "items": {
                         "$ref": "#/definitions/OrderItemReference"
                     }
@@ -2860,7 +2863,7 @@
         "OrderShippment": {
             "properties": {
                 "order": {
-                    "$ref": "#/definitions/OrderId",
+                    "$ref": "#/definitions/OrderId"
                 },
                 "items": {
                     "type": "array",
@@ -3158,9 +3161,9 @@
                     "description": "Data do processamento"
                 },
                 "updateValue": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Valor de atualização"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "refer": {
                     "type": "string",
@@ -3553,14 +3556,14 @@
                     "description": "Status atual do pedido"
                 },
                 "totalAmount": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Total do pedido"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Order total in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "totalDiscountAmount": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Total de descontos do pedido"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total order discounts in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "billing": {
                     "$ref": "#/definitions/BillingAddress"
@@ -3654,21 +3657,21 @@
                 "updatedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Última data de atualização do pedido"
+                    "description": "Last order update date-time"
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status atual do pedido"
+                    "description": "Order status"
                 },
                 "totalAmount": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Total do pedido"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total order amount. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "totalDiscountAmount": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Total de descontos do pedido"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total order discount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "billing": {
                     "$ref": "#/definitions/BillingAddress"
@@ -3681,21 +3684,18 @@
                 },
                 "items": {
                     "type": "array",
-                    "description": "Lista de itens do pedido",
                     "items": {
                         "$ref": "#/definitions/OrderItem"
                     }
                 },
                 "shipments": {
                     "type": "array",
-                    "description": "Informações de tracking do pedido",
                     "items": {
                         "$ref": "#/definitions/Tracking"
                     }
                 },
                 "seller": {
-                    "$ref": "#/definitions/Seller",
-                    "description": "Informações de venda"
+                    "$ref": "#/definitions/Seller"
                 }
             }
         },
@@ -3914,7 +3914,7 @@
                     "description": "Defines if giftwrpping is available for this product."
                 },
                 "giftCard": {
-                    "$ref": "#/definitions/GiftCard",
+                    "$ref": "#/definitions/GiftCard"
                 }
             }
         },
@@ -4116,7 +4116,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/OrderItemReference"
-                    },
+                    }
                 },
                 "info": {
                     "type": "string",
@@ -4316,7 +4316,7 @@
             ],
             "properties": {
                 "user": {
-                    "$ref": "#/definitions/UserReference",
+                    "$ref": "#/definitions/UserReference"
                 },
                 "visibility": {
                     "type": "string",
