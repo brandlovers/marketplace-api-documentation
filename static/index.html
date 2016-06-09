@@ -1,0 +1,5190 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>BrandLovers Marketplace API</title>
+    <style type="text/css">
+      body { 
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+	display: none;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+    </style>
+  </head>
+  <body>
+  <h1>BrandLovers Marketplace API</h1>
+    <div class="app-desc">Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and update orders status. 3) Receive and update shipping information. 4) Receive and update customer tickets. All requests use consume application/json and return application/json. All request must be authenticated and use HTTPS.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+  
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  
+  <h2>Table of Contents </h2>
+  <div class="method-summary"></div>
+  
+  <ol>
+  
+  
+  
+  <li><a href="#getMarketplaces"><code><span class="http-method">get</span> /marketplaces</code></a></li>
+  
+  
+  
+  
+  
+  <li><a href="#getOrderById"><code><span class="http-method">get</span> /order/{orderId}</code></a></li>
+  
+  <li><a href="#getOrderByIdAndSkuSllerId"><code><span class="http-method">get</span> /order/{orderId}/items/{skuSellerId}</code></a></li>
+  
+  <li><a href="#getOrders"><code><span class="http-method">get</span> /orders</code></a></li>
+  
+  <li><a href="#getOrdersByStatusApproved"><code><span class="http-method">get</span> /orders/status/approved</code></a></li>
+  
+  <li><a href="#getOrdersByStatusCanceled"><code><span class="http-method">get</span> /orders/status/canceled</code></a></li>
+  
+  <li><a href="#getOrdersByStatusDelivered"><code><span class="http-method">get</span> /orders/status/delivered</code></a></li>
+  
+  <li><a href="#getOrdersByStatusNew"><code><span class="http-method">get</span> /orders/status/new</code></a></li>
+  
+  <li><a href="#getOrdersByStatusPartiallyDelivered"><code><span class="http-method">get</span> /orders/status/partiallyDelivered</code></a></li>
+  
+  <li><a href="#getOrdersByStatusPartiallySent"><code><span class="http-method">get</span> /orders/status/partiallySent</code></a></li>
+  
+  <li><a href="#getOrdersByStatusSent"><code><span class="http-method">get</span> /orders/status/sent</code></a></li>
+  
+  <li><a href="#getOrdersshipmentsent"><code><span class="http-method">get</span> /orders/shipments/shipped</code></a></li>
+  
+  <li><a href="#postOrderShippmentCancelation"><code><span class="http-method">post</span> /order/{orderId}/shipments/cancel</code></a></li>
+  
+  <li><a href="#postOrderShippmentDelivered"><code><span class="http-method">post</span> /order/{orderId}/shipments/delivered</code></a></li>
+  
+  <li><a href="#postOrderShippmentExchange"><code><span class="http-method">post</span> /order/{orderId}/shipments/exchange</code></a></li>
+  
+  <li><a href="#postOrderShippmentReturn"><code><span class="http-method">post</span> /order/{orderId}/shipments/return</code></a></li>
+  
+  <li><a href="#postOrdersTrackingDelivered"><code><span class="http-method">post</span> /orders/shipments/delivered</code></a></li>
+  
+  <li><a href="#postOrdershipmentsent"><code><span class="http-method">post</span> /order/{orderId}/shipments/sent</code></a></li>
+  
+  <li><a href="#postOrdersshipmentsent"><code><span class="http-method">post</span> /orders/shipments/shipped</code></a></li>
+  
+  
+  
+  
+  
+  <li><a href="#getProduct"><code><span class="http-method">get</span> /product/{skuSellerId}</code></a></li>
+  
+  <li><a href="#putSellerItemPrices"><code><span class="http-method">put</span> /product/{skuSellerId}/prices</code></a></li>
+  
+  <li><a href="#putSellerItemStatus"><code><span class="http-method">put</span> /product/{skuSellerId}/status</code></a></li>
+  
+  <li><a href="#putSellerItemStock"><code><span class="http-method">put</span> /product/{skuSellerId}/stock</code></a></li>
+  
+  
+  
+  
+  
+  <li><a href="#getOrdersTrackingDelivered"><code><span class="http-method">get</span> /orders/shipments/delivered</code></a></li>
+  
+  <li><a href="#getProducts"><code><span class="http-method">get</span> /products</code></a></li>
+  
+  <li><a href="#getSellerItemsByStatusActive"><code><span class="http-method">get</span> /products/status/selling</code></a></li>
+  
+  <li><a href="#getSellerItemsPricesUpdatingStatus"><code><span class="http-method">get</span> /products/prices</code></a></li>
+  
+  <li><a href="#getSellerItemsStatus"><code><span class="http-method">get</span> /products/status</code></a></li>
+  
+  <li><a href="#getSellerItemsStocksUpdatingStatus"><code><span class="http-method">get</span> /products/stocks</code></a></li>
+  
+  <li><a href="#postProduct"><code><span class="http-method">post</span> /product</code></a></li>
+  
+  <li><a href="#postProducts"><code><span class="http-method">post</span> /products</code></a></li>
+  
+  <li><a href="#putProduct"><code><span class="http-method">put</span> /product/{skuSellerId}</code></a></li>
+  
+  <li><a href="#putSellerItemsPrices"><code><span class="http-method">put</span> /products/prices</code></a></li>
+  
+  <li><a href="#putSellerItemsStatus"><code><span class="http-method">put</span> /products/status</code></a></li>
+  
+  <li><a href="#putSellerItemsStocks"><code><span class="http-method">put</span> /products/stocks</code></a></li>
+  
+  
+  
+  
+  
+  <li><a href="#getTicketMessages"><code><span class="http-method">get</span> /ticket/{ticketId}/messages</code></a></li>
+  
+  <li><a href="#getTickets"><code><span class="http-method">get</span> /tickets</code></a></li>
+  
+  <li><a href="#postTicket"><code><span class="http-method">post</span> /ticket</code></a></li>
+  
+  <li><a href="#postTicketMessage"><code><span class="http-method">post</span> /ticket/{ticketId}/messages</code></a></li>
+  
+  <li><a href="#putTicketStatus"><code><span class="http-method">put</span> /ticket/{ticketId}/status</code></a></li>
+  
+  
+  
+  </ol>
+  
+
+  
+  
+  
+  
+  <div class="method"><a name="getMarketplaces"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /marketplaces</code></pre></div>
+    <div class="method-summary">Returns a list with marketplaces (<span class="nickname">getMarketplaces</span>)</div>
+    
+    <div class="method-notes">Returns a list with marketplaces detailed information.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetMarketplaces">GetMarketplaces</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  
+  
+  
+  
+  <div class="method"><a name="getOrderById"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /order/{orderId}</code></pre></div>
+    <div class="method-summary">Recupera detalhes do pedido informado (<span class="nickname">getOrderById</span>)</div>
+    
+    <div class="method-notes">Recupera detalhes do pedido informado.Observa\u00E7\u00E3o: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informa\u00E7\u00F5es de entrega s\u00E3o suprimidas para evitar a entrega antes da confirma\u00E7\u00E3o do pagamento. Nesta documenta\u00E7\u00E3o est\u00E3o presentes todos os campos de Pedido. Para saber quais campos s\u00E3o retornados para cada status do pedido, basta consultar a documenta\u00E7\u00E3o de cada um dos m\u00E9todos de consulta de pedidos por status. Deve ser informado um pedido v\u00E1lido.Abaixo seguem os valores poss\u00EDveis para o tipo de</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Order">Order</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrderByIdAndSkuSllerId"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /order/{orderId}/items/{skuSellerId}</code></pre></div>
+    <div class="method-summary">Recupera detalhes de um item espec\u00EDfico do pedido (<span class="nickname">getOrderByIdAndSkuSllerId</span>)</div>
+    
+    <div class="method-notes">Recupera detalhes de um item espec\u00EDfico do pedido. Deve ser informado um pedido e um item do pedido v\u00E1lidos.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div><div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; SKU Seller ID do item de pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#OrderItem">OrderItem</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrders"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders</code></pre></div>
+    <div class="method-summary">Recupera detalhes de todos os pedidos (<span class="nickname">getOrders</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para retornar informa\u00E7\u00F5es de todos os pedidos, independente do status em que se encontram os mesmos.Observa\u00E7\u00E3o: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informa\u00E7\u00F5es de entrega s\u00E3o suprimidas para evitar a entrega antes da confirma\u00E7\u00E3o do pagamento. Nesta documenta\u00E7\u00E3o est\u00E3o presentes todos os campos de Pedido. Para saber quais campos s\u00E3o retornados para cada status do pedido, basta consultar a documenta\u00E7\u00E3o de cada um dos m\u00E9todos de consulta de pedidos por status.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a posi\u00E7\u00E3o inicial da consulta. O registro inicial tem \u00EDndice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusApproved"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/approved</code></pre></div>
+    <div class="method-summary">Recupera uma lista de pedidos Aprovados (<span class="nickname">getOrdersByStatusApproved</span>)</div>
+    
+    <div class="method-notes">Recupera uma lista de pedidos com status Aprovado que est\u00E3o relacionados com o token do lojista informado. Este servi\u00E7o ir\u00E1 retornar um ou mais pedidos que j\u00E1 possua pagamento aprovado, ou seja, s\u00E3o pedidos que podem ter o processo de entrega iniciado de imediato.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email j\u00E1 \u00E9 enviado pelo Marketplace.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">approvedAt (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Data de aprova\u00E7\u00E3o. Esse campo aceita um range de datas separados por v\u00EDrgula, e os formatos aceitos para o campo s\u00E3o os seguintes: approvedAt={data inicial},{data final} approvedAt={data inicial},* approvedAt=*,{data final} onde, o * \u00E9 obrigat\u00F3rio e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas. </div><div class="param">customer.name (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Nome do Cliente. </div><div class="param">customer.documentNumber (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Documento do Cliente. </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to return when executing query. Defaults to 100, max 200. Use this in conjuction with `offset` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusCanceled"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/canceled</code></pre></div>
+    <div class="method-summary">Returns lists of canceled orders (<span class="nickname">getOrdersByStatusCanceled</span>)</div>
+    
+    <div class="method-notes">Returns a list with canceled orders. Canceled orders should not be fullfiled.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to return when executing query. Default 100, max 300. Use this conjuction with `offset` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusDelivered"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/delivered</code></pre></div>
+    <div class="method-summary">Returns a list of orders sucessfully delivered associated with this seller. (<span class="nickname">getOrdersByStatusDelivered</span>)</div>
+    
+    <div class="method-notes">Returns a list of orders sucessfully delivered associated with this seller.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusNew"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/new</code></pre></div>
+    <div class="method-summary">Returns a list of orders flagged as new. (<span class="nickname">getOrdersByStatusNew</span>)</div>
+    
+    <div class="method-notes">Returns a list of orders flagged as new. New orders should not be fullfiled until marketplace flags as ready for shipment.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersStatusNewResponse">GetOrdersStatusNewResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusPartiallyDelivered"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/partiallyDelivered</code></pre></div>
+    <div class="method-summary">Returns a list of partially deliverd orders (<span class="nickname">getOrdersByStatusPartiallyDelivered</span>)</div>
+    
+    <div class="method-notes">Returns a list of partially deliverd orders</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusPartiallySent"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/partiallySent</code></pre></div>
+    <div class="method-summary">Retorna uma lista de pedidos Parcialmente Enviados (<span class="nickname">getOrdersByStatusPartiallySent</span>)</div>
+    
+    <div class="method-notes">Retorna uma lista de pedidos Parcialmente Enviados que est\u00E3o relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, por\u00E9m ainda existem itens que n\u00E3o foram enviados. Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa j\u00E1 foram sinalizados como Enviados pelo servi\u00E7o</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">sentAt (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Data de envio. Esse campo aceita um range de datas separados por v\u00EDrgula, e os formatos aceitos para o campo s\u00E3o os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * \u00E9 obrigat\u00F3rio e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas. </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a posi\u00E7\u00E3o inicial da consulta. O registro inicial tem \u00EDndice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersByStatusSent"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/status/sent</code></pre></div>
+    <div class="method-summary">Recupera uma lista de pedidos Enviados (<span class="nickname">getOrdersByStatusSent</span>)</div>
+    
+    <div class="method-notes">Recupera uma lista de pedidos com status Enviado, que est\u00E3o relacionados com o token do lojista informado. Este estado representa os pedidos cujos itens foram todos entregues.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email j\u00E1 \u00E9 enviado pelo Marketplace.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">sentAt (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Data de envio. Esse campo aceita um range de datas separados por v\u00EDrgula, e os formatos aceitos para o campo s\u00E3o os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * \u00E9 obrigat\u00F3rio e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a posi\u00E7\u00E3o inicial da consulta. O registro inicial tem \u00EDndice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a quantidade de registros que deve ser trazido na consulta </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersResponse">GetOrdersResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getOrdersshipmentsent"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/shipments/shipped</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o utilizada para consultar o status dos produtos enviados (<span class="nickname">getOrdersshipmentsent</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para consultar o status de uma lista de produtos enviados. \u00C9 poss\u00EDvel refinar a consulta utilizando alguns par\u00E2metros n\u00E3o obrigat\u00F3rios como: STATUS e DATA DE CADASTRO DO PRODUTO.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Product status. </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersTrackingUpdatingResponse">GetOrdersTrackingUpdatingResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrderShippmentCancelation"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /order/{orderId}/shipments/cancel</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o para confirmar o cancelamento de um item de pedido (<span class="nickname">postOrderShippmentCancelation</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para confirmar o cancelamento de um item de pedido que foi aberto pelo cliente (via protocolo) ou cancelamento acionado pelo lojista. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que ser\u00E3o enviados. O controle de quais itens foram enviados dever\u00E1 ser realizado pela sua Aplica\u00E7\u00E3o.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+    <h4 class="field-label">415</h4>
+    Invalid content-type. JSON is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrderShippmentDelivered"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /order/{orderId}/shipments/delivered</code></pre></div>
+    <div class="method-summary">Registra uma nova opera\u00E7\u00E3o de tracking de entrega (<span class="nickname">postOrderShippmentDelivered</span>)</div>
+    
+    <div class="method-notes">Registra uma nova opera\u00E7\u00E3o de tracking de Entrega para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que foram entregues. O controle de quais itens foram enviados dever\u00E1 ser realizado pela sua Aplica\u00E7\u00E3o.  Para notificar a entrega de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique &lt;a href=&#39;../tutoriais/exemplo_tracking_delivered_v2.json&#39;  &gt;aqui&lt;/a&gt; para obter um exemplo de conte\u00FAdo JSON suportado por esse servi\u00E7o.Retorno do Servi\u00E7o.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucessfully received transaction
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+    <h4 class="field-label">415</h4>
+    Invalid content-type. JSON is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrderShippmentExchange"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /order/{orderId}/shipments/exchange</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o para confirmar a troca de um item de um pedido (<span class="nickname">postOrderShippmentExchange</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para confirmar a troca de um item de pedido aberto pelo cliente (via protocolo). Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que ser\u00E3o enviados. O controle de quais itens foram enviados dever\u00E1 ser realizado pela sua Aplica\u00E7\u00E3o.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique &lt;a href=&#39;/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json&#39;  &gt;aqui&lt;/a&gt; para obter um exemplo de conte\u00FAdo JSON suportado por esse servi\u00E7o.Retorno do Servi\u00E7o.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucessfully received transaction
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+    <h4 class="field-label">415</h4>
+    Invalid content-type. JSON is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrderShippmentReturn"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /order/{orderId}/shipments/return</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o para confirmar devolu\u00E7\u00E3o (reembolso) de item do pedido (<span class="nickname">postOrderShippmentReturn</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para confirma\u00E7\u00E3o de devolu\u00E7\u00E3o (reembolso) de item do pedido atrav\u00E9s de protocolo aberto pelo cliente. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que ser\u00E3o enviados. O controle de quais itens foram enviados dever\u00E1 ser realizado pela sua Aplica\u00E7\u00E3o.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique &lt;a href=&#39;/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json&#39;  &gt;aqui&lt;/a&gt; para obter um exemplo de conte\u00FAdo JSON suportado por esse servi\u00E7o.Retorno do Servi\u00E7o</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucessfully received transaction
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+    <h4 class="field-label">415</h4>
+    Invalid content-type. JSON is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrdersTrackingDelivered"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /orders/shipments/delivered</code></pre></div>
+    <div class="method-summary">Batch update of order shipments (<span class="nickname">postOrdersTrackingDelivered</span>)</div>
+    
+    <div class="method-notes">Batch update of order shipments status. This alows to inform multiple shipments status</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ordersshipments (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; JSON body with list of shipments to be updated. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess. Server received your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrdershipmentsent"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /order/{orderId}/shipments/sent</code></pre></div>
+    <div class="method-summary">Registra uma nova opera\u00E7\u00E3o de tracking de envio (<span class="nickname">postOrdershipmentsent</span>)</div>
+    
+    <div class="method-notes">Registra uma nova opera\u00E7\u00E3o de tracking de Envio para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que ser\u00E3o enviados. O controle de quais itens foram enviados dever\u00E1 ser realizado pela sua Aplica\u00E7\u00E3o.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique &lt;a href=&#39;/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json&#39;  &gt;aqui&lt;/a&gt; para obter um exemplo de conte\u00FAdo JSON suportado por esse servi\u00E7o.Retorno do Servi\u00E7o.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">orderId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID do pedido. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucessfully received transaction
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+    <h4 class="field-label">415</h4>
+    Invalid content-type. JSON is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postOrdersshipmentsent"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /orders/shipments/shipped</code></pre></div>
+    <div class="method-summary">Batch update of order shipments (<span class="nickname">postOrdersshipmentsent</span>)</div>
+    
+    <div class="method-notes">Allows batch updates of order shippments.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ordersshipments (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Arquivo em formato JSON cujo conte\u00FAdo cont\u00EAm uma lista de objetos de order tracking. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess transaction.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  
+  
+  
+  
+  <div class="method"><a name="getProduct"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /product/{skuSellerId}</code></pre></div>
+    <div class="method-summary">Returns details of a single product using the seller `skuSellerId` (<span class="nickname">getProduct</span>)</div>
+    
+    <div class="method-notes">Returns all information of a single product using the seller `skuSellerId`. This service will return a json document with product detail, status, price and invetory in the Brand Lovers marketplace</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; SKU ID do Lojista. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetProduct">GetProduct</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess fetching the object
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request. In general this means a invalid skuSellerId.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found. In general this means a invalid skuSellerId.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemPrices"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /product/{skuSellerId}/prices</code></pre></div>
+    <div class="method-summary">Allows seller to update prices of a single SKU (<span class="nickname">putSellerItemPrices</span>)</div>
+    
+    <div class="method-notes">Allows seller to set the SKU prices (MSRP and/or offer price). All prices must be informed in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. Same as $1,2345.67 must be informed solely as 1234567</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Product SKU </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; JSON document with the SKU price </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /product/{skuSellerId}/status</code></pre></div>
+    <div class="method-summary">Ativa\u00E7\u00E3o/Desativa\u00E7\u00E3o de produto no Marketplace (<span class="nickname">putSellerItemStatus</span>)</div>
+    
+    <div class="method-notes">Atualiza o status do produto no Marketplace. Se setado para false, o produto \u00E9 desativado e deixa de ser vendido no Marketplace.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; SKU ID do Lojista. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o do SKU. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Requisi\u00E7\u00E3o Requer Antentica\u00E7\u00E3o.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemStock"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /product/{skuSellerId}/stock</code></pre></div>
+    <div class="method-summary">Atualiza\u00E7\u00E3o de estoque do item do Lojista (<span class="nickname">putSellerItemStock</span>)</div>
+    
+    <div class="method-notes">Atualiza a quantidade dispon\u00EDvel para venda do Item do Lojista informado. Se atualizado para zero, o item n\u00E3o estar\u00E1 mais dispon\u00EDvel para venda.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; SKU ID do Lojista. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para atualiza\u00E7\u00E3o de estoque do SKU </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  
+  
+  
+  
+  <div class="method"><a name="getOrdersTrackingDelivered"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /orders/shipments/delivered</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o utilizada para consultar o status dos produtos enviados (<span class="nickname">getOrdersTrackingDelivered</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para consultar o status de uma lista de produtos enviados. \u00C9 poss\u00EDvel refinar a consulta utilizando alguns par\u00E2metros n\u00E3o obrigat\u00F3rios como: STATUS e DATA DE CADASTRO DO PRODUTO</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">createdAt (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Data de envio do produto. Esse campo aceita um range de datas separados por v\u00EDrgula, e os formatos aceitos para o campo s\u00E3o os seguintes: purchasedAt={data inicial},{data final} purchasedAt={data inicial},* purchasedAt=*,{data final} onde, o * \u00E9 obrigat\u00F3rio e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas. </div><div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Status do produto importado. </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a posi\u00E7\u00E3o do registro inicial que ser\u00E1 trazido. A primeira posi\u00E7\u00E3o \u00E9 sempre zero (0) </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a quantidade de registros que deve ser trazido na consulta </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetOrdersTrackingUpdatingResponse">GetOrdersTrackingUpdatingResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess!
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getProducts"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products</code></pre></div>
+    <div class="method-summary">Returns a list of products loaded into BrandLovers Marketplace (<span class="nickname">getProducts</span>)</div>
+    
+    <div class="method-notes">Get a list of my products loaded sucessfully loaded into the Marketplace. This dosen&#39;t means that products are eligible for sale, just that they are loaded into the server database.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of items to retun. Defaults to 100. Max alowed is 200. Use this conjuction with `offset` to paginate across the results.  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Successful request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getSellerItemsByStatusActive"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/status/selling</code></pre></div>
+    <div class="method-summary">Returns products that are sucessfully listed for sale. (<span class="nickname">getSellerItemsByStatusActive</span>)</div>
+    
+    <div class="method-notes">Returns products that are sucessfully listed for sale.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">marketplace (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Marketplace to query for product(s) </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a quantidade de registros que deve ser trazido na consulta </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetSellerItemsResponse">GetSellerItemsResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getSellerItemsPricesUpdatingStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/prices</code></pre></div>
+    <div class="method-summary">Returns a list of products and prices (<span class="nickname">getSellerItemsPricesUpdatingStatus</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o para consulta de status da atualiza\u00E7\u00E3o massiva de pre\u00E7os de produtos enviados.Essa opera\u00E7\u00E3o deve ser utilizada, principalmente, para recuperar a listagem de erros que podem ter ocorrido na importa\u00E7\u00E3o de produtos. N\u00E3o utilize esse servi\u00E7o para recuperar os dados atuais do produto que est\u00E1 sendo vendido (como pre\u00E7o e estoque). Para recuperar informa\u00E7\u00F5es de venda do produto, utilize o servi\u00E7o GET /sellerItems/{skuSellerId}</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetSellerItemsPricesUpdatingResponse">GetSellerItemsPricesUpdatingResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getSellerItemsStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/status</code></pre></div>
+    <div class="method-summary">Returns seller products status in the marketplace (<span class="nickname">getSellerItemsStatus</span>)</div>
+    
+    <div class="method-notes">Returns a list with seller products status and brief product information. Please note that this endpoint will not return all details of each product, just the status, skuSellerId and name. Also please note that this endpoint will return maximum 1000 products per call. For full details of a given procuct use GET /product/{skuSellerId}</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number of items to return in this query. Min 1, max 1000. Use this conjuction with `offset` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetSellerItemsStatusUpdatingResponse">GetSellerItemsStatusUpdatingResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success fetching results.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getSellerItemsStocksUpdatingStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/stocks</code></pre></div>
+    <div class="method-summary">Get bulk details about products inventory (<span class="nickname">getSellerItemsStocksUpdatingStatus</span>)</div>
+    
+    <div class="method-notes">Retuns bulk data with seller products inventory. For extensive details for a given product use GET /product/{skuSellerId}</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetSellerItemsStocksUpdatingResponse">GetSellerItemsStocksUpdatingResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postProduct"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /product</code></pre></div>
+    <div class="method-summary">Allows new products to be loaded into the marketplace (<span class="nickname">postProduct</span>)</div>
+    
+    <div class="method-notes">Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `skuSellerId`</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">products (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; JSON with a list of new products to be updloaded to the platform </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Server received your request and will start background processing.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad Request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Not authenticated. Check your headers, `authorization` is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postProducts"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /products</code></pre></div>
+    <div class="method-summary">Allows new products to be loaded into the marketplace (<span class="nickname">postProducts</span>)</div>
+    
+    <div class="method-notes">Use this enpoint to upload new product information to the Marketplace. This enpoint expects a json document with array of products. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `skuSellerId`</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">products (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; JSON with a list of new products to be updloaded to the platform </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Server received your request and will start background processing.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad Request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Not authenticated. Check your headers, `authorization` is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putProduct"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /product/{skuSellerId}</code></pre></div>
+    <div class="method-summary">Update product details (<span class="nickname">putProduct</span>)</div>
+    
+    <div class="method-notes">Update a single product information such as name, brand, attribute, dimension, etc. Please note that data from your request will be merged with existing data. This allows you to update only certain fields without the need to re-inform unchanged fields. `skuSellerId` field is mandatory.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">skuSellerId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; SKU do produto do lojista que dever\u00E1 ser alterado. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para alterar um produto enviado na carga. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemsPrices"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /products/prices</code></pre></div>
+    <div class="method-summary">Allows batch update of product prices. (<span class="nickname">putSellerItemsPrices</span>)</div>
+    
+    <div class="method-notes">Allows batch update of product prices. This endpoint expects a json document with an array of products with the seller ID and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o massiva de produtos </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemsStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /products/status</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o massiva de produtos (<span class="nickname">putSellerItemsStatus</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o massiva de produtos enviados na carga.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o massiva de produtos </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putSellerItemsStocks"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /products/stocks</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o para atualiza\u00E7\u00E3o de estoque de produtos em massa (<span class="nickname">putSellerItemsStocks</span>)</div>
+    
+    <div class="method-notes">Opera\u00E7\u00E3o utilizada para atualiza\u00E7\u00E3o de estoque, de forma massiva, de produtos enviados na carga. Retorno do Servi\u00E7o.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para atualiza\u00E7\u00E3o massiva de estoque de produtos. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  
+  
+  
+  
+  <div class="method"><a name="getTicketMessages"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /ticket/{ticketId}/messages</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o utilizada para consultar um protocolo (<span class="nickname">getTicketMessages</span>)</div>
+    
+    <div class="method-notes">Returns trouble ticket history with all messages exchanged. Only tickets related to your seller will be returned attempt to read other tickets will return 403 (acess denied).</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">ticketId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Trouble ticket ID. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetTicketMessagesResponse">GetTicketMessagesResponse</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucess processing your request
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Access denied. You can only access your trouble tickets
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="getTickets"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tickets</code></pre></div>
+    <div class="method-summary">Get customers trouble tickets (<span class="nickname">getTickets</span>)</div>
+    
+    <div class="method-notes">Allows seller to receive and status, queries, requests and complaints from customers. As well related messages</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+
+    
+
+    
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Query by trouble ticket status </div><div class="param">ticketId (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Trouble ticket uniqe identificaiton number. </div><div class="param">offset (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para indicar a posi\u00E7\u00E3o inicial de consulta.  </div><div class="param">limit (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Par\u00E2metro utilizado para limitar a quantidade de registros trazidos pela consulta.  </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#GetTickets">GetTickets</a>
+      
+    </div>
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postTicket"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /ticket</code></pre></div>
+    <div class="method-summary">Cria um novo protocolo (<span class="nickname">postTicket</span>)</div>
+    
+    <div class="method-notes">Esse servi\u00E7o ir\u00E1 efetuar a cria\u00E7\u00E3o de um novo Ticket. Serve para atender as necessidades do lojista entrar em contato com o consumidor final caso necess\u00E1rio.Todo contato com o comprador, com exce\u00E7\u00E3o dos os emails transacionais que j\u00E1 s\u00E3o enviados pelo Marketplace, deve ser realizado atrav\u00E9s desta API.</div>
+
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">newTicket (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; JSON object with message.. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="postTicketMessage"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /ticket/{ticketId}/messages</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o utilizada para criar uma mensagem no protocolo (<span class="nickname">postTicketMessage</span>)</div>
+    
+    <div class="method-notes">Esse servi\u00E7o ir\u00E1 criar uma mensagem atrelada ao Ticket em quest\u00E3o. Essa mensagem pode ou n\u00E3o ficar vis\u00EDvel para o consumidor final. As mensagens enviadas ficam dispon\u00EDveis no servi\u00E7o de Consulta de Mensagens de Ticket.</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">ticketId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Trouble ticket ID. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">ticket (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Objeto Ticket. </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Success processing your request.
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  <div class="method"><a name="putTicketStatus"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /ticket/{ticketId}/status</code></pre></div>
+    <div class="method-summary">Opera\u00E7\u00E3o utilizada para atualizar o status dos tickets (<span class="nickname">putTicketStatus</span>)</div>
+    
+    <div class="method-notes">Esse servi\u00E7o permitir\u00E1 que o lojista/plataforma altere o status de um Ticket. Os status permitidos ser\u00E3o: Fechado  (closed)  e Em Acompanhamento (attendance).</div>
+
+    
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">ticketId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Trouble ticket ID </div>
+    </div>  <!-- field-items -->
+    
+
+    
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Par\u00E2metros para ativa\u00E7\u00E3o/desativa\u00E7\u00E3o massiva de produtos </div>
+    </div>  <!-- field-items -->
+    
+
+    
+
+    
+
+    
+
+    
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    
+
+    
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+    
+      <li><code>application/json</code></li>
+    
+    </ul>
+    
+
+    <h3 class="field-label">Responses</h3>
+    
+    <h4 class="field-label">200</h4>
+    Sucessfully received transaction
+    
+    
+    <h4 class="field-label">400</h4>
+    Bad request.
+    
+    
+    <h4 class="field-label">401</h4>
+    Access denied. You&#39;re not authenticated. Check your request header. `authorization` field is required.
+    
+    
+    <h4 class="field-label">403</h4>
+    Server refused to process your request. Please check the API SLA and reduce number of requests per second.
+    
+    
+    <h4 class="field-label">404</h4>
+    Object not found.
+    
+    
+    <h4 class="field-label">405</h4>
+    Invalid method.
+    
+    
+  </div> <!-- method -->
+  <hr/>
+  
+  
+  
+  
+
+  <div class="up"><a href="#__Models">Up</a></div>
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h2>Table of Contents</h2>
+  <ol>
+  
+  
+    <li><a href="#BillingAddress"><code>BillingAddress</code></a></li>
+  
+  
+  
+    <li><a href="#ControlledStock"><code>ControlledStock</code></a></li>
+  
+  
+  
+    <li><a href="#Courier"><code>Courier</code></a></li>
+  
+  
+  
+    <li><a href="#Customer"><code>Customer</code></a></li>
+  
+  
+  
+    <li><a href="#CustomerReference"><code>CustomerReference</code></a></li>
+  
+  
+  
+    <li><a href="#Dimensions"><code>Dimensions</code></a></li>
+  
+  
+  
+    <li><a href="#Error"><code>Error</code></a></li>
+  
+  
+  
+    <li><a href="#Errors"><code>Errors</code></a></li>
+  
+  
+  
+    <li><a href="#Freight"><code>Freight</code></a></li>
+  
+  
+  
+    <li><a href="#GetMarketplaces"><code>GetMarketplaces</code></a></li>
+  
+  
+  
+    <li><a href="#GetOrdersResponse"><code>GetOrdersResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetOrdersStatusNewResponse"><code>GetOrdersStatusNewResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetOrdersTrackingUpdatingResponse"><code>GetOrdersTrackingUpdatingResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetProduct"><code>GetProduct</code></a></li>
+  
+  
+  
+    <li><a href="#GetProductsResponse"><code>GetProductsResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetSellerItemsPricesUpdatingResponse"><code>GetSellerItemsPricesUpdatingResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetSellerItemsResponse"><code>GetSellerItemsResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetSellerItemsStatusUpdatingResponse"><code>GetSellerItemsStatusUpdatingResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetSellerItemsStocksUpdatingResponse"><code>GetSellerItemsStocksUpdatingResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetTicketMessagesResponse"><code>GetTicketMessagesResponse</code></a></li>
+  
+  
+  
+    <li><a href="#GetTickets"><code>GetTickets</code></a></li>
+  
+  
+  
+    <li><a href="#GiftCard"><code>GiftCard</code></a></li>
+  
+  
+  
+    <li><a href="#GiftWrap"><code>GiftWrap</code></a></li>
+  
+  
+  
+    <li><a href="#Image"><code>Image</code></a></li>
+  
+  
+  
+    <li><a href="#Invoice"><code>Invoice</code></a></li>
+  
+  
+  
+    <li><a href="#ItemTracking"><code>ItemTracking</code></a></li>
+  
+  
+  
+    <li><a href="#Marketplace"><code>Marketplace</code></a></li>
+  
+  
+  
+    <li><a href="#Metadata"><code>Metadata</code></a></li>
+  
+  
+  
+    <li><a href="#NewTicket"><code>NewTicket</code></a></li>
+  
+  
+  
+    <li><a href="#NewTicketMessage"><code>NewTicketMessage</code></a></li>
+  
+  
+  
+    <li><a href="#NewTrackingRefund"><code>NewTrackingRefund</code></a></li>
+  
+  
+  
+    <li><a href="#Newshipmentstatus"><code>Newshipmentstatus</code></a></li>
+  
+  
+  
+    <li><a href="#Order"><code>Order</code></a></li>
+  
+  
+  
+    <li><a href="#OrderGiftWrap"><code>OrderGiftWrap</code></a></li>
+  
+  
+  
+    <li><a href="#OrderId"><code>OrderId</code></a></li>
+  
+  
+  
+    <li><a href="#OrderItem"><code>OrderItem</code></a></li>
+  
+  
+  
+    <li><a href="#OrderItemReference"><code>OrderItemReference</code></a></li>
+  
+  
+  
+    <li><a href="#OrderReference"><code>OrderReference</code></a></li>
+  
+  
+  
+    <li><a href="#OrderShippment"><code>OrderShippment</code></a></li>
+  
+  
+  
+    <li><a href="#OrderShippmentUpdatingStatus"><code>OrderShippmentUpdatingStatus</code></a></li>
+  
+  
+  
+    <li><a href="#OrderStatusNew"><code>OrderStatusNew</code></a></li>
+  
+  
+  
+    <li><a href="#Ordersshipments"><code>Ordersshipments</code></a></li>
+  
+  
+  
+    <li><a href="#Phone"><code>Phone</code></a></li>
+  
+  
+  
+    <li><a href="#Prices"><code>Prices</code></a></li>
+  
+  
+  
+    <li><a href="#PricesUpdatingStatus"><code>PricesUpdatingStatus</code></a></li>
+  
+  
+  
+    <li><a href="#Product"><code>Product</code></a></li>
+  
+  
+  
+    <li><a href="#ProductAttribute"><code>ProductAttribute</code></a></li>
+  
+  
+  
+    <li><a href="#ProductPrice"><code>ProductPrice</code></a></li>
+  
+  
+  
+    <li><a href="#ProductReference"><code>ProductReference</code></a></li>
+  
+  
+  
+    <li><a href="#ProductResponseItem"><code>ProductResponseItem</code></a></li>
+  
+  
+  
+    <li><a href="#ProductSiteReference"><code>ProductSiteReference</code></a></li>
+  
+  
+  
+    <li><a href="#ProductStock"><code>ProductStock</code></a></li>
+  
+  
+  
+    <li><a href="#ProductUpdate"><code>ProductUpdate</code></a></li>
+  
+  
+  
+    <li><a href="#Promotion"><code>Promotion</code></a></li>
+  
+  
+  
+    <li><a href="#Seller"><code>Seller</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItem"><code>SellerItem</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemPrices"><code>SellerItemPrices</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemReference"><code>SellerItemReference</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemStatus"><code>SellerItemStatus</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemStatusUpdate"><code>SellerItemStatusUpdate</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemStatusUpdatingStatus"><code>SellerItemStatusUpdatingStatus</code></a></li>
+  
+  
+  
+    <li><a href="#SellerItemStocks"><code>SellerItemStocks</code></a></li>
+  
+  
+  
+    <li><a href="#ShippingAddress"><code>ShippingAddress</code></a></li>
+  
+  
+  
+    <li><a href="#Stock"><code>Stock</code></a></li>
+  
+  
+  
+    <li><a href="#StockUpdatingStatus"><code>StockUpdatingStatus</code></a></li>
+  
+  
+  
+    <li><a href="#Ticket"><code>Ticket</code></a></li>
+  
+  
+  
+    <li><a href="#TicketMessage"><code>TicketMessage</code></a></li>
+  
+  
+  
+    <li><a href="#TicketStatus"><code>TicketStatus</code></a></li>
+  
+  
+  
+    <li><a href="#Tracking"><code>Tracking</code></a></li>
+  
+  
+  
+    <li><a href="#UserReference"><code>UserReference</code></a></li>
+  
+  
+  </ol>
+
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="BillingAddress">BillingAddress</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">address </div><div class="param-desc"><span class="param-type">String</span> Endere\u00E7o (nome da rua, avenida ... )</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> N\u00FAmero do endere\u00E7o</div>
+      
+      <div class="param">complement </div><div class="param-desc"><span class="param-type">String</span> Informa\u00E7\u00F5es adicionais</div>
+      
+      <div class="param">neighbourhood </div><div class="param-desc"><span class="param-type">String</span> Bairro</div>
+      
+      <div class="param">reference </div><div class="param-desc"><span class="param-type">String</span> Pontos de refer\u00EAncia</div>
+      
+      <div class="param">city </div><div class="param-desc"><span class="param-type">String</span> Cidade</div>
+      
+      <div class="param">state </div><div class="param-desc"><span class="param-type">String</span> Estado</div>
+      
+      <div class="param">countryId </div><div class="param-desc"><span class="param-type">String</span> Identifica\u00E7\u00E3o do Pa\u00EDs. Baseado na ISO-3166, padr\u00E3o alpha 2. Ex.: BR, US, AR</div>
+      
+      <div class="param">zipCode </div><div class="param-desc"><span class="param-type">String</span> C\u00F3digo de Endere\u00E7amento Postal - CEP</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ControlledStock">ControlledStock</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">quantity </div><div class="param-desc"><span class="param-type">Integer</span> Quantidade de produtos dispon\u00EDveis</div>
+      
+      <div class="param">reserved </div><div class="param-desc"><span class="param-type">Integer</span> Quantidade de produtos que est\u00E3o reservados (com compras ainda n\u00E3o confirmadas)</div>
+      
+      <div class="param">crossDockingTime </div><div class="param-desc"><span class="param-type">Integer</span> Tempo de prepara\u00E7\u00E3o/fabrica\u00E7\u00E3o do produto. Esse tempo \u00E9 inclu\u00EDdo no c\u00E1lculo de frete</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Courier">Courier</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Nome da transportadora</div>
+      
+      <div class="param">taxID </div><div class="param-desc"><span class="param-type">String</span> CNPJ da transportadora</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Customer">Customer</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> Identificador do cliente</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Customer Name</div>
+      
+      <div class="param">documentNumber </div><div class="param-desc"><span class="param-type">String</span> Customer tax information</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Customer type: Enterprise or Consumer</div>
+      
+      <div class="param">createdAt </div><div class="param-desc"><span class="param-type">Date</span> Data de envio do produto</div>
+      
+      <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> Email do cliente</div>
+      
+      <div class="param">birthDate </div><div class="param-desc"><span class="param-type">Date</span> Customer date of birth</div>
+      
+      <div class="param">phones </div><div class="param-desc"><span class="param-type">array[Phone]</span> Customer phone number</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="CustomerReference">CustomerReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Customer name</div>
+      
+      <div class="param">phoneNumber </div><div class="param-desc"><span class="param-type">String</span> Customer phone mumber</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Dimensions">Dimensions</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">weight </div><div class="param-desc"><span class="param-type">Integer</span> Product weight in Grams. No commas or periods are accepeted. For example one killo must be informed as 1000. Another example 1 Kilo and 234 grams should be informed solely as 1234</div>
+      
+      <div class="param">length </div><div class="param-desc"><span class="param-type">Integer</span> Product length in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230</div>
+      
+      <div class="param">width </div><div class="param-desc"><span class="param-type">Integer</span> Product width in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230</div>
+      
+      <div class="param">height </div><div class="param-desc"><span class="param-type">Integer</span> Product height in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Error">Error</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">code </div><div class="param-desc"><span class="param-type">String</span> C\u00F3digo de retorno da aplica\u00E7\u00E3o</div>
+      
+      <div class="param">httpStatus </div><div class="param-desc"><span class="param-type">String</span> C\u00F3digo de retorno do protoc\u00F3lo HTTP</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Tipo do erro</div>
+      
+      <div class="param">message </div><div class="param-desc"><span class="param-type">String</span> Descri\u00E7\u00E3o do erro</div>
+      
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> Identificador do seller item que originou o problema</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Errors">Errors</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> Lista contendo os skus que n\u00E3o puderam ser cancelado e o erro para cada um</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Freight">Freight</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">actualAmount </div><div class="param-desc"><span class="param-type">Integer</span> Valor nominal do frete (sem descontos e abatimentos, com margem comercial)</div>
+      
+      <div class="param">chargedAmount </div><div class="param-desc"><span class="param-type">Integer</span> Valor cobrado pelo frete</div>
+      
+      <div class="param">transitTime </div><div class="param-desc"><span class="param-type">Integer</span> Prazo de transporte para entrega do produto em dias \u00FAteis</div>
+      
+      <div class="param">crossDockingTime </div><div class="param-desc"><span class="param-type">Integer</span> Tempo de prepara\u00E7\u00E3o/fabrica\u00E7\u00E3o do produto em dias. Esse tempo \u00E9 inclu\u00EDdo no c\u00E1lculo de frete.</div>
+      
+      <div class="param">additionalInfo </div><div class="param-desc"><span class="param-type">String</span> Informa\u00E7\u00F5es adicionais sobre a entrega. Pode ser utilizado para informar o nome da transportadora, por exemplo</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Tipo de frete</div>
+      
+      <div class="param">scheduledAt </div><div class="param-desc"><span class="param-type">Date</span> Data de agendamento da entrega</div>
+      
+      <div class="param">scheduledPeriod </div><div class="param-desc"><span class="param-type">String</span> Per\u00EDodo que a entrega foi agendada</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetMarketplaces">GetMarketplaces</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">marktplaces </div><div class="param-desc"><span class="param-type">array[Marketplace]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetOrdersResponse">GetOrdersResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">orders </div><div class="param-desc"><span class="param-type">array[Order]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Leia mais sobre os metadados retornados nas listagens em &lt;a href=&#39;../apis/index.html#search&#39;  &gt;Metadada&lt;/a&gt;</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetOrdersStatusNewResponse">GetOrdersStatusNewResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">orders </div><div class="param-desc"><span class="param-type">array[OrderStatusNew]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Leia mais sobre os metadados retornados nas listagens em &lt;a href=&#39;../apis/index.html#search&#39;  &gt;Metadada&lt;/a&gt;</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetOrdersTrackingUpdatingResponse">GetOrdersTrackingUpdatingResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">shipments </div><div class="param-desc"><span class="param-type">array[OrderShippmentUpdatingStatus]</span> Informa\u00E7\u00F5es de tracking do pedido</div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Response payload</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetProduct">GetProduct</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto no Marketplace - utilizado para realizar associa\u00E7\u00E3o de produtos</div>
+      
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto do Lojista</div>
+      
+      <div class="param">productSellerId </div><div class="param-desc"><span class="param-type">String</span> ID do produto do lojista para fazer o agrupamento de SKUs</div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> Nome no Marketplace. Ex Televisor de LCD Sony Bravia 40\u201D...</div>
+      
+      <div class="param">description </div><div class="param-desc"><span class="param-type">String</span> Descri\u00E7\u00E3o do produto. Aceita tags HTML para formatar a apresenta\u00E7\u00E3o da descri\u00E7\u00E3o, no entanto h\u00E1 alguma tags restritas (tags para acesso a conte\u00FAdo externo): img, object, script e iframe.</div>
+      
+      <div class="param">brand </div><div class="param-desc"><span class="param-type">String</span> Marca. Ex Sony</div>
+      
+      <div class="param">gtin </div><div class="param-desc"><span class="param-type">array[String]</span> Lista que pode conter tanto o c\u00F3digo EAN do produto (c\u00F3digo de barras) quanto c\u00F3digos ISBN (geralmente utilizados para livros)</div>
+      
+      <div class="param">categories </div><div class="param-desc"><span class="param-type">array[String]</span> Lista de categorias</div>
+      
+      <div class="param">images </div><div class="param-desc"><span class="param-type">array[String]</span>  Lista de URLs de imagens. Pelo menos uma imagem precisa ser informada</div>
+      
+      <div class="param">videos </div><div class="param-desc"><span class="param-type">array[String]</span> </div>
+      
+      <div class="param">price </div><div class="param-desc"><span class="param-type">ProductPrice</span> </div>
+      
+      <div class="param">stock </div><div class="param-desc"><span class="param-type">ProductStock</span> </div>
+      
+      <div class="param">dimensions </div><div class="param-desc"><span class="param-type">Dimensions</span> </div>
+      
+      <div class="param">giftWrap </div><div class="param-desc"><span class="param-type">GiftWrap</span> </div>
+      
+      <div class="param">attributes </div><div class="param-desc"><span class="param-type">array[ProductAttribute]</span> </div>
+      
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetProductsResponse">GetProductsResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skus </div><div class="param-desc"><span class="param-type">array[ProductResponseItem]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Payload with response</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetSellerItemsPricesUpdatingResponse">GetSellerItemsPricesUpdatingResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skus </div><div class="param-desc"><span class="param-type">array[PricesUpdatingStatus]</span> Skus do pedido</div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Response payload</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetSellerItemsResponse">GetSellerItemsResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">sellerItems </div><div class="param-desc"><span class="param-type">array[SellerItem]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Leia mais sobre os metadados retornados nas listagens em &lt;a href=&#39;../apis/index.html#search&#39;  &gt;Metadada&lt;/a&gt;</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetSellerItemsStatusUpdatingResponse">GetSellerItemsStatusUpdatingResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skus </div><div class="param-desc"><span class="param-type">array[SellerItemStatusUpdatingStatus]</span> Informa\u00E7\u00F5es de status de SKU do produto do lojista</div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Response payload</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetSellerItemsStocksUpdatingResponse">GetSellerItemsStocksUpdatingResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skus </div><div class="param-desc"><span class="param-type">array[StockUpdatingStatus]</span> Product Array with inventory information</div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Payload information</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetTicketMessagesResponse">GetTicketMessagesResponse</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">messages </div><div class="param-desc"><span class="param-type">array[TicketMessage]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GetTickets">GetTickets</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">tickets </div><div class="param-desc"><span class="param-type">array[Ticket]</span> </div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GiftCard">GiftCard</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">from </div><div class="param-desc"><span class="param-type">String</span> Giftcard `from` field</div>
+      
+      <div class="param">to </div><div class="param-desc"><span class="param-type">String</span> Giftcard `to` field</div>
+      
+      <div class="param">message </div><div class="param-desc"><span class="param-type">String</span> Giftcard `body` message</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="GiftWrap">GiftWrap</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">available </div><div class="param-desc"><span class="param-type">Boolean</span> Flag que indica se existe embrulho para presente para o produto</div>
+      
+      <div class="param">value </div><div class="param-desc"><span class="param-type">Integer</span> Valor cobrado pelo embrulho</div>
+      
+      <div class="param">messageSupport </div><div class="param-desc"><span class="param-type">Boolean</span> Flag que indica se \u00E9 poss\u00EDvel incluir uma mensagem</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Image">Image</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Image format</div>
+      
+      <div class="param">main </div><div class="param-desc"><span class="param-type">Boolean</span> Sets as main image</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> Image URL</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Invoice">Invoice</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">cnpj </div><div class="param-desc"><span class="param-type">String</span> CNPJ respons\u00E1vel pelo envio dos produtos. Pode ser diferente caso a empresa possua diversos Centros de Distribui\u00E7\u00E3o (CDs)</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> N\u00FAmero da Nota Fiscal</div>
+      
+      <div class="param">serie </div><div class="param-desc"><span class="param-type">String</span> N\u00FAmero de serie da Nota Fiscal</div>
+      
+      <div class="param">issuedAt </div><div class="param-desc"><span class="param-type">Date</span> Data de emiss\u00E3o da Nota Fiscal</div>
+      
+      <div class="param">accessKey </div><div class="param-desc"><span class="param-type">String</span> N\u00FAmero da chave de acesso \u00E0 nota fiscal. A chave possui 44 d\u00EDgitos e cont\u00E9m todas as informa\u00E7\u00F5es da DANFE</div>
+      
+      <div class="param">linkXml </div><div class="param-desc"><span class="param-type">String</span> Url para consulta da NFE</div>
+      
+      <div class="param">linkDanfe </div><div class="param-desc"><span class="param-type">String</span> Url para consulta da DANFE</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ItemTracking">ItemTracking</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> Order Item ID do produto vendido</div>
+      
+      <div class="param">href </div><div class="param-desc"><span class="param-type">String</span> Link para acesso ao item</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Marketplace">Marketplace</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> Marketplace ID</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Marketplace Friendly Name</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> URL base para consultar produtos nesse site</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Metadata">Metadata</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">key </div><div class="param-desc"><span class="param-type">String</span> JSON attribute key</div>
+      
+      <div class="param">value </div><div class="param-desc"><span class="param-type">String</span> JSON object value</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="NewTicket">NewTicket</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">from </div><div class="param-desc"><span class="param-type">String</span> Friendly name of person sending this message, if not provided Seller name will be used</div>
+      
+      <div class="param">body </div><div class="param-desc"><span class="param-type">String</span> Message to the customer</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="NewTicketMessage">NewTicketMessage</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">user </div><div class="param-desc"><span class="param-type">UserReference</span> </div>
+      
+      <div class="param">visibility </div><div class="param-desc"><span class="param-type">String</span> Se o consumidor final ir\u00E1 receber/visualizar a mensagem. Os valores permitidos s\u00E3o: &#39;private&#39; e &#39;public&#39;</div>
+      
+      <div class="param">body </div><div class="param-desc"><span class="param-type">String</span> Texto da mensagem</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="NewTrackingRefund">NewTrackingRefund</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[OrderItemReference]</span> </div>
+      
+      <div class="param">info </div><div class="param-desc"><span class="param-type">String</span> Informa\u00E7\u00F5es adicionais sobre o evento</div>
+      
+      <div class="param">occurredAt </div><div class="param-desc"><span class="param-type">Date</span> Data da ocorr\u00EAncia</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> Url para consulta na transportadora</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> ID do objeto na transportadora</div>
+      
+      <div class="param">sellerDeliveryId </div><div class="param-desc"><span class="param-type">String</span> ID de entrega do Lojista. Esse ID deve ser \u00FAnico para um pedido, n\u00E3o podendo haver repeti\u00E7\u00E3o entre pedidos</div>
+      
+      <div class="param">cte </div><div class="param-desc"><span class="param-type">String</span> Conhecimento do Transporte Eletr\u00F4nico</div>
+      
+      <div class="param">courier </div><div class="param-desc"><span class="param-type">Courier</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Newshipmentstatus">Newshipmentstatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[String]</span> Lista de Order IDs dos produtos comprados no pedido e que ir\u00E3o ser atualizados pela opera\u00E7\u00E3o de tracking</div>
+      
+      <div class="param">occurredAt </div><div class="param-desc"><span class="param-type">Date</span> Data da ocorr\u00EAncia</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> Url para consulta na transportadora</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> ID do objeto na transportadora</div>
+      
+      <div class="param">sellerDeliveryId </div><div class="param-desc"><span class="param-type">String</span> ID de entrega do Lojista. Esse ID deve ser \u00FAnico para um pedido, n\u00E3o podendo haver repeti\u00E7\u00E3o entre pedidos</div>
+      
+      <div class="param">cte </div><div class="param-desc"><span class="param-type">String</span> Conhecimento do Transporte Eletr\u00F4nico</div>
+      
+      <div class="param">courier </div><div class="param-desc"><span class="param-type">Courier</span> </div>
+      
+      <div class="param">invoice </div><div class="param-desc"><span class="param-type">Invoice</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Order">Order</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do pedido gerado para o lojista</div>
+      
+      <div class="param">orderSiteId </div><div class="param-desc"><span class="param-type">String</span> ID do pedido gerado no site e que \u00E9 passado ao cliente</div>
+      
+      <div class="param">site </div><div class="param-desc"><span class="param-type">String</span> Site para o qual o pedido foi criado. Consulte a lista completa de sites dispon\u00EDveis no servi\u00E7o &lt;a href=&#39;#!/sites&#39;  &gt;GET /sites&lt;/a&gt;</div>
+      
+      <div class="param">purchasedAt </div><div class="param-desc"><span class="param-type">Date</span> Data da compra</div>
+      
+      <div class="param">approvedAt </div><div class="param-desc"><span class="param-type">Date</span> Data de aprova\u00E7\u00E3o de pagamento do pedido</div>
+      
+      <div class="param">updatedAt </div><div class="param-desc"><span class="param-type">Date</span> \u00DAltima data de atualiza\u00E7\u00E3o do pedido</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status atual do pedido</div>
+      
+      <div class="param">totalAmount </div><div class="param-desc"><span class="param-type">Integer</span> Order total in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">totalDiscountAmount </div><div class="param-desc"><span class="param-type">Integer</span> Total order discounts in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">billing </div><div class="param-desc"><span class="param-type">BillingAddress</span> </div>
+      
+      <div class="param">customer </div><div class="param-desc"><span class="param-type">Customer</span> </div>
+      
+      <div class="param">freight </div><div class="param-desc"><span class="param-type">Freight</span> </div>
+      
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[OrderItem]</span> </div>
+      
+      <div class="param">shipping </div><div class="param-desc"><span class="param-type">ShippingAddress</span> </div>
+      
+      <div class="param">shipments </div><div class="param-desc"><span class="param-type">array[Tracking]</span> </div>
+      
+      <div class="param">seller </div><div class="param-desc"><span class="param-type">Seller</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderGiftWrap">OrderGiftWrap</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">available </div><div class="param-desc"><span class="param-type">Boolean</span> Defines if giftwrpping is available for this product.</div>
+      
+      <div class="param">value </div><div class="param-desc"><span class="param-type">BigDecimal</span> Amount charged for gift wrap. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">messageSupport </div><div class="param-desc"><span class="param-type">Boolean</span> Defines if giftwrpping is available for this product.</div>
+      
+      <div class="param">giftCard </div><div class="param-desc"><span class="param-type">GiftCard</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderId">OrderId</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> ID do pedido.</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderItem">OrderItem</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do item de Pedido</div>
+      
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto do Lojista</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Nome do produto</div>
+      
+      <div class="param">salePrice </div><div class="param-desc"><span class="param-type">Integer</span> Product unit price</div>
+      
+      <div class="param">sent </div><div class="param-desc"><span class="param-type">Boolean</span> Flag que indica se o produto j\u00E1 foi enviado</div>
+      
+      <div class="param">freight </div><div class="param-desc"><span class="param-type">Freight</span> </div>
+      
+      <div class="param">giftWrap </div><div class="param-desc"><span class="param-type">OrderGiftWrap</span> </div>
+      
+      <div class="param">promotions </div><div class="param-desc"><span class="param-type">array[Promotion]</span> Lista de Promo\u00E7\u00F5es</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderItemReference">OrderItemReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">quantity </div><div class="param-desc"><span class="param-type">Integer</span> Quantidade do estoque</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderReference">OrderReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">Integer</span> ID do pedido.</div>
+      
+      <div class="param">href </div><div class="param-desc"><span class="param-type">String</span> URL de consulta da ordem por ID.</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderShippment">OrderShippment</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">order </div><div class="param-desc"><span class="param-type">OrderId</span> </div>
+      
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[OrderItemReference]</span> </div>
+      
+      <div class="param">controlPoint </div><div class="param-desc"><span class="param-type">String</span> Status do pedido. Veja o servi\u00E7o &lt;a href=&#39;#!/orders/getOrderByIdV2_get_0&#39;  &gt;GET /orders/{orderId}&lt;/a&gt; para consultar todos os controlPoits existentes.</div>
+      
+      <div class="param">occurredAt </div><div class="param-desc"><span class="param-type">Date</span> Data da ocorrencia</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> Url para consulta na transportadora</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> ID do objeto na transportadora</div>
+      
+      <div class="param">sellerDeliveryId </div><div class="param-desc"><span class="param-type">String</span> ID \u00FAnico da entrega para o lojista no parceiro, n\u00E3o pode haver repeti\u00E7\u00E3o deste ID</div>
+      
+      <div class="param">cte </div><div class="param-desc"><span class="param-type">String</span> Conhecimento de Transporte Elet\u00F4niconico</div>
+      
+      <div class="param">courier </div><div class="param-desc"><span class="param-type">Courier</span> </div>
+      
+      <div class="param">invoice </div><div class="param-desc"><span class="param-type">Invoice</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderShippmentUpdatingStatus">OrderShippmentUpdatingStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">order </div><div class="param-desc"><span class="param-type">OrderReference</span> </div>
+      
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[OrderItemReference]</span> </div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status do pedido</div>
+      
+      <div class="param">processedAt </div><div class="param-desc"><span class="param-type">Date</span> Data do processamento</div>
+      
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> Erros do envido de pedidos</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="OrderStatusNew">OrderStatusNew</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do pedido gerado para o lojista</div>
+      
+      <div class="param">orderSiteId </div><div class="param-desc"><span class="param-type">String</span> ID do pedido gerado no site e que \u00E9 passado ao cliente</div>
+      
+      <div class="param">site </div><div class="param-desc"><span class="param-type">String</span> Site para o qual o pedido foi criado. Consulte a lista completa de sites dispon\u00EDveis no servi\u00E7o &lt;a href=&#39;#!/sites&#39;  &gt;GET /sites&lt;/a&gt;</div>
+      
+      <div class="param">purchasedAt </div><div class="param-desc"><span class="param-type">Date</span> Data da compra</div>
+      
+      <div class="param">approvedAt </div><div class="param-desc"><span class="param-type">Date</span> Data de aprova\u00E7\u00E3o de pagamento do pedido</div>
+      
+      <div class="param">updatedAt </div><div class="param-desc"><span class="param-type">Date</span> Last order update date-time</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Order status</div>
+      
+      <div class="param">totalAmount </div><div class="param-desc"><span class="param-type">Integer</span> Total order amount. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">totalDiscountAmount </div><div class="param-desc"><span class="param-type">Integer</span> Total order discount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">billing </div><div class="param-desc"><span class="param-type">BillingAddress</span> </div>
+      
+      <div class="param">customer </div><div class="param-desc"><span class="param-type">Customer</span> </div>
+      
+      <div class="param">freight </div><div class="param-desc"><span class="param-type">Freight</span> </div>
+      
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[OrderItem]</span> </div>
+      
+      <div class="param">shipments </div><div class="param-desc"><span class="param-type">array[Tracking]</span> </div>
+      
+      <div class="param">seller </div><div class="param-desc"><span class="param-type">Seller</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Ordersshipments">Ordersshipments</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">shipments </div><div class="param-desc"><span class="param-type">array[OrderShippment]</span> Lista de shipments</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Phone">Phone</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> Phone number</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Phone number type, home, office, mobile, etc</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Prices">Prices</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">default </div><div class="param-desc"><span class="param-type">Integer</span> List price, also known as MSRP (Manufacturer Suggest Retail Price) or the recommended retail price (RRP). All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">offer </div><div class="param-desc"><span class="param-type">Integer</span> Product price. This is what will be offered to the customer. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">marketplace </div><div class="param-desc"><span class="param-type">String</span> Marketplace where this prices is applicable.</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="PricesUpdatingStatus">PricesUpdatingStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status do pedido</div>
+      
+      <div class="param">processedAt </div><div class="param-desc"><span class="param-type">Date</span> Data do processamento</div>
+      
+      <div class="param">updateValue </div><div class="param-desc"><span class="param-type">Double</span> Valor de atualiza\u00E7\u00E3o</div>
+      
+      <div class="param">siteName </div><div class="param-desc"><span class="param-type">String</span> Nome do site</div>
+      
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> Erros do pedido</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Product">Product</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">productId </div><div class="param-desc"><span class="param-type">String</span> Brand Lovers Product ID. Use this to recommend a product association</div>
+      
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> Unique Product ID (SKU) in the seller system</div>
+      
+      <div class="param">productSellerId </div><div class="param-desc"><span class="param-type">String</span> ID do produto do lojista para fazer o agrupamento de SKUs</div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> Product name as advertised by manufaturer</div>
+      
+      <div class="param">description </div><div class="param-desc"><span class="param-type">String</span> Product description.</div>
+      
+      <div class="param">brand </div><div class="param-desc"><span class="param-type">String</span> Product Brand</div>
+      
+      <div class="param">gtin </div><div class="param-desc"><span class="param-type">array[String]</span> Array of product EAN and/or ISBN and/or ASIN codes</div>
+      
+      <div class="param">categories </div><div class="param-desc"><span class="param-type">array[String]</span> Categories that this product belong to</div>
+      
+      <div class="param">images </div><div class="param-desc"><span class="param-type">array[String]</span> List of valid Product image URLs. Valid produtols are HTTP or HTTPS.</div>
+      
+      <div class="param">videos </div><div class="param-desc"><span class="param-type">array[String]</span> List of valid Product image URLs. Valid produtols are HTTP or HTTPS.</div>
+      
+      <div class="param">price </div><div class="param-desc"><span class="param-type">ProductPrice</span> </div>
+      
+      <div class="param">stock </div><div class="param-desc"><span class="param-type">ProductStock</span> </div>
+      
+      <div class="param">dimensions </div><div class="param-desc"><span class="param-type">Dimensions</span> </div>
+      
+      <div class="param">giftWrap </div><div class="param-desc"><span class="param-type">GiftWrap</span> </div>
+      
+      <div class="param">attributes </div><div class="param-desc"><span class="param-type">array[ProductAttribute]</span> Caracter\u00EDsticas do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductAttribute">ProductAttribute</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Attribute name</div>
+      
+      <div class="param">value </div><div class="param-desc"><span class="param-type">String</span> Attribute value</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductPrice">ProductPrice</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">default </div><div class="param-desc"><span class="param-type">Integer</span> List price, also known as MSRP (Manufacturer Suggest Retail Price) or the recommended retail price (RRP). All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">offer </div><div class="param-desc"><span class="param-type">Integer</span> Product price. This is what will be offered to the customer. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductReference">ProductReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do recurso</div>
+      
+      <div class="param">href </div><div class="param-desc"><span class="param-type">String</span> Link para acesso ao recurso</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductResponseItem">ProductResponseItem</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSeller </div><div class="param-desc"><span class="param-type">SellerItemReference</span> </div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status do produto</div>
+      
+      <div class="param">createdAt </div><div class="param-desc"><span class="param-type">Date</span> Data de envio do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductSiteReference">ProductSiteReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do produto</div>
+      
+      <div class="param">href </div><div class="param-desc"><span class="param-type">String</span> Link do produto no site</div>
+      
+      <div class="param">marketplace </div><div class="param-desc"><span class="param-type">String</span> Marketplace where this product information will be available. Please use GET /marketplace for details</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductStock">ProductStock</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">quantity </div><div class="param-desc"><span class="param-type">Integer</span> Number of product availble for sale</div>
+      
+      <div class="param">crossDockingTime </div><div class="param-desc"><span class="param-type">Integer</span> Lead and/or setup time in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ProductUpdate">ProductUpdate</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto no Marketplace - utilizado para realizar associa\u00E7\u00E3o de produtos</div>
+      
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto do Lojista</div>
+      
+      <div class="param">productSellerId </div><div class="param-desc"><span class="param-type">String</span> ID do produto do lojista para fazer o agrupamento de SKUs</div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> Nome no Marketplace. Ex Televisor de LCD Sony Bravia 40\u201D...</div>
+      
+      <div class="param">description </div><div class="param-desc"><span class="param-type">String</span> Descri\u00E7\u00E3o do produto. Aceita tags HTML para formatar a apresenta\u00E7\u00E3o da descri\u00E7\u00E3o, no entanto h\u00E1 algumas tags restritas (tags para acesso a conte\u00FAdo externo): img, object, script e iframe.</div>
+      
+      <div class="param">brand </div><div class="param-desc"><span class="param-type">String</span> Marca. Ex Sony</div>
+      
+      <div class="param">gtin </div><div class="param-desc"><span class="param-type">array[String]</span> Lista que pode conter tanto o c\u00F3digo EAN do produto (c\u00F3digo de barras) quanto c\u00F3digos ISBN (geralmente utilizados para livros)</div>
+      
+      <div class="param">categories </div><div class="param-desc"><span class="param-type">array[String]</span> Lista de categorias</div>
+      
+      <div class="param">images </div><div class="param-desc"><span class="param-type">array[String]</span>  Lista de URLs de imagens. Pelo menos uma imagem precisa ser informada</div>
+      
+      <div class="param">videos </div><div class="param-desc"><span class="param-type">array[String]</span>  Lista de URLs de v\u00EDdeos</div>
+      
+      <div class="param">price </div><div class="param-desc"><span class="param-type">ProductPrice</span> </div>
+      
+      <div class="param">stock </div><div class="param-desc"><span class="param-type">ProductStock</span> </div>
+      
+      <div class="param">dimensions </div><div class="param-desc"><span class="param-type">Dimensions</span> </div>
+      
+      <div class="param">giftWrap </div><div class="param-desc"><span class="param-type">GiftWrap</span> </div>
+      
+      <div class="param">attributes </div><div class="param-desc"><span class="param-type">array[ProductAttribute]</span> Caracter\u00EDsticas do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Promotion">Promotion</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID da promo\u00E7\u00E3o que o produto foi adquirido</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Descri\u00E7\u00E3o da promo\u00E7\u00E3o</div>
+      
+      <div class="param">amount </div><div class="param-desc"><span class="param-type">Double</span> Total de desconto</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Tipo da promo\u00E7\u00E3o</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Seller">Seller</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do produto</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Nome do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItem">SellerItem</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU ID do produto do Lojista</div>
+      
+      <div class="param">skuSiteId </div><div class="param-desc"><span class="param-type">String</span> SKU Id do produto.</div>
+      
+      <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> T\u00EDtulo de venda do produto no Marketplace. Ex Televisor de LCD Sony Bravia 40\u201D...</div>
+      
+      <div class="param">brand </div><div class="param-desc"><span class="param-type">String</span> Marca do produto. Ex Sony</div>
+      
+      <div class="param">gtin </div><div class="param-desc"><span class="param-type">array[String]</span> Lista que pode conter tanto o c\u00F3digo EAN do produto (c\u00F3digo de barras) quanto c\u00F3digos ISBN (geralmente utilizados para livros)</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">array[SellerItemStatus]</span> Status do produto para cada site</div>
+      
+      <div class="param">prices </div><div class="param-desc"><span class="param-type">array[Prices]</span> Informa\u00E7\u00F5es de pre\u00E7o de venda do produto para cada site</div>
+      
+      <div class="param">stocks </div><div class="param-desc"><span class="param-type">array[ControlledStock]</span> Informa\u00E7\u00F5es de estoque do produto para cada site</div>
+      
+      <div class="param">urls </div><div class="param-desc"><span class="param-type">array[ProductSiteReference]</span> Lista de urls do produto para cada site no qual o mesmo est\u00E1 dispon\u00EDvel</div>
+      
+      <div class="param">images </div><div class="param-desc"><span class="param-type">array[Image]</span> Lista de imagens do produto</div>
+      
+      <div class="param">product </div><div class="param-desc"><span class="param-type">ProductReference</span> </div>
+      
+      <div class="param">dimensions </div><div class="param-desc"><span class="param-type">Dimensions</span> </div>
+      
+      <div class="param">giftWrap </div><div class="param-desc"><span class="param-type">GiftWrap</span> </div>
+      
+      <div class="param">attributes </div><div class="param-desc"><span class="param-type">array[ProductAttribute]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemPrices">SellerItemPrices</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">prices </div><div class="param-desc"><span class="param-type">array[Prices]</span> Pre\u00E7o do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemReference">SellerItemReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> ID do produto</div>
+      
+      <div class="param">href </div><div class="param-desc"><span class="param-type">String</span> Caminho do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemStatus">SellerItemStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">active </div><div class="param-desc"><span class="param-type">Boolean</span> Defines if this product is ready for sale. Active `true`, disabled `false` </div>
+      
+      <div class="param">marketplace </div><div class="param-desc"><span class="param-type">String</span> Marketplace for witch this product is eligible. Please check marketplace list via GET /marketplaces .</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemStatusUpdate">SellerItemStatusUpdate</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">array[SellerItemStatus]</span> Status do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemStatusUpdatingStatus">SellerItemStatusUpdatingStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">site </div><div class="param-desc"><span class="param-type">String</span> Site de venda</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status do produto</div>
+      
+      <div class="param">processedAt </div><div class="param-desc"><span class="param-type">Date</span> Data do processamento</div>
+      
+      <div class="param">updateValue </div><div class="param-desc"><span class="param-type">String</span> Atualiza\u00E7\u00E3o</div>
+      
+      <div class="param">siteName </div><div class="param-desc"><span class="param-type">String</span> Nome do site</div>
+      
+      <div class="param">skuSite </div><div class="param-desc"><span class="param-type">String</span> Sku do site</div>
+      
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="SellerItemStocks">SellerItemStocks</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">stocks </div><div class="param-desc"><span class="param-type">array[Stock]</span> Estoque do produto</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="ShippingAddress">ShippingAddress</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">address </div><div class="param-desc"><span class="param-type">String</span> Address first line (ave, street, name )</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> Address number</div>
+      
+      <div class="param">complement </div><div class="param-desc"><span class="param-type">String</span> Complementary info (aptartament number, building name, suite)</div>
+      
+      <div class="param">neighbourhood </div><div class="param-desc"><span class="param-type">String</span> Customer neighbourhood</div>
+      
+      <div class="param">reference </div><div class="param-desc"><span class="param-type">String</span> Pontos de refer\u00EAncia</div>
+      
+      <div class="param">city </div><div class="param-desc"><span class="param-type">String</span> City</div>
+      
+      <div class="param">state </div><div class="param-desc"><span class="param-type">String</span> State</div>
+      
+      <div class="param">countryId </div><div class="param-desc"><span class="param-type">String</span> Country Code. Use ISO-3166. Example: BR, US, AR, GB, CN</div>
+      
+      <div class="param">zipCode </div><div class="param-desc"><span class="param-type">String</span> Zip Code</div>
+      
+      <div class="param">recipientName </div><div class="param-desc"><span class="param-type">String</span> Recipient Name</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Stock">Stock</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">quantity </div><div class="param-desc"><span class="param-type">Integer</span> Quantidade de produtos dispon\u00EDveis</div>
+      
+      <div class="param">crossDockingTime </div><div class="param-desc"><span class="param-type">Integer</span> Tempo de prepara\u00E7\u00E3o/fabrica\u00E7\u00E3o do produto em dias. Esse tempo \u00E9 inclu\u00EDdo no c\u00E1lculo de frete</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="StockUpdatingStatus">StockUpdatingStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">skuSellerId </div><div class="param-desc"><span class="param-type">String</span> SKU do produto do lojista que dever\u00E1 ser alterado</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Status da solicita\u00E7\u00E3o de atualiza\u00E7\u00E3o</div>
+      
+      <div class="param">processedAt </div><div class="param-desc"><span class="param-type">Date</span> Data do processamento</div>
+      
+      <div class="param">updateValue </div><div class="param-desc"><span class="param-type">Integer</span> Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567</div>
+      
+      <div class="param">refer </div><div class="param-desc"><span class="param-type">String</span> Arquivo de refer\u00EAncia da atualiza\u00E7\u00E3o</div>
+      
+      <div class="param">skuSite </div><div class="param-desc"><span class="param-type">String</span> SKU do site onde o estoque ser\u00E1 atualizado</div>
+      
+      <div class="param">siteList </div><div class="param-desc"><span class="param-type">array[String]</span> </div>
+      
+      <div class="param">errors </div><div class="param-desc"><span class="param-type">array[Error]</span> Erros do pedido</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Ticket">Ticket</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">ticketId </div><div class="param-desc"><span class="param-type">String</span> Trouble Ticket unique identification Id</div>
+      
+      <div class="param">status </div><div class="param-desc"><span class="param-type">String</span> Trouble Ticket status. &#39;OPEN&#39;,&#39;CLOSED&#39;,&#39;REOPENED&#39;</div>
+      
+      <div class="param">type </div><div class="param-desc"><span class="param-type">String</span> Trouble ticket type.</div>
+      
+      <div class="param">description </div><div class="param-desc"><span class="param-type">String</span> Trouble ticked brief description</div>
+      
+      <div class="param">createdAt </div><div class="param-desc"><span class="param-type">Date</span> Date time that ticket was created</div>
+      
+      <div class="param">updatedAt </div><div class="param-desc"><span class="param-type">Date</span> Date-time with last update of this ticket</div>
+      
+      <div class="param">closedAt </div><div class="param-desc"><span class="param-type">Date</span> Date-time when ticket was closed</div>
+      
+      <div class="param">priority </div><div class="param-desc"><span class="param-type">String</span> Trouble ticket priority</div>
+      
+      <div class="param">customer </div><div class="param-desc"><span class="param-type">CustomerReference</span> </div>
+      
+      <div class="param">marketplace </div><div class="param-desc"><span class="param-type">String</span> Marketplace related to this trouble ticket</div>
+      
+      <div class="param">subject </div><div class="param-desc"><span class="param-type">String</span> Short one line title describing ticket.</div>
+      
+      <div class="param">sla </div><div class="param-desc"><span class="param-type">Date</span> Date-time with a promisse for the customer when this ticket will be resolved</div>
+      
+      <div class="param">metadata </div><div class="param-desc"><span class="param-type">array[Metadata]</span> Leia mais sobre os metadados retornados nas listagens</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="TicketMessage">TicketMessage</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">createdAt </div><div class="param-desc"><span class="param-type">Date</span> Data de cria\u00E7\u00E3o do Ticket</div>
+      
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> Id do Ticket</div>
+      
+      <div class="param">user </div><div class="param-desc"><span class="param-type">UserReference</span> </div>
+      
+      <div class="param">body </div><div class="param-desc"><span class="param-type">String</span> Texto da mensagem</div>
+      
+      <div class="param">visibility </div><div class="param-desc"><span class="param-type">String</span> Se o consumidor final ir\u00E1 receber/visualizar a mensagem. Os valores permitidos s\u00E3o: &#39;INTERNAL&#39; e &#39;CUSTOMER&#39;</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="TicketStatus">TicketStatus</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">ticketStatus </div><div class="param-desc"><span class="param-type">String</span> Novo status desejado do Ticket. Fechado  (closed)  e Em Acompanhamento  (attendance) </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="Tracking">Tracking</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">items </div><div class="param-desc"><span class="param-type">array[ItemTracking]</span> Lista de itens alterados pela opera\u00E7\u00E3o de tracking</div>
+      
+      <div class="param">controlPoint </div><div class="param-desc"><span class="param-type">String</span> Status do pedido. Veja o servi\u00E7o &lt;a href=&#39;#!/orders/getOrderByIdV2_get_0&#39;  &gt;GET /orders/{orderId}&lt;/a&gt; para consultar todos os controlPoits existentes.</div>
+      
+      <div class="param">description </div><div class="param-desc"><span class="param-type">String</span> Descri\u00E7\u00E3o adicional sobre tracking</div>
+      
+      <div class="param">occurredAt </div><div class="param-desc"><span class="param-type">Date</span> Data da ocorr\u00EAncia</div>
+      
+      <div class="param">url </div><div class="param-desc"><span class="param-type">String</span> Url para consulta na transportadora</div>
+      
+      <div class="param">number </div><div class="param-desc"><span class="param-type">String</span> ID do objeto na transportadora</div>
+      
+      <div class="param">id </div><div class="param-desc"><span class="param-type">String</span> Identificador de agrupamento de shipments por item ou itens da ordem</div>
+      
+      <div class="param">sellerDeliveryId </div><div class="param-desc"><span class="param-type">String</span> ID \u00FAnico da entrega para o lojista no parceiro, n\u00E3o pode haver repeti\u00E7\u00E3o deste ID</div>
+      
+      <div class="param">cte </div><div class="param-desc"><span class="param-type">String</span> Conhecimento de Transporte Eletr\u00F4nico</div>
+      
+      <div class="param">courier </div><div class="param-desc"><span class="param-type">Courier</span> </div>
+      
+      <div class="param">invoice </div><div class="param-desc"><span class="param-type">Invoice</span> </div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  
+  <div class="model">
+    <h3 class="field-label"><a name="UserReference">UserReference</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+      <div class="param">login </div><div class="param-desc"><span class="param-type">String</span> Login do usu\u00E1rio que far\u00E1 o atendimento do Ticket</div>
+      
+      <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> Nome do usu\u00E1rio que far\u00E1 o atendimento do Ticket</div>
+      
+      
+    </div>  <!-- field-items -->
+  </div>
+  
+  
+  </body>
+</html>
