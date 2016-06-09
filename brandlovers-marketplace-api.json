@@ -3257,8 +3257,7 @@
                 "taxID": {
                     "type": "string",
                     "description": "Courier taxId information. For example CNPJ"
-                },
-
+                }
             }
         },
         "Invoice": {
