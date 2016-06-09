@@ -1622,68 +1622,6 @@
                 ]
             }
         },
-        "/order/{orderId}/items/{skuSellerId}": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success processing your request.",
-                        "schema": {
-                            "$ref": "#/definitions/OrderItem"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request."
-                    },
-                    "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
-                    },
-                    "403": {
-                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    }
-                },
-                "description": "Recupera detalhes de um item específico do pedido. Deve ser informado um pedido e um item do pedido válidos.",
-                "tags": [
-                    "orders"
-                ],
-                "summary": "Recupera detalhes de um item específico do pedido",
-                "operationId": "getOrderByIdAndSkuSllerId",
-                "produces": [
-                    "application/json"
-                ],
-                "consumes": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
-                        "name": "authorization",
-                        "type": "string",
-                        "required": true
-                    },
-                    {
-                        "in": "path",
-                        "description": "ID do pedido.",
-                        "name": "orderId",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "description": "SKU Seller ID do item de pedido.",
-                        "name": "skuSellerId",
-                        "required": true,
-                        "type": "string"
-                    }
-                ]
-            }
-        },
         "/order/{orderId}/shipments/cancel": {
             "post": {
                 "responses": {
@@ -2336,7 +2274,7 @@
     "tags": [
         {
             "name": "products",
-            "description": "Batch upload or Batch query of seller products."
+            "description": "Batch upload or bulk query of seller products."
         },
         {
             "name": "product",
@@ -2344,7 +2282,7 @@
         },
         {
             "name": "orders",
-            "description": "Batch upload or query orders"
+            "description": "Batch upload or bulk query orders"
         },
         {
             "name": "order",
@@ -2352,7 +2290,7 @@
         },
         {
             "name": "tickets",
-            "description": "Batch upload or query customer tickets"
+            "description": "Batch upload or bulk query customer tickets"
         },
         {
             "name": "ticket",
@@ -2360,7 +2298,7 @@
         },
         {
             "name": "marketplaces",
-            "description": "Returns Brand Lovers marketplaces details"
+            "description": "Returns marketplaces details"
         }
     ],
     "definitions": {
@@ -3257,8 +3195,7 @@
                 "taxID": {
                     "type": "string",
                     "description": "Courier taxId information. For example CNPJ"
-                },
-
+                }
             }
         },
         "Invoice": {
