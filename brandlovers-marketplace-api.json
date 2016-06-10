@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "BrandLovers Marketplace API",
+        "title": "BrandLovers Marketplace API V1",
         "description": "Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and update orders status. 3) Receive and update shipping information. 4) Receive and update customer tickets. All requests use consume application/json and return application/json. All request must be authenticated and use HTTPS.",
         "version": "1.0.0"
     },
@@ -1632,11 +1632,11 @@
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para confirmar a troca de um item de pedido aberto pelo cliente (via protocolo). Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
+                "description": "This enpoint to confirm item exchange when failure to deliver or requested by the customer. All customer requests are tracket via trouble tickets",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Operação para confirmar a troca de um item de um pedido",
+                "summary": "Confirm item exchange",
                 "operationId": "postOrderShippmentExchange",
                 "produces": [
                     "application/json"
@@ -1683,11 +1683,11 @@
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para confirmação de devolução (reembolso) de item do pedido através de protocolo aberto pelo cliente. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço",
+                "description": "Use this endpoint to return and refund items froma a order. In order to fully return an order list all items and applicate quantity.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Operação para confirmar devolução (reembolso) de item do pedido",
+                "summary": "Confirm order item return and refund",
                 "operationId": "postOrderShippmentReturn",
                 "produces": [
                     "application/json"
@@ -1713,7 +1713,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Order unique Id",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1734,11 +1734,11 @@
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
-                "description": "Registra uma nova operação de tracking de Envio para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
+                "description": "Updates order to include shipment shiped information. This endpoint can be used to include a single or multiple shipments for any give order. In order to inform that all items of a order where shipped list all of them, including applicable quantities in the payload.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Registra uma nova operação de tracking de envio",
+                "summary": "Update new order to include shipment information",
                 "operationId": "postOrdershipmentsent",
                 "produces": [
                     "application/json"
@@ -1898,11 +1898,11 @@
                         "description": "Access denied. You can only access your trouble tickets"
                     }
                 },
-                "description": "Returns trouble ticket history with all messages exchanged. Only tickets related to your seller will be returned attempt to read other tickets will return 403 (acess denied).",
+                "description": "Returns trouble ticket history with all messages exchanged. Only tickets related to your seller will be returned. Attempt to read other tickets will return 403 (acess denied).",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Operação utilizada para consultar um protocolo",
+                "summary": "Get trouble ticket messages",
                 "operationId": "GetTicketMessages",
                 "produces": [
                     "application/json"
@@ -2014,11 +2014,11 @@
                         "description": "Object not found."
                     }
                 },
-                "description": "Esse serviço permitirá que o lojista/plataforma altere o status de um Ticket. Os status permitidos serão: Fechado  (closed)  e Em Acompanhamento (attendance).",
+                "description": "Alows the seller to update the status of a trouble ticket",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Operação utilizada para atualizar o status dos tickets",
+                "summary": "Update trouble ticket status",
                 "operationId": "putTicketStatus",
                 "produces": [
                     "application/json"
@@ -2036,14 +2036,14 @@
                     },
                     {
                         "in": "path",
-                        "description": "Trouble ticket ID",
+                        "description": "Trouble ticket unique identification",
                         "name": "ticketId",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para ativação/desativação massiva de produtos",
+                        "description": "New trouble ticket status",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -2298,7 +2298,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "Descrição do produto. Aceita tags HTML para formatar a apresentação da descrição, no entanto há algumas tags restritas (tags para acesso a conteúdo externo): img, object, script e iframe."
+                    "description": "Product text description."
                 },
                 "brand": {
                     "type": "string",
@@ -2395,7 +2395,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "Descrição do produto. Aceita tags HTML para formatar a apresentação da descrição, no entanto há alguma tags restritas (tags para acesso a conteúdo externo): img, object, script e iframe."
+                    "description": "Product text description."
                 },
                 "brand": {
                     "type": "string",
@@ -2619,7 +2619,7 @@
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "ID único da entrega para o lojista no parceiro, não pode haver repetição deste ID"
+                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
                 },
                 "cte": {
                     "type": "string",
@@ -3062,7 +3062,7 @@
                 },
                 "urls": {
                     "type": "array",
-                    "description": "Lista de urls do produto para cada site no qual o mesmo está disponível",
+                    "description": "List of URLs where the product is listed for sale",
                     "items": {
                         "$ref": "#/definitions/ProductSiteReference"
                     }
@@ -3150,16 +3150,16 @@
         },
         "ProductSiteReference": {
             "required": [
-                "href",
-                "id",
+                "url",
+                "skuSellerId",
                 "marketplace"
             ],
             "properties": {
-                "id": {
+                "skuSellerId": {
                     "type": "string",
-                    "description": "ID do produto"
+                    "description": "Seller unique product Id"
                 },
-                "href": {
+                "url": {
                     "type": "string",
                     "description": "Link do produto no site"
                 },
@@ -3391,15 +3391,15 @@
             "properties": {
                 "address": {
                     "type": "string",
-                    "description": "Endereço (nome da rua, avenida ... )"
+                    "description": "Address first line (ave, street name, etc..)"
                 },
                 "number": {
                     "type": "string",
-                    "description": "Número do endereço"
+                    "description": "Address number"
                 },
                 "complement": {
                     "type": "string",
-                    "description": "Informações adicionais"
+                    "description": "Complementary info (aptartament number, building name, suite)"
                 },
                 "neighbourhood": {
                     "type": "string",
@@ -3695,7 +3695,7 @@
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "Seller unique shipping Id. associated with this shipment"
+                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
                 },
                 "cte": {
                     "type": "string",
@@ -3756,7 +3756,7 @@
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "ID de entrega do Lojista. Esse ID deve ser único para um pedido, não podendo haver repetição entre pedidos"
+                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
                 },
                 "cte": {
                     "type": "string",
@@ -3784,7 +3784,7 @@
                 },
                 "info": {
                     "type": "string",
-                    "description": "Informações adicionais sobre o evento"
+                    "description": "Aditional information about this shippment"
                 },
                 "occurredAt": {
                     "type": "string",
@@ -3826,7 +3826,7 @@
             "properties": {
                 "address": {
                     "type": "string",
-                    "description": "Address first line (ave, street, name )"
+                    "description": "Address first line (ave, street name, etc..)"
                 },
                 "number": {
                     "type": "string",
@@ -4041,7 +4041,7 @@
             "properties": {
                 "ticketStatus": {
                     "type": "string",
-                    "description": "Novo status desejado do Ticket. Fechado  (closed)  e Em Acompanhamento  (attendance) "
+                    "description": "Novo status desejado do Ticket. Fechado (closed) e Em Acompanhamento (attendance)"
                 }
             }
         },
