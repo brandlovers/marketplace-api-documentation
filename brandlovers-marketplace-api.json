@@ -24,7 +24,7 @@
                         "description": "Bad Request."
                     },
                     "401": {
-                        "description": "Not authenticated. Check your headers, `authorization` is required."
+                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
                 "description": "Use this enpoint to upload new product information to the Marketplace. This enpoint expects a json document with array of products. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update use the PUT method with the correct `skuSellerId`",
@@ -42,7 +42,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -99,7 +99,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -166,7 +166,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -218,7 +218,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -252,14 +252,14 @@
                       "description": "Bad Request."
                   },
                   "401": {
-                      "description": "Not authenticated. Check your headers, `authorization` is required."
+                      "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                   }
               },
-              "description": "Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT method with the correct referencing your `skuSellerId`",
+              "description": "Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit a product use the PUT method with the correct referencing your `skuSellerId`",
               "tags": [
                   "products"
               ],
-              "summary": "Allows new products to be loaded into the marketplace",
+              "summary": "Upload a new product to the marketplace",
               "operationId": "postProduct",
               "produces": [
                   "application/json"
@@ -270,14 +270,14 @@
               "parameters": [
                   {
                       "in": "header",
-                      "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                      "description": "Authorization token. The Authorization token can be found in your Admin console.",
                       "name": "authorization",
                       "type": "string",
                       "required": true
                   },
                   {
                       "in": "body",
-                      "description": "JSON with a array of new products to be updloaded to the platform",
+                      "description": "JSON with the new product to be updloaded to the platform",
                       "name": "products",
                       "required": true,
                       "schema": {
@@ -321,7 +321,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -335,7 +335,7 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number of items to return in this query. Min 1, max 1000. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number of items to return in this query. Defaults to 100. Maximum 200. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
                         "required": false,
                         "type": "integer"
@@ -369,7 +369,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -395,7 +395,7 @@
                     "200": {
                         "description": "Success processing your request.",
                         "schema": {
-                            "$ref": "#/definitions/GetSellerItemsPricesUpdatingResponse"
+                            "$ref": "#/definitions/GetSellerProductsPrices"
                         }
                     },
                     "400": {
@@ -410,7 +410,6 @@
                     "products"
                 ],
                 "summary": "Returns a list of products and prices",
-                "operationId": "getSellerItemsPricesUpdatingStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -420,7 +419,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -468,14 +467,14 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para ativação/desativação massiva de produtos",
+                        "description": "Data for bulk product price update",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -504,12 +503,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Retuns bulk data with seller products inventory. For extensive details for a given product use GET /product/{skuSellerId}",
+                "description": "Retuns bulk data with seller products inventory. For extensive details for a single product use GET /product/{skuSellerId}",
                 "tags": [
                     "products"
                 ],
                 "summary": "Get bulk details about products inventory",
-                "operationId": "getSellerItemsStocksUpdatingStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -519,7 +517,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -552,11 +550,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Operação utilizada para atualização de estoque, de forma massiva, de produtos enviados na carga. Retorno do Serviço.",
+                "description": "Bulk product stock update. This endpoint expect a array with product `skuSellerId` with new inventory data",
                 "tags": [
                     "products"
                 ],
-                "summary": "Operação para atualização de estoque de produtos em massa",
+                "summary": "Bulk product stock update",
                 "operationId": "putSellerItemsStocks",
                 "produces": [
                     "application/json"
@@ -567,14 +565,14 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para atualização massiva de estoque de produtos.",
+                        "description": "Array of product SKUs.",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -597,7 +595,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Requisição Requer Antenticação."
+                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
                 "description": "Update product status in the Marketplace. Set to `false` to disable `true` to enable for sale.",
@@ -605,7 +603,6 @@
                     "product"
                 ],
                 "summary": "Ativação/Desativação de produto no Marketplace",
-                "operationId": "putSellerItemStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -615,7 +612,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -667,7 +664,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -681,7 +678,7 @@
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para atualização de estoque do SKU",
+                        "description": "Product inventory information",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -719,7 +716,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -761,9 +758,6 @@
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
                     },
-                    "404": {
-                        "description": "Object not found."
-                    },
                     "405": {
                         "description": "Invalid method."
                     }
@@ -783,17 +777,10 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
-                    },
-                    {
-                        "in": "query",
-                        "description": "Marketplace to query for product(s)",
-                        "name": "marketplace",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "in": "query",
@@ -852,7 +839,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -902,7 +889,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -913,7 +900,7 @@
                         "name": "ordersshipments",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Ordersshipments"
+                            "$ref": "#/definitions/OrdersShipments"
                         }
                     }
                 ]
@@ -939,11 +926,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação utilizada para consultar o status de uma lista de produtos enviados. É possível refinar a consulta utilizando alguns parâmetros não obrigatórios como: STATUS e DATA DE CADASTRO DO PRODUTO",
+                "description": "Returns list of shipments. By default this will return list of the last shipments ordered by dateCreated, folowed by last update date.",
                 "tags": [
                     "products"
                 ],
-                "summary": "Get list of shipments",
+                "summary": "Returns list of shipments",
                 "operationId": "getOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
@@ -954,14 +941,14 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "query",
-                        "description": "Query by shippment status do produto importado.",
+                        "description": "Query by shippment status.",
                         "name": "status",
                         "required": false,
                         "type": "string"
@@ -1015,7 +1002,7 @@
                         "name": "ordersshipments",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Ordersshipments"
+                            "$ref": "#/definitions/OrdersShipments"
                         }
                     }
                 ]
@@ -1044,11 +1031,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação utilizada para consultar o status de uma lista de produtos enviados. É possível refinar a consulta utilizando alguns parâmetros não obrigatórios como: STATUS e DATA DE CADASTRO DO PRODUTO.",
+                "description": "Returns a list of shipments shipped. By Default returns items ordered by dateCreated folowed by last update",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Operação utilizada para consultar o status dos produtos enviados",
+                "summary": "Returns a list of shipments shipped",
                 "operationId": "getOrdersshipmentsent",
                 "produces": [
                     "application/json"
@@ -1059,7 +1046,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1134,7 +1121,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1196,7 +1183,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1258,7 +1245,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1320,7 +1307,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1382,7 +1369,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1429,11 +1416,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Retorna uma lista de pedidos Parcialmente Enviados que estão relacionados com o token do lojista informado. Ocorre quando um ou mais itens foram enviados, porém ainda existem itens que não foram enviados. Os pedidos ficam nesse estado apenas quando ocorreu quebra de entrega e alguns produtos da lista completa já foram sinalizados como Enviados pelo serviço",
+                "description": "Returns a list of orders containing one (or more) items that where not shipped. This will list the entire order as well the items with peding shipment. Use this service to track orders that need to be fullfiled.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Retorna uma lista de pedidos Parcialmente Enviados",
+                "summary": "Returns a list of orders partially fullfiled",
                 "operationId": "getOrdersByStatusPartiallySent",
                 "produces": [
                     "application/json"
@@ -1444,17 +1431,10 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
-                    },
-                    {
-                        "in": "query",
-                        "description": "Data de envio. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
-                        "name": "sentAt",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "in": "query",
@@ -1498,11 +1478,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Recupera uma lista de pedidos com status Enviado, que estão relacionados com o token do lojista informado. Este estado representa os pedidos cujos itens foram todos entregues.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
+                "description": "Returns a list with orders completely fullfiled, this means orders with all items sent. Orders will ordered by dateCreated fowllowed by last update",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Recupera uma lista de pedidos Enviados",
+                "summary": "Returns a list with orders fully sent",
                 "operationId": "getOrdersByStatusSent",
                 "produces": [
                     "application/json"
@@ -1513,17 +1493,10 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
-                    },
-                    {
-                        "in": "query",
-                        "description": "Data de envio. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: sentAt={data inicial},{data final} sentAt={data inicial},* sentAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas",
-                        "name": "sentAt",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "in": "query",
@@ -1567,11 +1540,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Recupera detalhes do pedido informado.Observação: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informações de entrega são suprimidas para evitar a entrega antes da confirmação do pagamento. Nesta documentação estão presentes todos os campos de Pedido. Para saber quais campos são retornados para cada status do pedido, basta consultar a documentação de cada um dos métodos de consulta de pedidos por status. Deve ser informado um pedido válido.Abaixo seguem os valores possíveis para o tipo de",
+                "description": "Returns all details of a single order, including last status, items shipped or not.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Recupera detalhes do pedido informado",
+                "summary": "Returns all details of a order",
                 "operationId": "getOrderById",
                 "produces": [
                     "application/json"
@@ -1582,14 +1555,14 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Unique Id of this order.",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1616,11 +1589,11 @@
                         "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Operação utilizada para confirmar o cancelamento de um item de pedido que foi aberto pelo cliente (via protocolo) ou cancelamento acionado pelo lojista. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.",
+                "description": "Confirm shipment canceletion (when requested by the customer) or failure to deliver one or more items",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Operação para confirmar o cancelamento de um item de pedido",
+                "summary": "Confirm shipment canceletion (when requested by the customer) or failure to deliver",
                 "operationId": "postOrderShippmentCancelation",
                 "produces": [
                     "application/json"
@@ -1631,7 +1604,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1673,11 +1646,11 @@
                         "description": "Invalid content-type. JSON is required."
                     }
                 },
-                "description": "Registra uma nova operação de tracking de Entrega para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que foram entregues. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar a entrega de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='../tutoriais/exemplo_tracking_delivered_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
+                "description": "Confirms that a shipment was delivered. Must inform quantity of sucessfully deliverd items even if items deliverd was less than the original order",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Registra uma nova operação de tracking de entrega",
+                "summary": "Confirms that a shipment was delivered",
                 "operationId": "postOrderShippmentDelivered",
                 "produces": [
                     "application/json"
@@ -1688,7 +1661,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1745,7 +1718,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1802,7 +1775,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1859,7 +1832,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1916,7 +1889,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -1932,13 +1905,6 @@
                             "REOPENED",
                             "CLOSE"
                         ]
-                    },
-                    {
-                        "in": "query",
-                        "description": "Trouble ticket uniqe identificaiton number.",
-                        "name": "ticketId",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "in": "query",
@@ -1966,18 +1932,15 @@
                     "400": {
                         "description": "Bad request."
                     },
-                    "404": {
-                        "description": "Object not found."
-                    },
                     "405": {
                         "description": "Invalid method."
                     }
                 },
-                "description": "Esse serviço irá efetuar a criação de um novo Ticket. Serve para atender as necessidades do lojista entrar em contato com o consumidor final caso necessário. Todo contato com o comprador, com exceção dos os emails transacionais que já são enviados pelo Marketplace, deve ser realizado através desta API.",
+                "description": "Use this service to initiate a new comunicaiton channel with the customer. Use this to send messages to the customer. Whenever possible this will be pushed to Mobile and email. This is the primary mean of comunicaiton with the customer regarding orders, shippments, shippments status",
                 "tags": [
                     "tickets"
                 ],
-                "summary": "Cria um novo protocolo",
+                "summary": "Creates a new trouble ticket",
                 "operationId": "postTicket",
                 "produces": [
                     "application/json"
@@ -1988,14 +1951,14 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
                     },
                     {
                         "in": "body",
-                        "description": "JSON object with message..",
+                        "description": "JSON object with new trouble ticket",
                         "name": "newTicket",
                         "required": true,
                         "schema": {
@@ -2042,7 +2005,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -2102,7 +2065,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -2164,7 +2127,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -2193,7 +2156,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console.",
+                        "description": "Authorization token. The Authorization token can be found in your Admin console.",
                         "name": "authorization",
                         "type": "string",
                         "required": true
@@ -2243,7 +2206,7 @@
             "type": "apiKey",
             "in": "header",
             "name": "authorization",
-            "description": "Authorization token. That's all you need to authorize. The Authorization token can be found in your Admin console."
+            "description": "Authorization token. The Authorization token can be found in your Admin console."
         }
     },
     "tags": [
@@ -2345,7 +2308,7 @@
             "properties": {
                 "productId": {
                     "type": "string",
-                    "description": "Brand Lovers Product ID. Use this to recommend a product association"
+                    "description": "Brand Lovers Product ID. Use this to suggest a product association. This field is optional."
                 },
                 "skuSellerId": {
                     "type": "string",
@@ -2409,7 +2372,7 @@
                 },
                 "attributes": {
                     "type": "array",
-                    "description": "Características do produto",
+                    "description": "List of `key` `value` attributes of this product. This is very important for search and SEO optmization. Include all relevant information",
                     "items": {
                         "$ref": "#/definitions/ProductAttribute"
                     }
@@ -2418,9 +2381,9 @@
         },
         "ProductUpdate": {
             "properties": {
-                "skuId": {
+                "productId": {
                     "type": "string",
-                    "description": "SKU ID do produto no Marketplace - utilizado para realizar associação de produtos"
+                    "description": "Brand Lovers Product Id. Use this to recommend a product association"
                 },
                 "skuSellerId": {
                     "type": "string",
@@ -2484,7 +2447,7 @@
                 },
                 "attributes": {
                     "type": "array",
-                    "description": "Características do produto",
+                    "description": "List of `key` `value` attributes of this product. This is very important for search and SEO optmization. Include all relevant information",
                     "items": {
                         "$ref": "#/definitions/ProductAttribute"
                     }
@@ -2521,7 +2484,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU ID do produto do Lojista"
+                    "description": "Unique Idenfication number associated with this product"
                 },
                 "productSellerId": {
                     "type": "string",
@@ -2658,7 +2621,7 @@
             "properties": {
                 "shipments": {
                     "type": "array",
-                    "description": "Informações de tracking do pedido",
+                    "description": "Order Shippment Status",
                     "items": {
                         "$ref": "#/definitions/OrderShippmentUpdatingStatus"
                     }
@@ -2716,7 +2679,7 @@
                 }
             }
         },
-        "Ordersshipments": {
+        "OrdersShipments": {
             "properties": {
                 "shipments": {
                     "type": "array",
@@ -2821,11 +2784,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status do produto"
-                },
-                "updateValue": {
-                    "type": "string",
-                    "description": "Atualização"
+                    "description": "Prodcut status"
                 },
                 "errors": {
                     "type": "array",
@@ -2838,19 +2797,20 @@
         "SellerItemStatusUpdate": {
             "required": [
                 "skuSellerId",
-                "status"
+                "active"
             ],
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Seller product unique Id that will be updated"
                 },
-                "status": {
-                    "type": "array",
-                    "description": "Status do produto",
-                    "items": {
-                        "$ref": "#/definitions/SellerItemStatus"
-                    }
+                "active": {
+                    "type": "boolean",
+                    "description": "Defines if this product is ready for sale. Active `true`, disabled `false`"
+                },
+                "marketplace": {
+                    "type": "string",
+                    "description": "Marketplace for witch this product is eligible. Please check marketplace list via GET /marketplaces ."
                 }
             }
         },
@@ -2870,11 +2830,11 @@
                 }
             }
         },
-        "GetSellerItemsPricesUpdatingResponse": {
+        "GetSellerProductsPrices": {
             "properties": {
                 "skus": {
                     "type": "array",
-                    "description": "Seller product SKUs",
+                    "description": "List of seller product SKUs with price information for each marketplace.",
                     "items": {
                         "$ref": "#/definitions/PricesUpdatingStatus"
                     }
@@ -2896,11 +2856,11 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status do pedido"
+                    "description": "Product status"
                 },
-                "updateValue": {
-                    "type": "integer",
-                    "description": "Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
+                "price": {
+                    "$ref": "#/definitions/ProductPrice",
+                    "description": "Price information for this product in this marketplace"
                 },
                 "marketplace": {
                     "type": "string",
@@ -2908,7 +2868,7 @@
                 },
                 "errors": {
                     "type": "array",
-                    "description": "Order erros (if any)",
+                    "description": "Price errors (if any)",
                     "items": {
                         "$ref": "#/definitions/Error"
                     }
@@ -2923,11 +2883,11 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Unique product Id from seller that willb e updated"
                 },
                 "prices": {
                     "type": "array",
-                    "description": "Preço do produto",
+                    "description": "New * do produto",
                     "items": {
                         "$ref": "#/definitions/Prices"
                     }
@@ -2947,6 +2907,10 @@
                 "offer": {
                     "type": "integer",
                     "description": "Product price. This is what will be offered to the customer. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
+                },
+                "marketplace": {
+                    "type": "string",
+                    "description": "Marketplace where this price is applicable."
                 }
             }
         },
@@ -2974,7 +2938,7 @@
             "properties": {
                 "skus": {
                     "type": "array",
-                    "description": "Product Array with inventory information",
+                    "description": "Product Array with detailed inventory information of each product",
                     "items": {
                         "$ref": "#/definitions/StockUpdatingStatus"
                     }
@@ -3002,12 +2966,9 @@
                     "type": "integer",
                     "description": "Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
-                "refer": {
-                    "type": "string",
-                    "description": "Arquivo de referência da atualização"
-                },
-                "siteList": {
+                "marketplaces": {
                     "type": "array",
+                    "description": "Arquivo de referência da atualização**",
                     "items": {
                         "type": "string"
                     }
@@ -3052,6 +3013,7 @@
                 },
                 "crossDockingTime": {
                     "type": "integer",
+                    "default": 0,
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
@@ -3067,6 +3029,7 @@
                 },
                 "crossDockingTime": {
                     "type": "integer",
+                    "default": 0,
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
@@ -3260,6 +3223,7 @@
                 },
                 "crossDockingTime": {
                     "type": "integer",
+                    "default": 0,
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the ETA informed to the customer"
                 }
             }
@@ -3771,6 +3735,7 @@
                 },
                 "crossDockingTime": {
                     "type": "integer",
+                    "default": 0,
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 },
                 "additionalInfo": {
@@ -4015,7 +3980,7 @@
             "properties": {
                 "from": {
                     "type": "string",
-                    "description": "Friendly name of person sending this message, if not provided Seller name will be used"
+                    "description": "Friendly name of the person sending this message, if not provided the seller `name` will be used"
                 },
                 "body": {
                     "type": "string",
