@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "BrandLovers Marketplace API V1",
-        "description": "Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and update orders status. 3) Receive and update shipping information. 4) Receive and update customer tickets. All requests use consume application/json and return application/json. All request must be authenticated and use HTTPS.",
+        "description": "Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and update orders status. 3) Receive and update shipping information. 4) Receive and update customer tickets. All requests consume and return application/json content. All request must be authenticated and use HTTPS.",
         "version": "1.0.0"
     },
     "host": "api.brandlovers.com",
@@ -290,7 +290,7 @@
                     "200": {
                         "description": "Success fetching results.",
                         "schema": {
-                            "$ref": "#/definitions/GetSellerItemsStatusUpdatingResponse"
+                            "$ref": "#/definitions/GetSellerProductsStatus"
                         }
                     },
                     "400": {
@@ -972,7 +972,7 @@
                 "parameters": [
                     {
                         "in": "body",
-                        "description": "Arquivo em formato JSON cujo conteúdo contêm uma lista de objetos de order tracking.",
+                        "description": "JSON payload with list of shippments of an order.",
                         "name": "ordersshipments",
                         "required": true,
                         "schema": {
@@ -2619,7 +2619,7 @@
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
+                    "description": "Unique Seller shipment shipment Id. This must be unique across all orders and itens"
                 },
                 "cte": {
                     "type": "string",
@@ -2649,13 +2649,13 @@
                 }
             }
         },
-        "GetSellerItemsStatusUpdatingResponse": {
+        "GetSellerProductsStatus": {
             "properties": {
                 "skus": {
                     "type": "array",
-                    "description": "Informações de status de SKU do produto do lojista",
+                    "description": "Status of the products from the seller",
                     "items": {
-                        "$ref": "#/definitions/SellerItemStatusUpdatingStatus"
+                        "$ref": "#/definitions/GetSellerProductStatus"
                     }
                 },
                 "metadata": {
@@ -2667,23 +2667,24 @@
                 }
             }
         },
-        "SellerItemStatusUpdatingStatus": {
+        "GetSellerProductStatus": {
             "required": [
                 "skuSellerId",
-                "status"
+                "status",
+                "marketplace"
             ],
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Unique Product Id (SKU) in the seller system. This is what defines witch product will be updated"
+                    "description": "Unique Product Id (SKU) in the seller system."
                 },
                 "marketplace": {
                     "type": "string",
-                    "description": "Marketplace Id that this order belogns to. use GET /marketplaces for details."
+                    "description": "Marketplace Id that this product is listed. Use GET /marketplaces for details of availble marketplaces."
                 },
                 "status": {
                     "type": "string",
-                    "description": "Prodcut status"
+                    "description": "Product status in this marketplace"
                 },
                 "errors": {
                     "type": "array",
@@ -2758,8 +2759,7 @@
                     "description": "Product status"
                 },
                 "price": {
-                    "$ref": "#/definitions/ProductPrice",
-                    "description": "Price information for this product in this marketplace"
+                    "$ref": "#/definitions/ProductPrice"
                 },
                 "marketplace": {
                     "type": "string",
@@ -2857,9 +2857,9 @@
                     "type": "string",
                     "description": "Unique Product Id (SKU) in the seller system"
                 },
-                "status": {
-                    "type": "string",
-                    "description": "Status da solicitação de atualização"
+                "quantity": {
+                    "type": "i",
+                    "description": "Status"
                 },
                 "updateValue": {
                     "type": "integer",
@@ -2867,7 +2867,7 @@
                 },
                 "marketplaces": {
                     "type": "array",
-                    "description": "Arquivo de referência da atualização**",
+                    "description": "Markplace information",
                     "items": {
                         "type": "string"
                     }
@@ -3041,21 +3041,21 @@
                 },
                 "status": {
                     "type": "array",
-                    "description": "Status do produto para cada site",
+                    "description": "Product status for each marketplace that this product is listed",
                     "items": {
                         "$ref": "#/definitions/SellerItemStatus"
                     }
                 },
                 "prices": {
                     "type": "array",
-                    "description": "Informações de preço de venda do produto para cada site",
+                    "description": "Price information for each marketplace that this product is listed",
                     "items": {
                         "$ref": "#/definitions/Prices"
                     }
                 },
                 "stocks": {
                     "type": "array",
-                    "description": "Informações de estoque do produto para cada site",
+                    "description": "Invetory information for each marketplace that this product is listed",
                     "items": {
                         "$ref": "#/definitions/ControlledStock"
                     }
@@ -3114,11 +3114,11 @@
             "properties": {
                 "quantity": {
                     "type": "integer",
-                    "description": "Quantidade de produtos disponíveis"
+                    "description": "Quantity of product available for sale"
                 },
                 "reserved": {
                     "type": "integer",
-                    "description": "Quantidade de produtos que estão reservados (com compras ainda não confirmadas)"
+                    "description": "Locked product invetory for orders that are not approved and are not ready to fullfil."
                 },
                 "crossDockingTime": {
                     "type": "integer",
@@ -3739,7 +3739,7 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista de Order IDs dos produtos comprados no pedido e que irão ser atualizados pela operação de tracking"
+                    "description": "List of Order IDs of this items from this order that will be updated in this shipment"
                 },
                 "occurredAt": {
                     "type": "string",
@@ -3748,11 +3748,11 @@
                 },
                 "url": {
                     "type": "string",
-                    "description": "Url para consulta na transportadora"
+                    "description": "Courier tracking URL para consulta na transportadora"
                 },
                 "number": {
                     "type": "string",
-                    "description": "ID do objeto na transportadora"
+                    "description": "Unique id shipment Id in the courier system"
                 },
                 "sellerDeliveryId": {
                     "type": "string",
