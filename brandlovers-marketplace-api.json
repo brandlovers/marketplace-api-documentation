@@ -24,7 +24,7 @@
                         "description": "Bad Request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Use this enpoint to upload new product information to the Marketplace. This enpoint expects a json document with array of products. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update use the PUT method with the correct `skuSellerId`",
@@ -73,7 +73,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                           "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -134,7 +134,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -183,13 +183,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request."
+                        "description": "Sucess!."
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -252,7 +252,7 @@
                       "description": "Bad Request."
                   },
                   "401": {
-                      "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                      "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                   }
               },
               "description": "Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit a product use the PUT method with the correct referencing your `skuSellerId`",
@@ -351,7 +351,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Bulk enable/disable products in the marketplace.",
@@ -443,13 +443,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Allows bulk update of product prices. This endpoint expects a json document with an array of products with the seller ID and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status",
@@ -542,13 +542,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request."
+                        "description": "Sucess!."
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Bulk product stock update. This endpoint expect a array with product `skuSellerId` with new inventory data",
@@ -590,13 +590,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Update product status in the Marketplace. Set to `true` to enable, `false` to disable sale.",
@@ -641,13 +641,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Update a single product inventory information. Products with zero stock will not be eligible for sale.",
@@ -693,13 +693,13 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Allows seller to set the SKU prices (MSRP and/or offer price). All prices must be informed in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. Same as $1,2345.67 must be informed solely as 1234567",
@@ -754,7 +754,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -813,7 +813,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -872,7 +872,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Bulk update of order shipments status. This alows to inform multiple shipments status",
@@ -918,7 +918,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -981,7 +981,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
                 "description": "Allows bulk updates of order shippments.",
@@ -1020,7 +1020,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1095,7 +1095,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1157,7 +1157,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1219,7 +1219,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1281,7 +1281,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1343,7 +1343,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1405,7 +1405,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1467,7 +1467,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1529,7 +1529,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -1581,7 +1581,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -1638,7 +1638,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -1695,7 +1695,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -1752,7 +1752,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -1809,7 +1809,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "405": {
                         "description": "Invalid method."
@@ -1973,7 +1973,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Sucess processing your request",
+                        "description": "Sucess!",
                         "schema": {
                             "$ref": "#/definitions/GetTicketMessagesResponse"
                         }
@@ -1982,7 +1982,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Access denied. You can only access your trouble tickets"
@@ -2101,7 +2101,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -2174,7 +2174,7 @@
                         "description": "Bad request."
                     },
                     "401": {
-                        "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
+                        "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
@@ -2321,7 +2321,7 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "Product name as advertised by manufaturer"
+                    "description": "Product name as advertised by manufacturer. This will be displayed in the Marketplace"
                 },
                 "description": {
                     "type": "string",
@@ -2329,7 +2329,7 @@
                 },
                 "brand": {
                     "type": "string",
-                    "description": "Product Brand"
+                    "description": "Brand name"
                 },
                 "gtin": {
                     "type": "array",
@@ -2396,7 +2396,7 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "Nome no Marketplace. Ex Televisor de LCD Sony Bravia 40”..."
+                    "description": "Product name as advertised by manufacturer. This will be displayed in the Marketplace"
                 },
                 "description": {
                     "type": "string",
@@ -2404,7 +2404,7 @@
                 },
                 "brand": {
                     "type": "string",
-                    "description": "Marca. Ex Sony"
+                    "description": "Brand name"
                 },
                 "gtin": {
                     "type": "array",
@@ -2493,7 +2493,7 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "Nome no Marketplace. Ex Televisor de LCD Sony Bravia 40”..."
+                    "description": "Product name as advertised by manufacturer. This will be displayed in the Marketplace"
                 },
                 "description": {
                     "type": "string",
@@ -2501,7 +2501,7 @@
                 },
                 "brand": {
                     "type": "string",
-                    "description": "Marca. Ex Sony"
+                    "description": "Brand name"
                 },
                 "gtin": {
                     "type": "array",
@@ -3128,11 +3128,11 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "Título de venda do produto no Marketplace. Ex Televisor de LCD Sony Bravia 40”..."
+                    "description": "Product name as advertised by manufacturer. This will be displayed in the Marketplace"
                 },
                 "brand": {
                     "type": "string",
-                    "description": "Marca do produto. Ex Sony"
+                    "description": "Brand name"
                 },
                 "gtin": {
                     "type": "array",
@@ -3505,7 +3505,7 @@
                 },
                 "neighbourhood": {
                     "type": "string",
-                    "description": "Bairro"
+                    "description": "Address neighbourhood"
                 },
                 "reference": {
                     "type": "string",
@@ -3513,19 +3513,19 @@
                 },
                 "city": {
                     "type": "string",
-                    "description": "Cidade"
+                    "description": "City"
                 },
                 "state": {
                     "type": "string",
-                    "description": "Estado"
+                    "description": "State"
                 },
                 "countryId": {
                     "type": "string",
-                    "description": "Identificação do País. Baseado na ISO-3166, padrão alpha 2. Ex.: BR, US, AR"
+                    "description": "Contry code using aplpha ISO-3166, Example: BR, US, AR, GB, CN"
                 },
                 "zipCode": {
                     "type": "string",
-                    "description": "Código de Endereçamento Postal - CEP"
+                    "description": "Zip Code"
                 }
             }
         },
@@ -3568,12 +3568,7 @@
                 },
                 "email": {
                     "type": "string",
-                    "description": "Customer Email (when available). Please note that there are no guarantess that customer will provide a email"
-                },
-                "birthDate": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Customer date of birth"
+                    "description": "Customer Email (when available). Please note: Email is not a mandatory field"
                 },
                 "phones": {
                     "type": "array",
@@ -3652,7 +3647,7 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "ID da promoção que o produto foi adquirido"
+                    "description": "Promotion unique idenfitcation number"
                 },
                 "name": {
                     "type": "string",
@@ -3770,39 +3765,39 @@
             "properties": {
                 "items": {
                     "type": "array",
-                    "description": "Lista de itens alterados pela operação de tracking",
+                    "description": "List of items updated shipped",
                     "items": {
                         "$ref": "#/definitions/ItemTracking"
                     }
                 },
                 "controlPoint": {
                     "type": "string",
-                    "description": "Status do pedido. Veja o serviço <a href='#!/orders/getOrderByIdV2_get_0'  >GET /orders/{orderId}</a> para consultar todos os controlPoits existentes."
+                    "description": "Shipment status"
                 },
                 "description": {
                     "type": "string",
-                    "description": "Descrição adicional sobre tracking"
+                    "description": "Additinal shipment tracking information"
                 },
                 "occurredAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data da ocorrência"
+                    "description": "Date time when this shippment happened"
                 },
                 "url": {
                     "type": "string",
-                    "description": "Url para consulta na transportadora"
+                    "description": "Courier tracking URL"
                 },
                 "number": {
                     "type": "string",
-                    "description": "ID do objeto na transportadora"
+                    "description": "Courier unique trackign Id associated with this shipment"
                 },
                 "id": {
                     "type": "string",
-                    "description": "Identificador de agrupamento de shipments por item ou itens da ordem"
+                    "description": "Shipment Id associated with this shippment used to group diferent item or items from a single order"
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "ID único da entrega para o lojista no parceiro, não pode haver repetição deste ID"
+                    "description": "Seller unique shipping Id. associated with this shipment"
                 },
                 "cte": {
                     "type": "string",
@@ -3945,7 +3940,7 @@
                 },
                 "neighbourhood": {
                     "type": "string",
-                    "description": "Customer neighbourhood"
+                    "description": "Address neighbourhood"
                 },
                 "reference": {
                     "type": "string",
@@ -3961,7 +3956,7 @@
                 },
                 "countryId": {
                     "type": "string",
-                    "description": "Country Code. Use ISO-3166. Example: BR, US, AR, GB, CN"
+                    "description": "Contry code using aplpha ISO-3166, Example: BR, US, AR, GB, CN"
                 },
                 "zipCode": {
                     "type": "string",
