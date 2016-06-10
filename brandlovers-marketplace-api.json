@@ -131,7 +131,7 @@
                         }
                     },
                     "400": {
-                        "description": "Bad request. In general this means a invalid skuSellerId."
+                        "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
@@ -225,14 +225,14 @@
                     },
                     {
                         "in": "path",
-                        "description": "SKU do produto do lojista que deverá ser alterado.",
+                        "description": "Unique Product Id (SKU) in the seller system that will be updated.",
                         "name": "skuSellerId",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para alterar um produto enviado na carga.",
+                        "description": "New product information.",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -531,7 +531,8 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Use this conjuction with `offset` to paginate across the results.",
+                        "default": 10,
                         "name": "limit",
                         "required": false,
                         "type": "integer"
@@ -619,7 +620,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "SKU ID do Lojista.",
+                        "description": "Unique Product Id (SKU) in the seller system",
                         "name": "skuSellerId",
                         "required": true,
                         "type": "string"
@@ -671,14 +672,14 @@
                     },
                     {
                         "in": "path",
-                        "description": "SKU ID do Lojista.",
+                        "description": "Unique Product Id (SKU) in the seller system that will be updated",
                         "name": "skuSellerId",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "in": "body",
-                        "description": "Product inventory information",
+                        "description": "New product inventory information",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -2312,11 +2313,11 @@
                 },
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Unique Product ID (SKU) in the seller system"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
-                "productSellerId": {
+                "productGroupId": {
                     "type": "string",
-                    "description": "ID do produto do lojista para fazer o agrupamento de SKUs"
+                    "description": "Unique Product Group ID. Products with the same `productGroupId` will be grouped and displayed as a unique entry. Use this to group diferent SKUs that represent diferent colors, sizes, capacities, etc.."
                 },
                 "title": {
                     "type": "string",
@@ -2387,11 +2388,11 @@
                 },
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU ID do produto do Lojista"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
-                "productSellerId": {
+                "productGroupId": {
                     "type": "string",
-                    "description": "ID do produto do lojista para fazer o agrupamento de SKUs"
+                    "description": "Unique Product Group ID. Products with the same `productGroupId` will be grouped and displayed as a unique entry. Use this to group diferent SKUs that represent diferent colors, sizes, capacities, etc.."
                 },
                 "title": {
                     "type": "string",
@@ -2484,11 +2485,11 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Unique Idenfication number associated with this product"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
-                "productSellerId": {
+                "productGroupId": {
                     "type": "string",
-                    "description": "ID do produto do lojista para fazer o agrupamento de SKUs"
+                    "description": "Unique Product Group ID. Products with the same `productGroupId` will be grouped and displayed as a unique entry. Use this to group diferent SKUs that represent diferent colors, sizes, capacities, etc.."
                 },
                 "title": {
                     "type": "string",
@@ -2605,11 +2606,11 @@
             "properties": {
                 "available": {
                     "type": "boolean",
-                    "description": "Flag that defines if seller supports giftwrapping"
+                    "description": "Flag that defines if this product is eligible for giftwrapping"
                 },
                 "value": {
                     "type": "integer",
-                    "description": "Valor cobrado pelo embrulho"
+                    "description": "Amount charged for gift wrap. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "messageSupport": {
                     "type": "boolean",
@@ -2742,11 +2743,11 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Unique Product Id (SKU) in the seller system. This is the key that defines witch product will be updated"
                 },
                 "quantity": {
                     "type": "integer",
-                    "description": "Quantidade do estoque"
+                    "description": "New quantity in stock availble for sale"
                 }
             }
         },
@@ -2776,7 +2777,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Unique Product Id (SKU) in the seller system. This is what defines witch product will be updated"
                 },
                 "marketplace": {
                     "type": "string",
@@ -2852,7 +2853,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Seller unique product identification number"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
                 "status": {
                     "type": "string",
@@ -2883,7 +2884,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Unique product Id from seller that willb e updated"
+                    "description": "Unique product Id from seller that will be updated"
                 },
                 "prices": {
                     "type": "array",
@@ -2956,7 +2957,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
                 "status": {
                     "type": "string",
@@ -2990,7 +2991,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU do produto do lojista que deverá ser alterado"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
                 "stocks": {
                     "type": "array",
@@ -3123,7 +3124,7 @@
             "properties": {
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU ID do produto do Lojista"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
                 "title": {
                     "type": "string",
@@ -3615,7 +3616,7 @@
                 },
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Seller SKU for this product"
+                    "description": "Unique Product Id (SKU) in the seller system"
                 },
                 "name": {
                     "type": "string",
