@@ -2310,7 +2310,7 @@
         },
         "Error": {
             "required": [
-                "type"
+                "type",
                 "message",
             ],
             "properties": {
