@@ -113,7 +113,7 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number of items to retun. Defaults to 100. Max alowed is 200. Use this conjuction with `offset` to paginate across the results. ",
+                        "description": "Number of items to retun. Defaults to 100. Max alowed is 200. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
                         "required": false,
                         "type": "integer"
@@ -598,11 +598,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Update product status in the Marketplace. Set to `false` to disable `true` to enable for sale.",
+                "description": "Update product status in the Marketplace. Set to `true` to enable, `false` to disable sale.",
                 "tags": [
                     "product"
                 ],
-                "summary": "Ativação/Desativação de produto no Marketplace",
+                "summary": "Enable/disable a single product in the Marketplace",
                 "produces": [
                     "application/json"
                 ],
@@ -626,7 +626,7 @@
                     },
                     {
                         "in": "body",
-                        "description": "Parâmetros para ativação/desativação do SKU.",
+                        "description": "Seller SKU that will be enabled or disabled",
                         "name": "body",
                         "required": true,
                         "schema": {
@@ -649,11 +649,11 @@
                         "description": "Access denied. You're not authenticated. Check your request header. `authorization` field is required."
                     }
                 },
-                "description": "Atualiza a quantidade disponível para venda do Item do Lojista informado. Se atualizado para zero, o item não estará mais disponível para venda.",
+                "description": "Update a single product inventory information. Products with zero stock will not be eligible for sale.",
                 "tags": [
                     "product"
                 ],
-                "summary": "Atualização de estoque do item do Lojista",
+                "summary": "Update a single prouduc stock",
                 "operationId": "putSellerItemStock",
                 "produces": [
                     "application/json"
