@@ -64,7 +64,10 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Successful request."
+                        "description": "Successful request.",
+                        "schema": {
+                            "$ref": "#/definitions/GetProductsResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad request."
@@ -1135,13 +1138,6 @@
                         "name": "authorization",
                         "type": "string",
                         "required": true
-                    },
-                    {
-                        "in": "query",
-                        "description": "Data de aprovação. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: approvedAt={data inicial},{data final} approvedAt={data inicial},* approvedAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
-                        "name": "approvedAt",
-                        "required": false,
-                        "type": "string"
                     },
                     {
                         "in": "query",
@@ -2297,26 +2293,15 @@
                 }
             }
         },
-        "Errors": {
-            "properties": {
-                "errors": {
-                    "type": "array",
-                    "description": "Lista contendo os skus que não puderam ser cancelado e o erro para cada um",
-                    "items": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        },
         "Error": {
             "required": [
                 "type",
-                "message",
+                "message"
             ],
             "properties": {
                 "type": {
                     "type": "string",
-                    "description": "Tipo do erro"
+                    "description": "Error type"
                 },
                 "message": {
                     "type": "string",
@@ -2509,28 +2494,15 @@
         "ProductResponseItem": {
             "properties": {
                 "skuSeller": {
-                    "$ref": "#/definitions/SellerItemReference"
+                    "$ref": "#/definitions/GetProduct"
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status do produto"
+                    "description": "Product status"
                 },
                 "createdAt": {
                     "type": "string",
-                    "format": "date-time",
-                    "description": "Data de envio do produto"
-                }
-            }
-        },
-        "SellerItemReference": {
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "ID do produto"
-                },
-                "href": {
-                    "type": "string",
-                    "description": "Caminho do produto"
+                    "format": "date-time"
                 }
             }
         },
@@ -2547,10 +2519,6 @@
                 "images"
             ],
             "properties": {
-                "skuId": {
-                    "type": "string",
-                    "description": "SKU ID do produto no Marketplace - utilizado para realizar associação de produtos"
-                },
                 "skuSellerId": {
                     "type": "string",
                     "description": "SKU ID do produto do Lojista"
@@ -2650,22 +2618,18 @@
             "properties": {
                 "weight": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product weight in Grams. No commas or periods are accepeted. For example one killo must be informed as 1000. Another example 1 Kilo and 234 grams should be informed solely as 1234"
                 },
                 "length": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product length in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230"
                 },
                 "width": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product width in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230"
                 },
                 "height": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product height in millimeters. No commas or periods are accepeted. For example one meter produc must be informed as 1000. Another example 1 meter and 23 centimeters should be informed solely as 1230"
                 }
             }
@@ -2682,7 +2646,6 @@
                 },
                 "value": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Valor cobrado pelo embrulho"
                 },
                 "messageSupport": {
@@ -2736,18 +2699,16 @@
         "OrderId": {
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "ID do pedido."
+                    "type": "string",
+                    "description": "Order unique Id."
                 }
             }
         },
         "OrderReference": {
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "ID do pedido."
+                    "type": "string",
+                    "description": "Order unique Id."
                 },
                 "href": {
                     "type": "string",
@@ -2779,7 +2740,7 @@
                 },
                 "controlPoint": {
                     "type": "string",
-                    "description": "Status do pedido. Veja o serviço <a href='#!/orders/getOrderByIdV2_get_0'  >GET /orders/{orderId}</a> para consultar todos os controlPoits existentes."
+                    "description": "Status do pedido."
                 },
                 "occurredAt": {
                     "type": "string",
@@ -2822,7 +2783,6 @@
                 },
                 "quantity": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Quantidade do estoque"
                 }
             }
@@ -2866,10 +2826,6 @@
                 "updateValue": {
                     "type": "string",
                     "description": "Atualização"
-                },
-                "siteName": {
-                    "type": "string",
-                    "description": "Nome do site"
                 },
                 "errors": {
                     "type": "array",
@@ -2943,17 +2899,16 @@
                     "description": "Status do pedido"
                 },
                 "updateValue": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Valor de atualização"
+                    "type": "integer",
+                    "description": "Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
-                "siteName": {
+                "marketplace": {
                     "type": "string",
-                    "description": "Nome do site"
+                    "description": "Marketplace"
                 },
                 "errors": {
                     "type": "array",
-                    "description": "Erros do pedido",
+                    "description": "Order erros (if any)",
                     "items": {
                         "$ref": "#/definitions/Error"
                     }
@@ -2987,12 +2942,10 @@
             "properties": {
                 "default": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "List price, also known as MSRP (Manufacturer Suggest Retail Price) or the recommended retail price (RRP). All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "offer": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product price. This is what will be offered to the customer. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 }
             }
@@ -3005,12 +2958,10 @@
             "properties": {
                 "default": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "List price, also known as MSRP (Manufacturer Suggest Retail Price) or the recommended retail price (RRP). All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "offer": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product price. This is what will be offered to the customer. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "marketplace": {
@@ -3049,7 +3000,6 @@
                 },
                 "updateValue": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Update value in cents. All pirces must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "refer": {
@@ -3064,7 +3014,7 @@
                 },
                 "errors": {
                     "type": "array",
-                    "description": "Erros do pedido",
+                    "description": "Order errors",
                     "items": {
                         "$ref": "#/definitions/Error"
                     }
@@ -3098,12 +3048,10 @@
             "properties": {
                 "quantity": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Number of product availble for sale"
                 },
                 "crossDockingTime": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
@@ -3115,12 +3063,10 @@
             "properties": {
                 "quantity": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Stock available"
                 },
                 "crossDockingTime": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 }
             }
@@ -3306,17 +3252,14 @@
             "properties": {
                 "quantity": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Quantidade de produtos disponíveis"
                 },
                 "reserved": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Quantidade de produtos que estão reservados (com compras ainda não confirmadas)"
                 },
                 "crossDockingTime": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the ETA informed to the customer"
                 }
             }
@@ -3404,7 +3347,7 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Unique order Id related to this seller"
+                    "description": "Unique order Id (related to this seller)"
                 },
                 "orderMarketplaceId": {
                     "type": "string",
@@ -3422,25 +3365,23 @@
                 "approvedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data de aprovação de pagamento do pedido"
+                    "description": "Order approval date-time"
                 },
                 "updatedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Última data de atualização do pedido"
+                    "description": "Order last update"
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status atual do pedido"
+                    "description": "Order status"
                 },
                 "totalAmount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Order total in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "totalDiscountAmount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Total order discounts in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "billing": {
@@ -3511,11 +3452,11 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "ID do pedido gerado para o lojista"
+                    "description": "Unique order Id (related to this seller)"
                 },
                 "orderMarketplaceId": {
                     "type": "string",
-                    "description": "ID do pedido gerado no site e que é passado ao cliente"
+                    "description": "Unique Order Id that will be displayed to the customer. This Id is not the same as `orderId`"
                 },
                 "marketplace": {
                     "type": "string",
@@ -3529,7 +3470,7 @@
                 "approvedAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data de aprovação de pagamento do pedido"
+                    "description": "Order approval date"
                 },
                 "updatedAt": {
                     "type": "string",
@@ -3542,12 +3483,10 @@
                 },
                 "totalAmount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Total order amount. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "totalDiscountAmount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Total order discount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "billing": {
@@ -3720,7 +3659,6 @@
                 },
                 "salePrice": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Product unit price"
                 },
                 "sent": {
@@ -3757,7 +3695,6 @@
                 },
                 "amount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Total discount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "type": {
@@ -3822,27 +3759,23 @@
             "properties": {
                 "actualAmount": {
                     "type": "integer",
-                    "format": "int32",
                     "description": "Valor nominal do frete (sem descontos e abatimentos, com margem comercial)"
                 },
                 "chargedAmount": {
                     "type": "integer",
-                    "format": "int32",
-                    "description": "Valor cobrado pelo frete"
+                    "description": "Shipment cost. Must be informed in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. Same as $1,2345.67 must be informed solely as 1234567"
                 },
                 "transitTime": {
                     "type": "integer",
-                    "format": "int32",
-                    "description": "Prazo de transporte para entrega do produto em dias úteis"
+                    "description": "Deliver time in seconds. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 },
                 "crossDockingTime": {
                     "type": "integer",
-                    "format": "int32",
-                    "description": "Tempo de preparação/fabricação do produto em dias. Esse tempo é incluído no cálculo de frete."
+                    "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the product ETA informed to the customer"
                 },
                 "additionalInfo": {
                     "type": "string",
-                    "description": "Informações adicionais sobre a entrega. Pode ser utilizado para informar o nome da transportadora, por exemplo"
+                    "description": "Aditional information for the courier"
                 },
                 "type": {
                     "type": "string",
@@ -3851,11 +3784,11 @@
                 "scheduledAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data de agendamento da entrega"
+                    "description": "Scheduled delivery date"
                 },
                 "scheduledPeriod": {
                     "type": "string",
-                    "description": "Período que a entrega foi agendada"
+                    "description": "Scheduled period"
                 }
             }
         },
@@ -4001,15 +3934,15 @@
                 },
                 "url": {
                     "type": "string",
-                    "description": "Url para consulta na transportadora"
+                    "description": "Courier tracking URL"
                 },
                 "number": {
                     "type": "string",
-                    "description": "ID do objeto na transportadora"
+                    "description": "Tracking Id in the courier"
                 },
                 "sellerDeliveryId": {
                     "type": "string",
-                    "description": "ID de entrega do Lojista. Esse ID deve ser único para um pedido, não podendo haver repetição entre pedidos"
+                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
                 },
                 "cte": {
                     "type": "string",
