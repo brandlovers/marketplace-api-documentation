@@ -1116,11 +1116,11 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Recupera uma lista de pedidos com status Aprovado que estão relacionados com o token do lojista informado. Este serviço irá retornar um ou mais pedidos que já possua pagamento aprovado, ou seja, são pedidos que podem ter o processo de entrega iniciado de imediato.Obs.: Os emails transacionais que reportam o status do pedido para os clientes devem ser desabibilitados. Esse tipo de email já é enviado pelo Marketplace.",
+                "description": "Returns a list of approved orders. Orders in the `approved` state must be fullfiled imediadetelly.",
                 "tags": [
                     "orders"
                 ],
-                "summary": "Recupera uma lista de pedidos Aprovados",
+                "summary": "Return list of approved orders",
                 "operationId": "getOrdersByStatusApproved",
                 "produces": [
                     "application/json"
@@ -1140,20 +1140,6 @@
                         "in": "query",
                         "description": "Data de aprovação. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: approvedAt={data inicial},{data final} approvedAt={data inicial},* approvedAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
                         "name": "approvedAt",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Nome do Cliente.",
-                        "name": "customer.name",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Documento do Cliente.",
-                        "name": "customer.documentNumber",
                         "required": false,
                         "type": "string"
                     },
