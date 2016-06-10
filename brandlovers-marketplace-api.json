@@ -27,7 +27,7 @@
                         "description": "Not authenticated. Check your headers, `authorization` is required."
                     }
                 },
-                "description": "Use this enpoint to upload new product information to the Marketplace. This enpoint expects a json document with array of products. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `skuSellerId`",
+                "description": "Use this enpoint to upload new product information to the Marketplace. This enpoint expects a json document with array of products. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update use the PUT method with the correct `skuSellerId`",
                 "tags": [
                     "products"
                 ],
@@ -76,7 +76,7 @@
                           "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
                     }
                 },
-                "description": "Get a list of my products loaded sucessfully loaded into the Marketplace. This dosen't means that products are eligible for sale, just that they are loaded into the server database.",
+                "description": "Get a list of my products loaded sucessfully loaded into the Marketplace. This dosen't means that products are eligible for sale, just that they are loaded in the database.",
                 "tags": [
                     "products"
                 ],
@@ -103,7 +103,7 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
                         "required": false,
                         "type": "integer"
@@ -252,7 +252,7 @@
                       "description": "Not authenticated. Check your headers, `authorization` is required."
                   }
               },
-              "description": "Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT or DELETE methods with the correct referencing your `skuSellerId`",
+              "description": "Use this enpoint to upload a single new product to the Marketplace. This enpoint expects a json document with one product. If you whant to upload multiple products in a single API call use POST /products method. The server will load each product as an individual item that can be manipulated using your own `skuSellerId`. This system is idenpontent, this means that once a `skuSellerId` is created it cannot be re-created using this tool. In order to update, edit or even delete a product use the PUT method with the correct referencing your `skuSellerId`",
               "tags": [
                   "products"
               ],
@@ -274,7 +274,7 @@
                   },
                   {
                       "in": "body",
-                      "description": "JSON with a list of new products to be updloaded to the platform",
+                      "description": "JSON with a array of new products to be updloaded to the platform",
                       "name": "products",
                       "required": true,
                       "schema": {
@@ -325,9 +325,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -424,14 +424,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -523,14 +523,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -794,9 +794,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -834,7 +834,7 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Operação utilizada para retornar informações de todos os pedidos, independente do status em que se encontram os mesmos.Observação: Os campos retornados dependem do status do pedido, por exemplo, no status new, as informações de entrega são suprimidas para evitar a entrega antes da confirmação do pagamento. Nesta documentação estão presentes todos os campos de Pedido. Para saber quais campos são retornados para cada status do pedido, basta consultar a documentação de cada um dos métodos de consulta de pedidos por status.",
+                "description": "Retuns a list of orders associated with this seller. The list is ordered by dateCreated.",
                 "tags": [
                     "orders"
                 ],
@@ -856,14 +856,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a posição inicial da consulta. O registro inicial tem índice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to reut when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -940,7 +940,7 @@
                 "tags": [
                     "products"
                 ],
-                "summary": "Operação utilizada para consultar o status dos produtos enviados",
+                "summary": "Get list of shipments",
                 "operationId": "getOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
@@ -958,23 +958,16 @@
                     },
                     {
                         "in": "query",
-                        "description": "Data de envio do produto. Esse campo aceita um range de datas separados por vírgula, e os formatos aceitos para o campo são os seguintes: purchasedAt={data inicial},{data final} purchasedAt={data inicial},* purchasedAt=*,{data final} onde, o * é obrigatório e indica a que todas as datas antes ou depois da outra data passada devem ser consideradas.",
-                        "name": "createdAt",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "description": "Status do produto importado.",
+                        "description": "Query by shippment status do produto importado.",
                         "name": "status",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a posição do registro inicial que será trazido. A primeira posição é sempre zero (0)",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -1083,14 +1076,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -1166,9 +1159,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -1228,9 +1221,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -1290,14 +1283,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -1352,14 +1345,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -1414,14 +1407,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -1483,14 +1476,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a posição inicial da consulta. O registro inicial tem índice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -1552,9 +1545,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a posição inicial da consulta. O registro inicial tem índice zero (0), ou seja, para trazer os 10 primeiros registros, informa 0 para offset e 10 para limit.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -1967,9 +1960,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a posição inicial de consulta. ",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
@@ -1998,7 +1991,7 @@
                         "description": "Invalid method."
                     }
                 },
-                "description": "Esse serviço irá efetuar a criação de um novo Ticket. Serve para atender as necessidades do lojista entrar em contato com o consumidor final caso necessário.Todo contato com o comprador, com exceção dos os emails transacionais que já são enviados pelo Marketplace, deve ser realizado através desta API.",
+                "description": "Esse serviço irá efetuar a criação de um novo Ticket. Serve para atender as necessidades do lojista entrar em contato com o consumidor final caso necessário. Todo contato com o comprador, com exceção dos os emails transacionais que já são enviados pelo Marketplace, deve ser realizado através desta API.",
                 "tags": [
                     "tickets"
                 ],
@@ -2081,14 +2074,14 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "offset",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
                         "name": "limit",
                         "required": true,
                         "type": "integer"
@@ -2331,30 +2324,21 @@
         },
         "Error": {
             "required": [
-                "code",
-                "message",
                 "type"
+                "message",
             ],
             "properties": {
-                "code": {
-                    "type": "string",
-                    "description": "Código de retorno da aplicação"
-                },
-                "httpStatus": {
-                    "type": "string",
-                    "description": "Código de retorno do protocólo HTTP"
-                },
                 "type": {
                     "type": "string",
                     "description": "Tipo do erro"
                 },
                 "message": {
                     "type": "string",
-                    "description": "Descrição do erro"
+                    "description": "Friendly message describing the error"
                 },
                 "skuSellerId": {
                     "type": "string",
-                    "description": "Identificador do seller item que originou o problema"
+                    "description": "When applicabe will include `skuSellerId` related to this error"
                 }
             }
         },
@@ -2754,11 +2738,6 @@
                     "type": "string",
                     "description": "Status do pedido"
                 },
-                "processedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data do processamento"
-                },
                 "errors": {
                     "type": "array",
                     "description": "Erros do envido de pedidos",
@@ -2898,11 +2877,6 @@
                     "type": "string",
                     "description": "Status do produto"
                 },
-                "processedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data do processamento"
-                },
                 "updateValue": {
                     "type": "string",
                     "description": "Atualização"
@@ -2910,10 +2884,6 @@
                 "siteName": {
                     "type": "string",
                     "description": "Nome do site"
-                },
-                "skuSite": {
-                    "type": "string",
-                    "description": "Sku do site"
                 },
                 "errors": {
                     "type": "array",
@@ -2985,11 +2955,6 @@
                 "status": {
                     "type": "string",
                     "description": "Status do pedido"
-                },
-                "processedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data do processamento"
                 },
                 "updateValue": {
                     "type": "number",
@@ -3096,11 +3061,6 @@
                     "type": "string",
                     "description": "Status da solicitação de atualização"
                 },
-                "processedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data do processamento"
-                },
                 "updateValue": {
                     "type": "integer",
                     "format": "int32",
@@ -3109,10 +3069,6 @@
                 "refer": {
                     "type": "string",
                     "description": "Arquivo de referência da atualização"
-                },
-                "skuSite": {
-                    "type": "string",
-                    "description": "SKU do site onde o estoque será atualizado"
                 },
                 "siteList": {
                     "type": "array",
@@ -3274,10 +3230,6 @@
                     "type": "string",
                     "description": "SKU ID do produto do Lojista"
                 },
-                "skuSiteId": {
-                    "type": "string",
-                    "description": "SKU Id do produto."
-                },
                 "title": {
                     "type": "string",
                     "description": "Título de venda do produto no Marketplace. Ex Televisor de LCD Sony Bravia 40”..."
@@ -3379,7 +3331,7 @@
                 "crossDockingTime": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Tempo de preparação/fabricação do produto. Esse tempo é incluído no cálculo de frete"
+                    "description": "Time it will take to manufacture, prepare or setup this product. Time must be provided in seconds. For example 1 day should be informed as 86400. This time will be included in the ETA informed to the customer"
                 }
             }
         },
@@ -3449,7 +3401,7 @@
         "Order": {
             "required": [
                 "id",
-                "orderSiteId",
+                "orderMarketplaceId",
                 "purchasedAt",
                 "updatedAt",
                 "status",
@@ -3466,11 +3418,11 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "ID do pedido gerado para o lojista"
+                    "description": "Unique order Id related to this seller"
                 },
-                "orderSiteId": {
+                "orderMarketplaceId": {
                     "type": "string",
-                    "description": "ID do pedido gerado no site e que é passado ao cliente"
+                    "description": "Unique Order Id that will be displayed to the customer. This Id is not the same as `orderId`"
                 },
                 "marketplace": {
                     "type": "string",
@@ -3550,15 +3502,14 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Metadata"
-                    },
-                    "description": "Leia mais sobre os metadados retornados nas listagens em <a href='../apis/index.html#search'  >Metadada</a>"
+                    }
                 }
             }
         },
         "OrderStatusNew": {
             "required": [
                 "id",
-                "orderSiteId",
+                "orderMarketplaceId",
                 "purchasedAt",
                 "updatedAt",
                 "status",
@@ -3576,7 +3527,7 @@
                     "type": "string",
                     "description": "ID do pedido gerado para o lojista"
                 },
-                "orderSiteId": {
+                "orderMarketplaceId": {
                     "type": "string",
                     "description": "ID do pedido gerado no site e que é passado ao cliente"
                 },
@@ -3692,11 +3643,11 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "ID do produto"
+                    "description": "Seller unique Id in the Brand Lovers Marketplace"
                 },
                 "name": {
                     "type": "string",
-                    "description": "Nome do produto"
+                    "description": "Seller name in the Brand Lovers Marketplace"
                 }
             }
         },
@@ -3711,7 +3662,7 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "Identificador do cliente"
+                    "description": "Customer unqiue Id"
                 },
                 "name": {
                     "type": "string",
@@ -3725,14 +3676,9 @@
                     "type": "string",
                     "description": "Customer type: Enterprise or Consumer"
                 },
-                "createdAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data de envio do produto"
-                },
                 "email": {
                     "type": "string",
-                    "description": "Email do cliente"
+                    "description": "Customer Email (when available). Please note that there are no guarantess that customer will provide a email"
                 },
                 "birthDate": {
                     "type": "string",
@@ -3776,15 +3722,15 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "ID do item de Pedido"
+                    "description": "Unique Id representing this item"
                 },
                 "skuSellerId": {
                     "type": "string",
-                    "description": "SKU ID do produto do Lojista"
+                    "description": "Seller SKU for this product"
                 },
                 "name": {
                     "type": "string",
-                    "description": "Nome do produto"
+                    "description": "Product name"
                 },
                 "salePrice": {
                     "type": "integer",
@@ -3793,7 +3739,7 @@
                 },
                 "sent": {
                     "type": "boolean",
-                    "description": "Flag que indica se o produto já foi enviado"
+                    "description": "Flag if product was already shipped"
                 },
                 "freight": {
                     "$ref": "#/definitions/Freight"
@@ -3803,7 +3749,7 @@
                 },
                 "promotions": {
                     "type": "array",
-                    "description": "Lista de Promoções",
+                    "description": "Promotions array",
                     "items": {
                         "$ref": "#/definitions/Promotion"
                     }
@@ -3821,16 +3767,16 @@
                 },
                 "name": {
                     "type": "string",
-                    "description": "Descrição da promoção"
+                    "description": "Promotion name"
                 },
                 "amount": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Total de desconto"
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total discount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "type": {
                     "type": "string",
-                    "description": "Tipo da promoção"
+                    "description": "Promotion type"
                 }
             }
         },
