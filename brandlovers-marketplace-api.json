@@ -130,9 +130,6 @@
                             "$ref": "#/definitions/GetProduct"
                         }
                     },
-                    "400": {
-                        "description": "Bad request."
-                    },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     },
@@ -141,9 +138,6 @@
                     },
                     "404": {
                         "description": "Object not found. In general this means a invalid skuSellerId."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns all information of a single product using the seller `skuSellerId`. This service will return a json document with product detail, status, price and invetory in the Brand Lovers marketplace",
@@ -183,7 +177,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess!."
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -301,9 +295,6 @@
                     },
                     "400": {
                         "description": "Bad request."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list with seller products status and brief product information. Please note that this endpoint will not return all details of each product, just the status, skuSellerId and name. Also please note that this endpoint will return maximum 1000 products per call. For full details of a given procuct use GET /product/{skuSellerId}",
@@ -400,9 +391,6 @@
                     },
                     "400": {
                         "description": "Bad request."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns list of products and respective prices",
@@ -498,9 +486,6 @@
                     },
                     "400": {
                         "description": "Bad request."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Retuns bulk data with seller products inventory. For extensive details for a single product use GET /product/{skuSellerId}",
@@ -542,7 +527,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Sucess!."
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -758,9 +743,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns products that are sucessfully listed for sale.",
@@ -817,12 +799,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Retuns a list of orders associated with this seller. The list is ordered by dateCreated.",
@@ -922,9 +898,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns list of shipments. By default this will return list of the last shipments ordered by dateCreated, folowed by last update date.",
@@ -1027,9 +1000,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of shipments shipped. By Default returns items ordered by dateCreated folowed by last update",
@@ -1102,9 +1072,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of approved orders. Orders in the `approved` state must be fullfiled imediadetelly.",
@@ -1164,9 +1131,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list with canceled orders. Canceled orders should not be fullfiled.",
@@ -1226,9 +1190,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of orders sucessfully delivered associated with this seller.",
@@ -1288,9 +1249,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of orders flagged as new. New orders should not be fullfiled until marketplace flags as ready for shipment.",
@@ -1350,9 +1308,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of partially deliverd orders",
@@ -1412,9 +1367,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list of orders containing one (or more) items that where not shipped. This will list the entire order as well the items with peding shipment. Use this service to track orders that need to be fullfiled.",
@@ -1474,9 +1426,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list with orders completely fullfiled, this means orders with all items sent. Orders will ordered by dateCreated fowllowed by last update",
@@ -1536,9 +1485,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns all details of a single order, including last status, items shipped or not.",
@@ -1582,12 +1528,6 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    },
-                    "415": {
-                        "description": "Invalid content-type. JSON is required."
                     }
                 },
                 "description": "Confirm shipment canceletion (when requested by the customer) or failure to deliver one or more items",
@@ -1639,12 +1579,6 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    },
-                    "415": {
-                        "description": "Invalid content-type. JSON is required."
                     }
                 },
                 "description": "Confirms that a shipment was delivered. Must inform quantity of sucessfully deliverd items even if items deliverd was less than the original order",
@@ -1696,12 +1630,6 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    },
-                    "415": {
-                        "description": "Invalid content-type. JSON is required."
                     }
                 },
                 "description": "Operação utilizada para confirmar a troca de um item de pedido aberto pelo cliente (via protocolo). Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
@@ -1753,12 +1681,6 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    },
-                    "415": {
-                        "description": "Invalid content-type. JSON is required."
                     }
                 },
                 "description": "Operação utilizada para confirmação de devolução (reembolso) de item do pedido através de protocolo aberto pelo cliente. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço",
@@ -1810,12 +1732,6 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
-                    },
-                    "405": {
-                        "description": "Invalid method."
-                    },
-                    "415": {
-                        "description": "Invalid content-type. JSON is required."
                     }
                 },
                 "description": "Registra uma nova operação de tracking de Envio para os itens do pedido. Quebra de envio No caso de quebra de envio, passe apenas os itens e a quantidade que serão enviados. O controle de quais itens foram enviados deverá ser realizado pela sua Aplicação.  Para notificar o envio de todos os produtos, passe a lista contendo todos os itens e quantidade total.  Clique <a href='/api-portal/sites/default/files/support/exemplo_tracking_sent_v2.json'  >aqui</a> para obter um exemplo de conteúdo JSON suportado por esse serviço.Retorno do Serviço.",
@@ -1870,9 +1786,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Allows seller to receive and status, queries, requests and complaints from customers. As well related messages",
@@ -1932,9 +1845,6 @@
                     },
                     "400": {
                         "description": "Bad request."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Use this service to initiate a new comunicaiton channel with the customer. Use this to send messages to the customer. Whenever possible this will be pushed to Mobile and email. This is the primary mean of comunicaiton with the customer regarding orders, shippments, shippments status",
@@ -1986,9 +1896,6 @@
                     },
                     "403": {
                         "description": "Access denied. You can only access your trouble tickets"
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns trouble ticket history with all messages exchanged. Only tickets related to your seller will be returned attempt to read other tickets will return 403 (acess denied).",
@@ -2046,9 +1953,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Add a new message to this trouble ticket. Messages can be `CUSTOMER` (customer will be able to see it) or `INTERNAL`.",
@@ -2108,9 +2012,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Esse serviço permitirá que o lojista/plataforma altere o status de um Ticket. Os status permitidos serão: Fechado  (closed)  e Em Acompanhamento (attendance).",
@@ -2181,9 +2082,6 @@
                     },
                     "404": {
                         "description": "Object not found."
-                    },
-                    "405": {
-                        "description": "Invalid method."
                     }
                 },
                 "description": "Returns a list with marketplaces detailed information.",
