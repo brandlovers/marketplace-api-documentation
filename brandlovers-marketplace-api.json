@@ -334,7 +334,7 @@
                         "in": "query",
                         "description": "Number of items to return in this query. Min 1, max 1000. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -431,9 +431,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -530,9 +530,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -801,9 +801,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a quantidade de registros que deve ser trazido na consulta",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -863,9 +863,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to reut when executing query. List starts at zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -972,9 +972,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a quantidade de registros que deve ser trazido na consulta",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1083,9 +1083,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1168,7 +1168,7 @@
                         "in": "query",
                         "description": "Number or items to return when executing query. Defaults to 100, max 200. Use this in conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1230,7 +1230,7 @@
                         "in": "query",
                         "description": "Number or items to return when executing query. Default 100, max 300. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1290,9 +1290,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1352,9 +1352,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1414,9 +1414,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1483,9 +1483,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1552,9 +1552,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para indicar a quantidade de registros que deve ser trazido na consulta",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -1967,9 +1967,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Parâmetro utilizado para limitar a quantidade de registros trazidos pela consulta. ",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
@@ -2081,9 +2081,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to skip when executing query. List starts at zero. If omitted will default to zero. Use this conjuction with `limit` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     }
                 ]
