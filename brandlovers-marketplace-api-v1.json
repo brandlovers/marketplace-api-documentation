@@ -18,7 +18,7 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Server received your request and will start background processing."
+                        "description": "Sucess! Server received your request and will start background processing."
                     },
                     "400": {
                         "description": "Bad Request."
@@ -32,7 +32,6 @@
                     "products"
                 ],
                 "summary": "Allows new products from the seller to be loaded into the marketplace",
-                "operationId": "postProducts",
                 "produces": [
                     "application/json"
                 ],
@@ -84,7 +83,6 @@
                     "products"
                 ],
                 "summary": "Returns a list of products loaded into BrandLovers Marketplace",
-                "operationId": "getProducts",
                 "produces": [
                     "application/json"
                 ],
@@ -145,7 +143,6 @@
                     "product"
                 ],
                 "summary": "Returns details of a single product using the seller `skuSellerId`",
-                "operationId": "getProduct",
                 "produces": [
                     "application/json"
                 ],
@@ -197,7 +194,6 @@
                     "products"
                 ],
                 "summary": "Update product details",
-                "operationId": "putProduct",
                 "produces": [
                     "application/json"
                 ],
@@ -240,7 +236,7 @@
           "post": {
               "responses": {
                   "200": {
-                      "description": "Server received your request and will start background processing."
+                      "description": "Sucess! Server received your request and will start background processing."
                   },
                   "400": {
                       "description": "Bad Request."
@@ -254,7 +250,6 @@
                   "product"
               ],
               "summary": "Create a new product to the marketplace",
-              "operationId": "postProduct",
               "produces": [
                   "application/json"
               ],
@@ -290,16 +285,15 @@
                             "$ref": "#/definitions/GetSellerProductsStatus"
                         }
                     },
-                    "400": {
-                        "description": "Bad request."
+                    "403": {
+                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
                     }
                 },
-                "description": "Returns a list with seller products status. Please note that this endpoint will not return all details of each product, just the skuSellerId and status. Also please note that this endpoint will return 1000 products per call. For full details of a given procuct use GET /product/{skuSellerId}",
+                "description": "Returns a list with seller products status. Please note that this endpoint will not return all details of each product, just the skuSellerId and status. Also please note that this endpoint will return 250 products per call. For full details of a given procuct use GET /product/{skuSellerId}",
                 "tags": [
                     "products"
                 ],
                 "summary": "Returns seller products status in the marketplace",
-                "operationId": "getSellerItemsStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -323,7 +317,7 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number of items to return in this query. Defaults to 1000. Maximum 1000. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number of items to return in this query. Defaults to 250. Maximum 1000. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
                         "required": false,
                         "type": "integer"
@@ -333,7 +327,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request."
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -347,7 +341,6 @@
                     "products"
                 ],
                 "summary": "Bulk enable/disable products in the marketplace",
-                "operationId": "putSellerItemsStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -370,7 +363,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/SellerItemStatusUpdate"
+                                "$ref": "#/definitions/ProductStatusUpdate"
                             }
                         }
                     }
@@ -381,7 +374,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "success!"
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -390,12 +383,11 @@
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
-                "description": "Allows bulk update of product prices. This endpoint expects a json document with an array of products with the seller ID and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status",
+                "description": "Allows bulk update of product prices. This endpoint expects a json document with an array of products with the `skuSellerId` and the new price. Server will process each new product update individually and will ackwlodge as much updates as possible, even if a single product update fails. After this request you can query product final status with GET /product/status",
                 "tags": [
                     "products"
                 ],
                 "summary": "Allows bulk update of product prices.",
-                "operationId": "putSellerItemsPrices",
                 "produces": [
                     "application/json"
                 ],
@@ -429,7 +421,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "success!"
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -438,12 +430,11 @@
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
                     }
                 },
-                "description": "Bulk product stock update. This endpoint expect a array with product `skuSellerId` with new inventory data",
+                "description": "Bulk product stock update. This endpoint expect a array of products `skuSellerId` with new inventory data",
                 "tags": [
                     "products"
                 ],
                 "summary": "Bulk product stock update",
-                "operationId": "putSellerItemsStocks",
                 "produces": [
                     "application/json"
                 ],
@@ -466,7 +457,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/SellerItemStocks"
+                                "$ref": "#/definitions/ProductStock"
                             }
                         }
                     }
@@ -477,7 +468,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "success!"
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -528,7 +519,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "success!"
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -542,7 +533,6 @@
                     "product"
                 ],
                 "summary": "Update a single prouduc stock",
-                "operationId": "putSellerItemStock",
                 "produces": [
                     "application/json"
                 ],
@@ -580,7 +570,7 @@
             "put": {
                 "responses": {
                     "200": {
-                        "description": "success!"
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -594,7 +584,6 @@
                     "product"
                 ],
                 "summary": "Allows seller to update prices of a single SKU",
-                "operationId": "putSellerItemPrices",
                 "produces": [
                     "application/json"
                 ],
@@ -632,9 +621,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetSellerItemsResponse"
+                            "$ref": "#/definitions/GetProductsStatusSelling"
                         }
                     },
                     "400": {
@@ -652,7 +641,6 @@
                     "products"
                 ],
                 "summary": "Returns products that are successfully listed for sale.",
-                "operationId": "getSellerItemsByStatusActive",
                 "produces": [
                     "application/json"
                 ],
@@ -688,9 +676,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -707,8 +695,7 @@
                 "tags": [
                     "orders"
                 ],
-                "summary": "Recupera detalhes de todos os pedidos",
-                "operationId": "getOrders",
+                "summary": "Returns orders details",
                 "produces": [
                     "application/json"
                 ],
@@ -744,13 +731,16 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "success. Server received your request."
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "403": {
+                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
                     }
                 },
                 "description": "Bulk update of order shipments status. This alows to inform multiple shipments status",
@@ -758,7 +748,6 @@
                     "orders"
                 ],
                 "summary": "Bulk update of order shipments",
-                "operationId": "postOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
                 ],
@@ -787,9 +776,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "success!",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersTrackingUpdatingResponse"
+                            "$ref": "#/definitions/GetOrdersShipments"
                         }
                     },
                     "400": {
@@ -804,10 +793,9 @@
                 },
                 "description": "Returns list of shipments. By default this will return list of the last shipments ordered by dateCreated, folowed by last update date.",
                 "tags": [
-                    "products"
+                    "orders"
                 ],
                 "summary": "Returns list of shipments",
-                "operationId": "getOrdersTrackingDelivered",
                 "produces": [
                     "application/json"
                 ],
@@ -850,21 +838,23 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "success transaction."
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "403": {
+                        "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
                     }
                 },
-                "description": "Allows bulk updates of order shippments.",
+                "description": "Allows bulk updates of orders shippments.",
                 "tags": [
                     "orders"
                 ],
                 "summary": "Bulk update of order shipments",
-                "operationId": "postOrdersshipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -874,7 +864,7 @@
                 "parameters": [
                     {
                         "in": "body",
-                        "description": "JSON payload with list of shippments of an order.",
+                        "description": "JSON payload with list of shippments of orders.",
                         "name": "ordersshipments",
                         "required": true,
                         "schema": {
@@ -886,9 +876,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersTrackingUpdatingResponse"
+                            "$ref": "#/definitions/GetOrdersShipments"
                         }
                     },
                     "400": {
@@ -899,9 +889,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Returns a list of shipments shipped. By Default returns items ordered by dateCreated folowed by last update",
@@ -909,7 +896,6 @@
                     "orders"
                 ],
                 "summary": "Returns a list of shipments shipped",
-                "operationId": "getOrdersshipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -958,9 +944,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -971,9 +957,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Returns a list of approved orders. Orders in the `approved` state must be fullfiled imediadetelly.",
@@ -981,7 +964,6 @@
                     "orders"
                 ],
                 "summary": "Return list of approved orders",
-                "operationId": "getOrdersByStatusApproved",
                 "produces": [
                     "application/json"
                 ],
@@ -1017,9 +999,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1030,9 +1012,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Returns a list with canceled orders. Canceled orders should not be fullfiled.",
@@ -1040,7 +1019,6 @@
                     "orders"
                 ],
                 "summary": "Returns lists of canceled orders",
-                "operationId": "getOrdersByStatusCanceled",
                 "produces": [
                     "application/json"
                 ],
@@ -1064,8 +1042,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to return when executing query. Default 100, max 300. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Default 100, max 250. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
+                        "default": 100,
                         "required": false,
                         "type": "integer"
                     }
@@ -1076,9 +1055,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1089,9 +1068,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Returns a list of orders successfully delivered associated with this seller.",
@@ -1099,7 +1075,6 @@
                     "orders"
                 ],
                 "summary": "Returns a list of orders successfully delivered associated with this seller.",
-                "operationId": "getOrdersByStatusDelivered",
                 "produces": [
                     "application/json"
                 ],
@@ -1135,9 +1110,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1148,17 +1123,14 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
-                "description": "Returns a list of orders flagged as new. New orders should not be fullfiled until marketplace flags as ready for shipment.",
+                "description": "Returns a list of orders flagged as new. New orders should not be fullfiled until marketplace flags them as approved.",
                 "tags": [
                     "orders"
                 ],
                 "summary": "Returns a list of orders flagged as new.",
-                "operationId": "getOrdersByStatusNew",
+
                 "produces": [
                     "application/json"
                 ],
@@ -1182,8 +1154,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 100. Max 250. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
+                        "default": 100,
                         "required": false,
                         "type": "integer"
                     }
@@ -1194,9 +1167,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1207,17 +1180,13 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
-                "description": "Returns a list of partially deliverd orders",
+                "description": "Returns a list of partially deliverd orders. This is a list of orders with items shipped but with not all items ackwlodged as deliverd",
                 "tags": [
                     "orders"
                 ],
                 "summary": "Returns a list of partially deliverd orders",
-                "operationId": "getOrdersByStatusPartiallyDelivered",
                 "produces": [
                     "application/json"
                 ],
@@ -1241,8 +1210,9 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 100. Max 250. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
+                        "default": 100,
                         "required": false,
                         "type": "integer"
                     }
@@ -1253,9 +1223,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1266,17 +1236,13 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
-                "description": "Returns a list of orders containing one (or more) items that where not shipped. This will list the entire order as well the items with peding shipment. Use this service to track orders that need to be fullfiled.",
+                "description": "Returns a list of orders that contain one (or more) items that where not shipped. This will list the entire order as well the items with peding shipment. Use this service to track orders that need to be fullfiled.",
                 "tags": [
                     "orders"
                 ],
                 "summary": "Returns a list of orders partially fullfiled",
-                "operationId": "getOrdersByStatusPartiallySent",
                 "produces": [
                     "application/json"
                 ],
@@ -1300,7 +1266,7 @@
                     },
                     {
                         "in": "query",
-                        "description": "Number or items to return when executing query. Defaults to 10. Use this conjuction with `offset` to paginate across the results.",
+                        "description": "Number or items to return when executing query. Defaults to 100. Use this conjuction with `offset` to paginate across the results.",
                         "name": "limit",
                         "required": false,
                         "type": "integer"
@@ -1312,9 +1278,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetOrdersResponse"
+                            "$ref": "#/definitions/GetOrders"
                         }
                     },
                     "400": {
@@ -1325,9 +1291,6 @@
                     },
                     "403": {
                         "description": "Server refused to process your request. Please check the API SLA and reduce number of requests per second."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Returns a list with orders completely fullfiled, this means orders with all items sent. Orders will ordered by dateCreated fowllowed by last update",
@@ -1335,7 +1298,6 @@
                     "orders"
                 ],
                 "summary": "Returns a list with orders fully sent",
-                "operationId": "getOrdersByStatusSent",
                 "produces": [
                     "application/json"
                 ],
@@ -1394,7 +1356,6 @@
                     "order"
                 ],
                 "summary": "Returns all details of a order",
-                "operationId": "getOrderById",
                 "produces": [
                     "application/json"
                 ],
@@ -1419,7 +1380,7 @@
                 ]
             }
         },
-        "/order/{orderId}/shipments/cancel": {
+        "/order/{orderId}/shipment/cancel": {
             "post": {
                 "responses": {
                     "200": {
@@ -1430,14 +1391,16 @@
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "404": {
+                        "description": "Object not found. Was not able to find orderId"
                     }
                 },
-                "description": "Confirm shipment canceletion (when requested by the customer) or failure to deliver one or more items",
+                "description": "Confirm shipment canceletion (when requested by the customer) or failure to deliver one shipment",
                 "tags": [
                     "order"
                 ],
                 "summary": "Confirm shipment canceletion (when requested by the customer) or failure to deliver",
-                "operationId": "postOrderShippmentCancelation",
                 "produces": [
                     "application/json"
                 ],
@@ -1462,7 +1425,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Unique Order Id",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1470,17 +1433,20 @@
                 ]
             }
         },
-        "/order/{orderId}/shipments/delivered": {
+        "/order/{orderId}/shipment/delivered": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "successfully received transaction"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "404": {
+                        "description": "Object not found. Was not able to find orderId"
                     }
                 },
                 "description": "Confirms that a shipment was delivered. Must inform quantity of successfully deliverd items even if items deliverd was less than the original order",
@@ -1488,7 +1454,6 @@
                     "order"
                 ],
                 "summary": "Confirms that a shipment was delivered",
-                "operationId": "postOrderShippmentDelivered",
                 "produces": [
                     "application/json"
                 ],
@@ -1513,7 +1478,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Unique Order Id",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1521,17 +1486,20 @@
                 ]
             }
         },
-        "/order/{orderId}/shipments/exchange": {
+        "/order/{orderId}/shipment/exchange": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "successfully received transaction"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "404": {
+                        "description": "Object not found. Was not able to find orderId"
                     }
                 },
                 "description": "This enpoint to confirm item exchange when failure to deliver or requested by the customer. All customer requests are tracket via trouble tickets",
@@ -1539,7 +1507,6 @@
                     "order"
                 ],
                 "summary": "Confirm item exchange",
-                "operationId": "postOrderShippmentExchange",
                 "produces": [
                     "application/json"
                 ],
@@ -1564,7 +1531,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Unique Order Id",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1572,17 +1539,20 @@
                 ]
             }
         },
-        "/order/{orderId}/shipments/return": {
+        "/order/{orderId}/shipment/return": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "successfully received transaction"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "404": {
+                        "description": "Object not found. Was not able to find orderId"
                     }
                 },
                 "description": "Use this endpoint to return and refund items froma a order. In order to fully return an order list all items and applicate quantity.",
@@ -1590,7 +1560,6 @@
                     "order"
                 ],
                 "summary": "Confirm order item return and refund",
-                "operationId": "postOrderShippmentReturn",
                 "produces": [
                     "application/json"
                 ],
@@ -1623,17 +1592,20 @@
                 ]
             }
         },
-        "/order/{orderId}/shipments/sent": {
+        "/order/{orderId}/shipment/sent": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "successfully received transaction"
+                        "description": "Sucess!"
                     },
                     "400": {
                         "description": "Bad request."
                     },
                     "401": {
                         "description": "Access denied. You're not authenticated or token expired. Check your request header the `authorization` field is required."
+                    },
+                    "404": {
+                        "description": "Object not found. Was not able to find orderId"
                     }
                 },
                 "description": "Updates order to include shipment shiped information. This endpoint can be used to include a single or multiple shipments for any give order. In order to inform that all items of a order where shipped list all of them, including applicable quantities in the payload.",
@@ -1641,7 +1613,6 @@
                     "order"
                 ],
                 "summary": "Update new order to include shipment information",
-                "operationId": "postOrdershipmentsent",
                 "produces": [
                     "application/json"
                 ],
@@ -1666,7 +1637,7 @@
                     },
                     {
                         "in": "path",
-                        "description": "ID do pedido.",
+                        "description": "Unique Order Id",
                         "name": "orderId",
                         "required": true,
                         "type": "string"
@@ -1678,16 +1649,13 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request.",
+                        "description": "Success!",
                         "schema": {
                             "$ref": "#/definitions/GetTickets"
                         }
                     },
                     "400": {
                         "description": "Bad request."
-                    },
-                    "404": {
-                        "description": "Object not found."
                     }
                 },
                 "description": "Allows seller to receive and status, queries, requests and complaints from customers. As well related messages",
@@ -1695,7 +1663,6 @@
                     "tickets"
                 ],
                 "summary": "Get customers trouble tickets",
-                "operationId": "GetTickets",
                 "produces": [
                     "application/json"
                 ],
@@ -1719,7 +1686,7 @@
                         "enum": [
                             "OPEN",
                             "REOPENED",
-                            "CLOSE"
+                            "CLOSED"
                         ]
                     },
                     {
@@ -1743,18 +1710,17 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request."
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
                     }
                 },
-                "description": "Use this service to initiate a new comunicaiton channel with the customer. Use this to send messages to the customer. Whenever possible this will be pushed to Mobile and email. This is the primary mean of comunicaiton with the customer regarding orders, shippments, shippments status",
+                "description": "Use this service to create a new trouble ticket. Use this to include relevant information about the order, comunicate with the customer or marketplace team. Whenever possible message will be pushed to Mobile first. This is the primary mean of comunicaiton with the customer regarding orders, shippments, shippments status. New tickets will be automatically be set to 'OPEN'. Trouble tickets need to be associated with a orderId or customer. New tickets can optionally include a new message.",
                 "tags": [
                     "tickets"
                 ],
                 "summary": "Creates a new trouble ticket",
-                "operationId": "postTicket",
                 "produces": [
                     "application/json"
                 ],
@@ -1785,9 +1751,9 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "success!",
+                        "description": "Success!",
                         "schema": {
-                            "$ref": "#/definitions/GetTicketMessagesResponse"
+                            "$ref": "#/definitions/GetTicketMessages"
                         }
                     },
                     "400": {
@@ -1805,7 +1771,6 @@
                     "tickets"
                 ],
                 "summary": "Get trouble ticket messages",
-                "operationId": "GetTicketMessages",
                 "produces": [
                     "application/json"
                 ],
@@ -1848,7 +1813,7 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Success processing your request."
+                        "description": "Success!"
                     },
                     "400": {
                         "description": "Bad request."
@@ -1862,7 +1827,6 @@
                     "tickets"
                 ],
                 "summary": "Add new message to trouble ticket",
-                "operationId": "postTicketMessage",
                 "produces": [
                     "application/json"
                 ],
@@ -1920,7 +1884,6 @@
                     "tickets"
                 ],
                 "summary": "Update trouble ticket status",
-                "operationId": "putTicketStatus",
                 "produces": [
                     "application/json"
                 ],
@@ -2093,21 +2056,21 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Categories that this product belong to"
+                    "description": "Array of categories associated with this product"
                 },
                 "images": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "List of valid Product image URLs. HTTP or HTTPS are valid. However HTTPS is prefered."
+                    "description": "List of valid Product image URLs. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "videos": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "List of valid Product image URLs. HTTP or HTTPS are valid. However HTTPS is prefered."
+                    "description": "List of videos de URLs associated with this product. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "price": {
                     "$ref": "#/definitions/ProductPrice"
@@ -2133,7 +2096,7 @@
         },
         "ProductUpdate": {
           "required": [
-              "skuSellerId",
+              "skuSellerId"
           ],
             "properties": {
                 "productId": {
@@ -2165,28 +2128,28 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista que pode conter tanto o código EAN do produto (código de barras) quanto códigos ISBN (geralmente utilizados para livros)"
+                    "description": "Array of product EAN and/or ISBN and/or ASIN codes"
                 },
                 "categories": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista de categorias"
+                    "description": "Array of categories associated with this product"
                 },
                 "images": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": " Lista de URLs de imagens. Pelo menos uma imagem precisa ser informada"
+                    "description": "List of valid Product image URLs. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "videos": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": " Lista de URLs de vídeos"
+                    "description": "List of videos de URLs associated with this product. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "price": {
                     "$ref": "#/definitions/ProductPrice"
@@ -2221,7 +2184,7 @@
                 "attributes",
                 "stock",
                 "images",
-                "status",
+                "status"
             ],
             "properties": {
                 "skuSellerId": {
@@ -2249,27 +2212,28 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista que pode conter tanto o código EAN do produto (código de barras) quanto códigos ISBN (geralmente utilizados para livros)"
+                    "description": "Array of product EAN and/or ISBN and/or ASIN codes"
                 },
                 "categories": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista de categorias"
+                    "description": "Array of categories associated with this product"
                 },
                 "images": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": " Lista de URLs de imagens. Pelo menos uma imagem precisa ser informada"
+                    "description": "List of valid Product image URLs. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "videos": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "List of videos de URLs associated with this product. HTTP or HTTPS are valid. HTTPS is prefered."
                 },
                 "price": {
                     "$ref": "#/definitions/ProductPrice"
@@ -2364,13 +2328,13 @@
                 }
             }
         },
-        "GetOrdersTrackingUpdatingResponse": {
+        "GetOrdersShipments": {
             "properties": {
                 "shipments": {
                     "type": "array",
                     "description": "Order Shippment Status",
                     "items": {
-                        "$ref": "#/definitions/OrderShippmentUpdatingStatus"
+                        "$ref": "#/definitions/OrderShippmentStatus"
                     }
                 },
                 "metadata": {
@@ -2382,10 +2346,15 @@
                 }
             }
         },
-        "OrderShippmentUpdatingStatus": {
+        "OrderShippmentStatus": {
             "properties": {
-                "order": {
-                    "$ref": "#/definitions/OrderReference"
+                "shipmentId": {
+                    "type": "string",
+                    "description": "Shippment unique Id"
+                },
+                "trackingUrl":{
+                  "type": "string",
+                  "description": "Courier tracking URL"
                 },
                 "items": {
                     "type": "array",
@@ -2395,26 +2364,13 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "Status do pedido"
+                    "description": "Shipment status"
                 },
                 "errors": {
                     "type": "array",
-                    "description": "Erros do envido de pedidos",
                     "items": {
                         "$ref": "#/definitions/Error"
                     }
-                }
-            }
-        },
-        "OrderReference": {
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Order unique Id."
-                },
-                "href": {
-                    "type": "string",
-                    "description": "URL de consulta da ordem por ID."
                 }
             }
         },
@@ -2424,8 +2380,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/OrderShippment"
-                    },
-                    "description": "Lista de shipments"
+                    }
                 }
             }
         },
@@ -2448,19 +2403,19 @@
                 "occurredAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data da ocorrencia"
+                    "description": "Date that this shippment was shiped"
                 },
-                "url": {
+                "trackingUrl": {
                     "type": "string",
-                    "description": "Url para consulta na transportadora"
+                    "description": "Courier tracking URL"
                 },
                 "number": {
                     "type": "string",
                     "description": "Courier unique trackign Id associated with this shipment"
                 },
-                "sellerDeliveryId": {
+                "sellerShipmentId": {
                     "type": "string",
-                    "description": "Unique Seller shipment shipment Id. This must be unique across all orders and itens"
+                    "description": "Unique Seller shipment Id. This must be unique across all orders and shipments"
                 },
                 "cte": {
                     "type": "string",
@@ -2513,7 +2468,7 @@
                 "skuSellerId",
                 "status",
                 "price",
-                "stock",
+                "stock"
               ],
             "properties": {
                 "skuSellerId": {
@@ -2539,7 +2494,7 @@
                 }
             }
         },
-        "SellerItemStatusUpdate": {
+        "ProductStatusUpdate": {
             "required": [
                 "skuSellerId",
                 "active"
@@ -2557,7 +2512,7 @@
         },
         "SellerItemStatus": {
             "required": [
-                "active",
+                "active"
             ],
             "properties": {
                 "active": {
@@ -2597,7 +2552,7 @@
                 }
             }
         },
-        "SellerItemStocks": {
+        "ProductStock": {
             "required": [
                 "skuSellerId",
                 "stocks"
@@ -2609,7 +2564,7 @@
                 },
                 "stocks": {
                     "type": "array",
-                    "description": "Estoque do produto",
+                    "description": "Invetory information",
                     "items": {
                         "$ref": "#/definitions/Stock"
                     }
@@ -2685,7 +2640,7 @@
                 }
             }
         },
-        "GetSellerItemsResponse": {
+        "GetProductsStatusSelling": {
             "required": [
                 "sellerItems",
                 "metadata"
@@ -2736,7 +2691,7 @@
                     "items": {
                         "type": "string"
                     },
-                    "description": "Lista que pode conter tanto o código EAN do produto (código de barras) quanto códigos ISBN (geralmente utilizados para livros)"
+                    "description": "Array of product EAN and/or ISBN and/or ASIN codes"
                 },
                 "status": {
                     "type": "array",
@@ -2768,7 +2723,7 @@
                 },
                 "images": {
                     "type": "array",
-                    "description": "Lista de imagens do produto",
+                    "description": "List of valid Product image URLs.",
                     "items": {
                         "$ref": "#/definitions/Image"
                     }
@@ -2863,7 +2818,7 @@
                 }
             }
         },
-        "GetOrdersResponse": {
+        "GetOrders": {
             "required": [
                 "orders",
                 "metadata"
@@ -2887,16 +2842,18 @@
             "required": [
                 "orderId",
                 "orderMarketplaceId",
-                "purchasedAt",
+                "createdAt",
                 "updatedAt",
                 "status",
                 "totalAmount",
+                "totalItemsAmount",
+                "totalShippingAmount",
                 "totalDiscountAmount",
                 "freight",
                 "customer",
-                "billing",
+                "billingAddress",
                 "items",
-                "shipping",
+                "shippingAddress",
                 "shipments"
             ],
             "properties": {
@@ -2908,7 +2865,7 @@
                     "type": "string",
                     "description": "Unique Order Id that will be displayed to the customer. This Id is not the same as `orderId`"
                 },
-                "purchasedAt": {
+                "createdAt": {
                     "type": "string",
                     "format": "date-time",
                     "description": "Date that this order was created"
@@ -2929,14 +2886,22 @@
                 },
                 "totalAmount": {
                     "type": "integer",
-                    "description": "Order total in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
+                    "description": "Order total in cents, this is what the customer will be charged for. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
+                },
+                "totalItemsAmount": {
+                    "type": "integer",
+                    "description": "Order items total amount in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
+                },
+                "totalShippingAmount": {
+                  "type": "integer",
+                  "description": "Total shipments amount items. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "totalDiscountAmount": {
                     "type": "integer",
                     "description": "Total order discounts in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
-                "billing": {
-                    "$ref": "#/definitions/ShippingAddress"
+                "billingAddress": {
+                    "$ref": "#/definitions/Address"
                 },
                 "customer": {
                     "$ref": "#/definitions/Customer"
@@ -2950,8 +2915,8 @@
                         "$ref": "#/definitions/OrderItem"
                     }
                 },
-                "shipping": {
-                    "$ref": "#/definitions/ShippingAddress"
+                "shippingAddress": {
+                    "$ref": "#/definitions/Address"
                 },
                 "shipments": {
                     "type": "array",
@@ -3109,8 +3074,7 @@
                     "description": "Defines if giftwrpping is available for this product."
                 },
                 "value": {
-                    "type": "number",
-                    "format": "integer",
+                    "type": "integer",
                     "description": "Amount charged for gift wrap. All prices must be provided in cents. No commas or periods are accepeted. For example one dollar should be informed as 100. $1,2345.67 should be informed solely as 1234567"
                 },
                 "messageSupport": {
@@ -3193,7 +3157,7 @@
                 "items",
                 "status",
                 "occurredAt",
-                "sellerDeliveryId",
+                "sellerShipmentId",
                 "invoice",
                 "courier"
             ],
@@ -3218,7 +3182,7 @@
                     "format": "date-time",
                     "description": "Date time when this shippment happened"
                 },
-                "url": {
+                "trackingUrl": {
                     "type": "string",
                     "description": "Courier tracking URL"
                 },
@@ -3230,9 +3194,9 @@
                     "type": "string",
                     "description": "Shipment Id associated with this shippment used to group diferent item or items from a single order"
                 },
-                "sellerDeliveryId": {
+                "sellerShipmentId": {
                     "type": "string",
-                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
+                    "description": "Unique Seller shipment Id. This must be unique across all orders and shipments"
                 },
                 "cte": {
                     "type": "string",
@@ -3250,7 +3214,7 @@
             "required": [
                 "items",
                 "occurredAt",
-                "sellerDeliveryId",
+                "sellerShipmentId",
                 "courier",
                 "invoice"
             ],
@@ -3267,17 +3231,17 @@
                     "format": "date-time",
                     "description": "Data da ocorrência"
                 },
-                "url": {
+                "trackingUrl": {
                     "type": "string",
-                    "description": "Courier tracking URL para consulta na transportadora"
+                    "description": "Courier tracking URL"
                 },
                 "number": {
                     "type": "string",
                     "description": "Unique id shipment Id in the courier system"
                 },
-                "sellerDeliveryId": {
+                "sellerShipmentId": {
                     "type": "string",
-                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
+                    "description": "Unique Seller shipment Id. This must be unique across all orders and shipmnents"
                 },
                 "cte": {
                     "type": "string",
@@ -3310,9 +3274,9 @@
                 "occurredAt": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "Data da ocorrência"
+                    "description": "Date time that this was created"
                 },
-                "url": {
+                "tranckingUrl": {
                     "type": "string",
                     "description": "Courier tracking URL"
                 },
@@ -3320,9 +3284,9 @@
                     "type": "string",
                     "description": "Tracking Id in the courier"
                 },
-                "sellerDeliveryId": {
+                "sellerShipmentId": {
                     "type": "string",
-                    "description": "Unique Seller shipment tracking Id. This must be unique across all orders and itens"
+                    "description": "Unique Seller shipment Id. This must be unique across all orders and shipments"
                 },
                 "cte": {
                     "type": "string",
@@ -3333,7 +3297,7 @@
                 }
             }
         },
-        "ShippingAddress": {
+        "Address": {
             "required": [
                 "address",
                 "number",
@@ -3389,10 +3353,16 @@
         },
         "NewTicket": {
             "required": [
+                "orderId",
                 "from",
-                "body"
+                "body",
+                "type"
             ],
             "properties": {
+                "orderId": {
+                    "type": "string",
+                    "description": "Unique order Id that this trouble ticket belongs to"
+                },
                 "from": {
                     "type": "string",
                     "description": "Friendly name of the person sending this message, if not provided the seller `name` will be used"
@@ -3400,6 +3370,20 @@
                 "body": {
                     "type": "string",
                     "description": "Message to the customer"
+                },
+                "message":{
+                    "$ref": "#/definitions/NewTicketMessage"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Trouble ticket type."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Trouble ticked brief description"
+                },
+                "customer": {
+                    "$ref": "#/definitions/CustomerReference"
                 }
             }
         },
@@ -3472,8 +3456,7 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Metadata"
-                    },
-                    "description": "Leia mais sobre os metadados retornados nas listagens"
+                    }
                 }
             }
         },
@@ -3505,7 +3488,7 @@
                 }
             }
         },
-        "GetTicketMessagesResponse": {
+        "GetTicketMessages": {
             "required": [
                 "metadata"
             ],
@@ -3558,7 +3541,7 @@
             "properties": {
                 "ticketStatus": {
                     "type": "string",
-                    "description": "Novo status desejado do Ticket. Fechado (closed) e Em Acompanhamento (attendance)"
+                    "description": "New trouble ticket status. Valid options are `REOPENED`, `CLOSED`"
                 }
             }
         }
